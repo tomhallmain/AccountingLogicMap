@@ -23,6 +23,11 @@ def build_transactions(
     txns: list[Transaction] = []
 
     for txn_id, txn_lines in group_lines(lines).items():
+        # Errors accumulate across the whole ledger, so "did this transaction fail?"
+        # is answered by comparing the list length against its length on entry.
+        # Rescanning the accumulated list per transaction would be O(n²).
+        errors_before = len(errors)
+
         if require_known_accounts:
             for ln in txn_lines:
                 if ln.account_id not in accounts:
@@ -65,9 +70,8 @@ def build_transactions(
             )
             continue
 
-        # Only emit txn if no errors were recorded for this id so far in this pass
-        txn_errors = [e for e in errors if e.txn_id == txn_id]
-        if txn_errors:
+        # Only emit the transaction if this pass recorded no errors against it.
+        if len(errors) > errors_before:
             continue
 
         dates = {ln.date for ln in txn_lines}

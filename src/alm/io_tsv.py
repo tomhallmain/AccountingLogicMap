@@ -168,12 +168,15 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
         ],
     )
 
-    edge_rows = [_scored_to_row(se) for se in logic_map.scored]
+    edge_rows = [
+        _scored_to_row(se, logic_map.edges.get(se.key)) for se in logic_map.scored
+    ]
     fields = [
         "debit_account_id",
         "credit_account_id",
         "weight_sum",
         "depth",
+        "pair_instances",
         "mean_weight",
         "share_w",
         "share_c",
@@ -223,12 +226,16 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
     )
 
 
-def _scored_to_row(se: ScoredEdge) -> dict:
+def _scored_to_row(se: ScoredEdge, stat: EdgeStat | None = None) -> dict:
+    # pair_instances lives on EdgeStat rather than ScoredEdge, but it has to be
+    # persisted for a map directory to reload without losing the multi-line
+    # signal (pair_instances > depth). Falls back to depth when unavailable.
     return {
         "debit_account_id": se.key.debit_account_id,
         "credit_account_id": se.key.credit_account_id,
         "weight_sum": f"{se.weight_sum:.6f}",
         "depth": se.depth,
+        "pair_instances": stat.pair_instances if stat is not None else se.depth,
         "mean_weight": f"{se.mean_weight:.6f}",
         "share_w": f"{se.share_w:.6f}",
         "share_c": f"{se.share_c:.6f}",
@@ -254,7 +261,9 @@ def load_map_dir(path: Path) -> LogicMap:
             key=key,
             weight_sum=weight,
             depth=depth,
-            pair_instances=depth,
+            # Older map directories predate the column; depth is the floor, since
+            # every contributing transaction emits at least one pair.
+            pair_instances=int(float(row.get("pair_instances") or depth)),
             ambiguous_weight=weight * float(row.get("ambiguous_share", 0) or 0),
         )
         scored.append(

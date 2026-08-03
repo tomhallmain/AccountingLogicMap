@@ -1,13 +1,15 @@
 """Eval artifact contents — the metrics must survive the write to TSV.
 
-Regression cover for two defects the original eval could not surface:
+Regression cover for three defects the original eval could not surface:
   * heterogeneous metric rows silently losing every column the first row lacked
   * the spec §11.2 "frequent edges (depth >= 3)" cohort never being computed
+  * anomaly recovery scored against a hardcoded list of one entity's accounts
 """
 
 from __future__ import annotations
 
 import csv
+import logging
 import tempfile
 import unittest
 from pathlib import Path
@@ -107,6 +109,59 @@ class PredictCohortTests(unittest.TestCase):
         holdout = load_holdout_edges(SAMPLE / "holdout.tsv")
         in_map = [e for e in holdout if EdgeKey(*e) in self.map.edges]
         self.assertEqual(len(in_map), len(holdout))
+
+
+class AnomalyExpectationTests(unittest.TestCase):
+    """`eval` must not invent the signals it scores recovery against.
+
+    Expectations name specific accounts, so a built-in default scores every other
+    entity against the wrong edges — and looks like a pass on the one entity whose
+    accounts happen to match.
+    """
+
+    def setUp(self):
+        # main() configures logging to stderr; keep the suite's output readable.
+        logging.disable(logging.CRITICAL)
+        self.addCleanup(logging.disable, logging.NOTSET)
+
+    def _run_eval(self, tmp: Path, *extra: str) -> list[dict]:
+        from alm.cli import main
+
+        base, open_dir = tmp / "baseline", tmp / "open"
+        for out, src in ((base, "transactions.tsv"), (open_dir, "transactions_open.tsv")):
+            self.assertEqual(
+                main(["build", "--accounts", str(SAMPLE / "accounts.tsv"),
+                      "--transactions", str(SAMPLE / src), "--out", str(out)]),
+                0,
+            )
+        out_dir = tmp / "eval"
+        self.assertEqual(
+            main(["eval", "--map", str(base), "--out", str(out_dir),
+                  "--baseline", str(base), "--open-map", str(open_dir), *extra]),
+            0,
+        )
+        path = out_dir / "eval_summary.tsv"
+        if not path.exists():
+            return []
+        with path.open(newline="", encoding="utf-8") as f:
+            return list(csv.DictReader(f, delimiter="\t"))
+
+    def test_no_expectations_file_means_no_anomaly_metric(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            rows = self._run_eval(Path(tmp))
+        self.assertEqual([r for r in rows if r["metric"] == "anomaly_recovery"], [])
+
+    def test_expectations_file_produces_the_metric(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            rows = self._run_eval(
+                Path(tmp),
+                "--expected-anomalies",
+                str(SAMPLE / "expected_anomalies.tsv"),
+            )
+        recovery = [r for r in rows if r["metric"] == "anomaly_recovery"]
+        self.assertEqual(len(recovery), 1)
+        self.assertEqual(recovery[0]["n"], "3")
+        self.assertEqual(recovery[0]["recovered"], "3")
 
 
 if __name__ == "__main__":

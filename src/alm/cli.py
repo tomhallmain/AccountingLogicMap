@@ -12,7 +12,7 @@ from .aggregate import build_logic_map, logic_map_from_edge_stats
 from .anomalies import compare_maps
 from .balances import unnatural_balances
 from .eval import evaluate_anomalies, evaluate_prediction, run_verify_eval
-from .io_excel import load_excel_reference
+from .io_excel import DEFAULT_ACCOUNT_SHEET, DEFAULT_EDGE_SHEET, load_excel_reference
 from .io_tsv import (
     load_accounts,
     load_edge_list_tsv,
@@ -170,9 +170,17 @@ def cmd_build_from_excel(args: argparse.Namespace) -> int:
     xlsx = Path(args.xlsx)
     LOG.info("build-from-excel: %s", xlsx)
     try:
-        logic_map = load_excel_reference(xlsx, window_label=args.label or "excel_ref")
+        logic_map = load_excel_reference(
+            xlsx,
+            window_label=args.label or "excel_ref",
+            edge_sheet=args.edge_sheet,
+            account_sheet=args.account_sheet,
+        )
     except ImportError as exc:
         LOG.error("%s", exc)
+        return 1
+    except ValueError as exc:
+        LOG.error("build-from-excel: %s", exc)
         return 1
     _log_spectrum(logic_map)
     out = Path(args.out)
@@ -488,17 +496,20 @@ def cmd_eval(args: argparse.Namespace) -> int:
             window,
         )
 
-    if args.baseline and args.open_map:
+    if args.baseline and args.open_map and not args.expected_anomalies:
+        # Recovery is only measurable against signals the caller declares. There is
+        # no defensible default: expectations are specific to one entity's accounts,
+        # so a built-in list would score every other entity against the wrong edges.
+        LOG.warning(
+            "eval: --baseline/--open-map given without --expected-anomalies; "
+            "skipping the anomaly-recovery metric (nothing to recover against)"
+        )
+
+    if args.baseline and args.open_map and args.expected_anomalies:
         baseline = load_map_dir(Path(args.baseline))
         open_map = load_map_dir(Path(args.open_map))
         anomalies = compare_maps(baseline, open_map, top_k=args.top)
-        expected_signals = [
-            ("missing_edge", "1000 Bank", "4000 Vehicle Sales"),
-            ("new_edge", "1200 Clearing", "1000 Bank"),
-            ("new_edge", "1000 Bank", "2500 New Floor Plan"),
-        ]
-        if args.expected_anomalies:
-            expected_signals = load_expected_anomalies(Path(args.expected_anomalies))
+        expected_signals = load_expected_anomalies(Path(args.expected_anomalies))
         anom_summary = evaluate_anomalies(anomalies, expected_signals=expected_signals)
         summaries.append(
             {
@@ -831,10 +842,17 @@ def build_parser() -> argparse.ArgumentParser:
                     help="only report accounts off-side for at least this many periods in a row")
     ba.set_defaults(func=cmd_balances)
 
-    be = sub.add_parser("build-from-excel", help="Build map from reference xlsx rw/ca sheets")
+    be = sub.add_parser(
+        "build-from-excel",
+        help="Build a map from a workbook's aggregated-edge and account-type sheets",
+    )
     be.add_argument("--xlsx", required=True)
     be.add_argument("--out", required=True)
     be.add_argument("--label", default=None)
+    be.add_argument("--edge-sheet", default=DEFAULT_EDGE_SHEET,
+                    help=f"aggregated-edge sheet name (default: {DEFAULT_EDGE_SHEET})")
+    be.add_argument("--account-sheet", default=DEFAULT_ACCOUNT_SHEET,
+                    help=f"account-type sheet name (default: {DEFAULT_ACCOUNT_SHEET})")
     be.set_defaults(func=cmd_build_from_excel)
 
     v = sub.add_parser("verify", help="Verify candidate transactions against a map")

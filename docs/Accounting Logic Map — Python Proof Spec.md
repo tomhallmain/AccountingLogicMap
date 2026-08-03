@@ -98,6 +98,8 @@ AccountingLogicMap/
     test_eval_outputs.py
     test_periods.py
     test_balances.py
+    test_io_roundtrip.py
+    test_io_excel.py
 ```
 
 ---
@@ -144,14 +146,14 @@ A map can be built from an already-aggregated edge list, which allows a spreadsh
 
 `build-from-edges` reads this as TSV with no third-party dependency; `data/reference/` ships an entity in exactly that form, with expected results per edge. The loader accepts both the export and map-directory column namings, and accumulates repeated keys rather than overwriting them.
 
-**Excel form.** `build-from-excel` reads the same four values out of a workbook when `openpyxl` is installed. It expects two sheets:
+**Excel form.** `build-from-excel` reads the same four values out of a workbook when `openpyxl` is installed. It expects two sheets, named `rw` and `ca` by default and overridable with `--edge-sheet` and `--account-sheet`:
 
 | Sheet | Extracted as |
 |-------|--------------|
-| `rw` | One aggregated edge per row from row 2 down: debit endpoint, credit endpoint, edge sum, and depth in columns B–E. Rows with a missing endpoint, a non-positive sum, or zero depth are skipped. |
-| `ca` | An account-type lookup, account name in column A and type in column B. Accounts appearing only on `rw` are admitted with type `Unknown`. |
+| Edge sheet | One aggregated edge per row below the header. Columns are resolved from the header text where it names all four values — "Re-Split Debit Node" and `debit_account_id` both resolve to the debit endpoint — and otherwise fall back to columns B–E. Rows with a missing endpoint, an uncoercible or non-positive sum, or zero depth are skipped; repeated keys accumulate rather than overwrite. |
+| Account sheet | An account-type lookup, account name in column A and type in column B. Accounts appearing only on the edge sheet are admitted with type `Unknown`. |
 
-Cached values are read, not formulas, so the workbook must have been calculated before export. Any further columns on the edge sheet are ignored; concept §8 records which of them the concept accounts for.
+Cached values are read, not formulas, so the workbook must have been calculated before it was saved. A workbook with no such sheet, or no usable edge row, is an error rather than an empty map. Any further columns on the edge sheet are ignored; concept §8 records which of them the concept accounts for.
 
 ---
 
@@ -444,8 +446,9 @@ python -m alm build-from-edges \
   --accounts data/reference/reference_accounts.tsv \
   --out out/reference
 
-# Pre-aggregated edge list from an Excel workbook with rw / ca sheets (requires openpyxl)
-python -m alm build-from-excel --xlsx <workbook.xlsx> --out out/excel_ref
+# Pre-aggregated edge list from an Excel workbook (requires openpyxl)
+python -m alm build-from-excel --xlsx <workbook.xlsx> --out out/excel_ref \
+  [--edge-sheet rw] [--account-sheet ca]
 ```
 
 `build`, `periods`, and `balances` accept `--from` and `--to` as inclusive ISO dates, plus `--granularity`. The selected window is recorded in `meta.tsv`.
@@ -462,7 +465,7 @@ Each `--out <dir>` from `build` contains:
 |------|----------|
 | `meta.tsv` | window label, txn/line/edge counts, totals, granularity, period count and first/last period, generated_at |
 | `accounts.tsv` | normalized copy of the accounts used |
-| `edges.tsv` | debit_account_id, credit_account_id, weight_sum, depth, mean_weight, share_w, share_c, share_m, norm, rank, ambiguous_share, is_self_loop |
+| `edges.tsv` | debit_account_id, credit_account_id, weight_sum, depth, pair_instances, mean_weight, share_w, share_c, share_m, norm, rank, ambiguous_share, is_self_loop |
 | `edge_periods.tsv` | debit_account_id, credit_account_id, period, weight, depth — per-period mass, so it survives a round-trip and `predict --season` works against a saved map |
 | `spectrum.tsv` | the same rows and columns as `edges.tsv`, sorted by norm; provided for convenience |
 | `node_activity.tsv` | account_id, account_type, as_debit_weight, as_credit_weight, incident_norm |
@@ -479,6 +482,8 @@ Command outputs:
 | `balances` | `balances.tsv` — `unnatural_balance` rows plus `inferred_contra` rows, distinguished by the `kind` column |
 
 `eval_summary.tsv` holds heterogeneous metric rows for verify, predict, and anomaly families, each carrying different keys. Its header must be the **union** of keys across all rows; deriving it from the first row alone blanks every column that row happens to lack.
+
+A map directory is the only state passed between commands, so writing and reloading one must be lossless. That includes `pair_instances`, which is otherwise the single `EdgeStat` field with no column: reconstructing it as `depth` on load erases the multi-line signal, since `pair_instances > depth` marks an edge one journal emitted more than once. The reader tolerates its absence for directories written before the column existed, falling back to `depth`.
 
 Console output: a short banner, counts, the top 10 spectrum edges, and command-specific highlights. No full matrix dumps.
 
@@ -539,6 +544,8 @@ A cohort with no members reports `n=0` and `above_random=False`, never a vacuous
 
 Given an open window with known injected signals, the top-25 anomaly list must include those injections. Expected signals are supplied by `--expected-anomalies`, with `data/sample/expected_anomalies.tsv` as the shipped fixture.
 
+Expectations name specific accounts, so there is no defensible default for them: a built-in list would score every other entity against the wrong edges, while appearing to pass on the one entity whose accounts happen to match. Without the flag, `eval` logs a warning and omits the anomaly-recovery metric rather than reporting a number it cannot justify.
+
 ### 11.4 Scale smoke
 
 `build-from-edges` completes on the 190-edge reference entity, reproduces its globals exactly (`total_weight = 6,007,237.44`, `total_depth = 2241`, `total_mean_weight = 1,453,364.406`), writes `edges.tsv` with non-zero counts, and logs the top edges and the 18.4% self-loop share. This discharges the scale check without a third-party dependency. `build-from-excel` covers the same path from a workbook where `openpyxl` is installed, with no accuracy claim beyond matching edge keys and comparable sums.
@@ -563,7 +570,7 @@ Errors for invariant breaks include the `txn_id` and the amounts. Use `WARNING` 
 
 ## 13. Testing plan
 
-Tests live under `tests/` and are part of the proof, not optional. The suite is 70 tests and runs in well under a second.
+Tests live under `tests/` and are part of the proof, not optional. The suite is 103 tests and runs in well under a second.
 
 | Test module | Must prove |
 |-------------|------------|
@@ -572,13 +579,18 @@ Tests live under `tests/` and are part of the proof, not optional. The suite is 
 | `test_verify_predict` | Known edge passes; nonsense fails or warns; predict top contains the fixture counterpart; negative line rejected before rewrite; self-transfer fails; in-journal self-loop casts no vote |
 | `test_anomalies` | Injected new and missing edges appear in the output; qualifiers do not flood a small map; `rank_shift` requires a material move; one row per edge |
 | `test_reference_parity` | Globals, normed blend, and predict probabilities match the expected values shipped in `data/reference/`; the wrong `s_m` denominator is guarded |
-| `test_eval_outputs` | `eval_summary.tsv` keeps every metric family's columns; predict cohorts computed; empty cohort never passes vacuously; holdout-leakage assertion |
+| `test_eval_outputs` | `eval_summary.tsv` keeps every metric family's columns; predict cohorts computed; empty cohort never passes vacuously; holdout-leakage assertion; anomaly recovery reported only when expectations are supplied |
+| `test_io_roundtrip` | `write_map_dir` → `load_map_dir` preserves globals, counts, every edge stat including `pair_instances`, scored order, and per-period mass; predictions identical after reload; globals derived when `meta.tsv` omits them; older directories without `pair_instances` still load |
+| `test_io_excel` | Edge-column resolution from descriptive and export-style headers, and the positional fallback when a header names nothing or only some columns; row coercion, skipping, and key accumulation; account-type defaults |
 | `test_balances` | Natural side per type; parent resolution with and without account codes; name alone is not contra; coverage separates a contra from an occasional dip; fixture end-to-end, where the contra is silent and the overdrawn bank is `high` |
 | `test_periods` | Period keys sort and bound correctly; windows never split a journal; period weights sum to the map total; forward expectation is the trailing mean, capped not padded; prediction beats random on transactions outside the map; seasonal conditioning reranks in-season counterparts and drops out-of-season ones |
 
 Run: `python -m unittest discover -s tests -v`
 
-The Excel loader is exercised through `build-from-excel` where `openpyxl` is installed. It is an optional end-to-end step, not a CI dependency; `build-from-edges` covers the same code path without it.
+The Excel loader splits into a workbook-reading shell and pure functions over row
+tuples, so `test_io_excel` covers column resolution and row interpretation with no
+third-party package present. Only the `openpyxl` call itself needs the optional
+dependency, exercised through `build-from-excel` where it is installed.
 
 ---
 
@@ -631,7 +643,7 @@ and seeing terminal summaries plus TSVs matching §9–§11.
 - [x] Tests cover rewrite conservation and the three use-case smoke paths.
 - [x] No UI, no required services; the concept definition remains the behavioral source of truth.
 - [x] The reference edge-list path builds at scale and reproduces the expected globals exactly, via `build-from-edges`.
-- [ ] The Excel path builds a map from a workbook's `rw` and `ca` sheets (§5.3). Unverified, since `openpyxl` is unavailable in the development environment. `build-from-edges` covers the same parity contract from TSV, so this box gates only the workbook reader itself.
+- [ ] The Excel path builds a map from a workbook end to end (§5.3). Column resolution and row interpretation are unit-tested, but the `openpyxl` call is unverified, since the package is unavailable in the development environment. `build-from-edges` covers the same parity contract from TSV, so this box gates only the workbook read itself.
 
 ---
 

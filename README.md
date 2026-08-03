@@ -117,10 +117,12 @@ expected result for each edge, pinning the scoring arithmetic at a scale the sam
 entity does not reach.
 
 The same four values can be read from an Excel workbook carrying an aggregated edge
-sheet named `rw` and an account-type sheet named `ca` (needs `openpyxl`):
+sheet and an account-type sheet (needs `openpyxl`). Edge columns are matched by header
+text where the sheet names them, so the layout need not be exact:
 
 ```bash
-python -m alm build-from-excel --xlsx <workbook.xlsx> --out out/excel_ref
+python -m alm build-from-excel --xlsx <workbook.xlsx> --out out/excel_ref \
+  --edge-sheet rw --account-sheet ca
 ```
 
 ## Outputs
@@ -131,7 +133,7 @@ Each map directory under `out/` contains:
 |------|----------|
 | `meta.tsv` | Window label, counts, global totals, period range |
 | `accounts.tsv` | Accounts used, with types |
-| `edges.tsv` | One row per distinct edge: weight, depth, the three shares, normed score, rank, ambiguous share, self-loop flag |
+| `edges.tsv` | One row per distinct edge: weight, depth, pair instances, the three shares, normed score, rank, ambiguous share, self-loop flag |
 | `spectrum.tsv` | The same rows ranked by normed score |
 | `node_activity.tsv` | Per-account debit and credit weight, and incident norm |
 | `edge_periods.tsv` | Per-period edge mass, written where the source carries dates |
@@ -145,6 +147,6 @@ Command results sit beside them: `verify_results.tsv`, `anomaly_edges.tsv`,
 python -m unittest discover -s tests -v
 ```
 
-70 tests, covering weight conservation through the rewrite, scoring parity against the
-reference entity, the three use-case paths, period windowing and seasonal
-conditioning, and natural-balance inference.
+103 tests, covering weight conservation through the rewrite, scoring parity against
+the reference entity, the three use-case paths, period windowing and seasonal
+conditioning, natural-balance inference, and map-directory round-trip fidelity.
