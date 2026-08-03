@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .aggregate import build_logic_map, logic_map_from_edge_stats
 from .anomalies import compare_maps
+from .balances import unnatural_balances
 from .eval import evaluate_anomalies, evaluate_prediction, run_verify_eval
 from .io_excel import load_excel_reference
 from .io_tsv import (
@@ -19,6 +20,7 @@ from .io_tsv import (
     load_lines,
     load_map_dir,
     write_anomaly_rows,
+    write_balance_rows,
     write_eval_summary,
     write_map_dir,
     write_period_rows,
@@ -342,6 +344,62 @@ def cmd_periods(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_balances(args: argparse.Namespace) -> int:
+    """Natural-balance quality signal (concept §3.2 / §6)."""
+    accounts = load_accounts(Path(args.accounts))
+    lines = filter_lines(
+        load_lines(Path(args.transactions)),
+        start=_date_arg(args.start),
+        end=_date_arg(args.end),
+    )
+    txns, errors = build_transactions(lines, accounts)
+    for err in errors:
+        LOG.error("txn %s: %s", err.txn_id, err.message)
+    if errors:
+        LOG.error("balances aborted: %d validation error(s)", len(errors))
+        return 1
+
+    findings, contra = unnatural_balances(
+        accounts,
+        txns,
+        granularity=args.granularity,
+        min_consecutive=args.min_consecutive,
+    )
+
+    inferred = [v for v in contra.values() if v.is_contra]
+    LOG.info(
+        "balances: %d account(s) inferred contra, %d unnatural balance(s) at >= %d consecutive period(s)",
+        len(inferred),
+        len(findings),
+        args.min_consecutive,
+    )
+    for v in sorted(inferred, key=lambda v: v.account_id):
+        LOG.info("  contra %s (score %d)", v.account_id, v.score)
+        for reason in v.reasons:
+            LOG.info("      - %s", reason)
+    for f in findings:
+        LOG.warning(
+            "  [%s] %s (%s) expects a %s balance, held %s %.2f for %d consecutive period(s) to %s",
+            f.severity,
+            f.account_id,
+            f.account_type,
+            f.expected_side,
+            f.actual_side,
+            f.balance,
+            f.consecutive_off,
+            f.period,
+        )
+    if not findings:
+        LOG.info("  no accounts sitting outside their natural balance")
+
+    if args.out:
+        out_dir = Path(args.out)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        write_balance_rows(out_dir / "balances.tsv", findings, contra)
+        LOG.info("wrote %s", out_dir / "balances.tsv")
+    return 0
+
+
 def cmd_build_from_edges(args: argparse.Namespace) -> int:
     """Build a map from a pre-aggregated edge list (spec §5.3), no Excel needed."""
     accounts = load_accounts(Path(args.accounts)) if args.accounts else {}
@@ -472,6 +530,232 @@ def cmd_eval(args: argparse.Namespace) -> int:
     return 0
 
 
+DEMO_WIDTH = 78
+
+
+def _say(text: str = "") -> None:
+    """Narration for the demo.
+
+    Goes to stderr alongside the command logs so the ordering is the real
+    execution order, not two streams racing.
+    """
+    for para in text.split("\n"):
+        if not para.strip():
+            print(file=sys.stderr)
+            continue
+        print(textwrap.fill(para, DEMO_WIDTH), file=sys.stderr)
+    sys.stderr.flush()
+
+
+def _act(number: int, title: str, blurb: str) -> None:
+    print(f"\n{'═' * DEMO_WIDTH}", file=sys.stderr)
+    print(f" ACT {number}. {title}", file=sys.stderr)
+    print("═" * DEMO_WIDTH, file=sys.stderr)
+    _say(blurb)
+    print(file=sys.stderr)
+
+
+def _demo_run(argv: list[str]) -> int:
+    """Run one CLI command through the real parser, echoing it first.
+
+    Going through `build_parser` rather than hand-building a Namespace keeps the
+    demo honest: every command shown is one a reader can paste verbatim, with the
+    same defaults it would get on the command line.
+    """
+    print(f"$ python -m alm {shlex.join(argv)}", file=sys.stderr)
+    sys.stderr.flush()
+    args = build_parser().parse_args(argv)
+    code = args.func(args)
+    if code != 0:
+        raise SystemExit(f"demo step failed: {shlex.join(argv)}")
+    return code
+
+
+def cmd_demo(args: argparse.Namespace) -> int:
+    """Run every demo in sequence, with commentary."""
+    out = Path(args.out)
+    sample = Path(args.sample)
+    history = Path(args.history)
+    reference = Path(args.reference)
+
+    def o(*parts: str) -> str:
+        return str(out.joinpath(*parts))
+
+    _say(
+        "Accounting Logic Map — end-to-end demo.\n\n"
+        "Every step below is a real command; the banner shows exactly what was "
+        f"run. Artifacts land under {out}/. Commentary goes to stderr along with "
+        "the logs, so piping stdout stays clean."
+    )
+
+    _act(
+        1,
+        "Build a map from journal lines",
+        "Transactions are rewritten into debit→credit edges, aggregated, and "
+        "ranked. Watch for two warnings the rewrite is obliged to raise: "
+        "self-loop edges (one account on both sides of a journal — an artifact, "
+        "not a value movement) and the share of weight whose pairing had to be "
+        "inferred from a journal with several lines on both sides.",
+    )
+    _demo_run([
+        "build", "--accounts", str(sample / "accounts.tsv"),
+        "--transactions", str(sample / "transactions.tsv"), "--out", o("baseline"),
+    ])
+    _demo_run([
+        "build", "--accounts", str(sample / "accounts.tsv"),
+        "--transactions", str(sample / "transactions_open.tsv"),
+        "--out", o("open"), "--label", "open",
+    ])
+
+    _act(
+        2,
+        "Verify postings against the map",
+        "Each candidate is rewritten and its edges checked against history and "
+        "against account-type expectations. The fixture mixes normal postings, "
+        "an unseen-but-plausible pair, a reclass-shaped pair, and an unbalanced "
+        "one — the expected verdict is carried in the file, so you can see the "
+        "verdicts line up.",
+    )
+    _demo_run([
+        "verify", "--map", o("baseline"),
+        "--candidates", str(sample / "candidates.tsv"), "--out", o("verify"),
+    ])
+
+    _act(
+        3,
+        "Predict the other side of a movement",
+        "Given one node and a side, rank the counterparts by their share of that "
+        "node's weight. This is the conditional edge mass, nothing more — no "
+        "model, no training.",
+    )
+    _demo_run([
+        "predict", "--map", o("baseline"), "--account", "1000 Bank",
+        "--side", "debit", "--top", "5",
+    ])
+
+    _act(
+        4,
+        "Spot structural change between windows",
+        "Baseline against open period. The fixture injects three changes: the "
+        "core sales edge disappears, a clearing account surges, and a new "
+        "financing edge appears. Qualifiers are fractions of the map paired with "
+        "materiality floors, so small-edge churn stays out of the report.",
+    )
+    _demo_run([
+        "anomalies", "--baseline", o("baseline"), "--open", o("open"),
+        "--out", o("anomalies"),
+    ])
+
+    _act(
+        5,
+        "Score the whole thing against the success criteria",
+        "Verification verdicts against their labels, prediction hit-rate against "
+        "a uniform-random baseline, and recovery of the injected anomalies.",
+    )
+    _demo_run([
+        "eval", "--map", o("baseline"), "--out", o("eval"),
+        "--candidates", str(sample / "candidates.tsv"),
+        "--holdout", str(sample / "holdout.tsv"),
+        "--baseline", o("baseline"), "--open-map", o("open"),
+        "--expected-anomalies", str(sample / "expected_anomalies.tsv"),
+    ])
+
+    _act(
+        6,
+        "Periods: slice one ledger instead of curating two files",
+        "A 25-month history. The baseline is a date-bounded window, so the open "
+        "month is genuinely outside it. Bounds are inclusive and applied to "
+        "lines before validation — a window that cuts a journal in half produces "
+        "an unbalanced transaction and is rejected, which is the correct answer.",
+    )
+    _demo_run([
+        "build", "--accounts", str(history / "accounts.tsv"),
+        "--transactions", str(history / "transactions.tsv"),
+        "--to", "2024-12-31", "--out", o("hist", "baseline"), "--label", "closed",
+    ])
+    _say(
+        "\nPer-period activity, then the paper's forward expectation: project the "
+        "open period as the mean of the trailing closed periods and report the "
+        "variance against it."
+    )
+    print(file=sys.stderr)
+    _demo_run([
+        "periods", "--accounts", str(history / "accounts.tsv"),
+        "--transactions", str(history / "transactions.tsv"),
+        "--granularity", "month", "--baseline-periods", "12",
+        "--out", o("hist", "periods"),
+    ])
+    _say(
+        "\nBecause the open month sits outside the map, its edges are a real "
+        "prediction holdout rather than a re-read of the training window."
+    )
+    print(file=sys.stderr)
+    _demo_run([
+        "eval", "--map", o("hist", "baseline"), "--out", o("hist", "eval"),
+        "--holdout", str(history / "holdout.tsv"),
+    ])
+
+    _act(
+        7,
+        "Seasonality: condition on comparable periods",
+        "Averaging a counterpart distribution over the whole window buries "
+        "anything that only happens part of the year. This garage buys bulk "
+        "heating fuel direct from the bank in winter and season supplies in "
+        "summer. Unconditioned, both sit near the bottom. Conditioned on the "
+        "same month in prior years, the in-season one climbs and the "
+        "out-of-season one disappears entirely.",
+    )
+    for label, season in (("whole window", None), ("January", "2025-01"), ("July", "2025-07")):
+        _say(f"-- {label} --")
+        argv = [
+            "predict", "--map", o("hist", "baseline"), "--account", "1000 Bank",
+            "--side", "credit", "--top", "10",
+        ]
+        if season:
+            argv += ["--season", season]
+        _demo_run(argv)
+        print(file=sys.stderr)
+
+    _act(
+        8,
+        "Natural balance: a quality signal that knows about contra accounts",
+        "Does each account's closing balance sit where its type implies? A bank "
+        "with a credit balance is overdrawn. The catch is contra accounts — "
+        "Accumulated Depreciation is a Fixed Asset that carries a credit balance "
+        "by construction. Nothing marks it as contra, so it is inferred from "
+        "chart hierarchy, coverage-weighted persistence, and name. Below, the "
+        "contra is excused and the payroll bank — funded short for four months "
+        "and never trued up — is flagged.",
+    )
+    _demo_run([
+        "balances", "--accounts", str(history / "accounts.tsv"),
+        "--transactions", str(history / "transactions.tsv"),
+        "--min-consecutive", "2", "--out", o("hist", "balances"),
+    ])
+
+    _act(
+        9,
+        "Scale: build from a pre-aggregated edge list",
+        "190 edges over an 82-account chart, with expected results computed "
+        "independently of this implementation. The globals reproduce them "
+        "exactly, which is what pins the scoring chain. Note the self-loop "
+        "warning: on a real-shaped entity those artifacts carry 18% of weight.",
+    )
+    _demo_run([
+        "build-from-edges", "--edges", str(reference / "reference_edges.tsv"),
+        "--accounts", str(reference / "reference_accounts.tsv"),
+        "--out", o("reference"),
+    ])
+
+    print(f"\n{'═' * DEMO_WIDTH}", file=sys.stderr)
+    _say(
+        f"Done. Artifacts are under {out}/ — map directories carry meta.tsv, "
+        "edges.tsv, spectrum.tsv, node_activity.tsv and edge_periods.tsv; the "
+        "command-specific TSVs sit beside them."
+    )
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="alm",
@@ -508,6 +792,17 @@ def build_parser() -> argparse.ArgumentParser:
     pe.add_argument("--granularity", default="month", choices=list(GRANULARITIES))
     pe.add_argument("--baseline-periods", type=int, default=DEFAULT_BASELINE_PERIODS)
     pe.set_defaults(func=cmd_periods)
+
+    ba = sub.add_parser("balances", help="Flag accounts sitting outside their natural balance")
+    ba.add_argument("--accounts", required=True)
+    ba.add_argument("--transactions", required=True)
+    ba.add_argument("--out", default=None)
+    ba.add_argument("--from", dest="start", default=None, metavar="YYYY-MM-DD")
+    ba.add_argument("--to", dest="end", default=None, metavar="YYYY-MM-DD")
+    ba.add_argument("--granularity", default="month", choices=list(GRANULARITIES))
+    ba.add_argument("--min-consecutive", type=int, default=1,
+                    help="only report accounts off-side for at least this many periods in a row")
+    ba.set_defaults(func=cmd_balances)
 
     be = sub.add_parser("build-from-excel", help="Build map from reference xlsx rw/ca sheets")
     be.add_argument("--xlsx", required=True)

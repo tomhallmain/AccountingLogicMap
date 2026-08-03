@@ -49,6 +49,8 @@ These are not ML assumptions; they are double-entry axioms the demo must respect
 
 Any pipeline that invents unbalanced edges or negative line weights is invalid.
 
+Constraints 1–4 are enforced on ingest. Constraint 5 is enforced upstream by any correctly configured accounting system, so the map does not re-derive it; what it *does* use from the same logic is the natural-balance signal in §6.1, which is about position rather than about the graph.
+
 ### 3.3 Why a bipartite rewrite
 
 A single journal can touch many accounts. For characteristic analysis we care about **pairwise value flow**: which account funded which account (and how often / how much).
@@ -208,6 +210,29 @@ Use \(B\) to:
 - bootstrap priors when historical depth is thin (new entity or new account).
 
 Base groups: Assets, Liabilities, Equity, Income, Expense (with contra and clearing treated explicitly when present).
+
+### 6.1 Natural balance as a quality signal
+
+Each type implies a characteristic balance direction — the paper's \(\tilde{B} = \{+1 \text{ if } DR,\ -1 \text{ if } CR\}\), keyed to the type's initialization side. Asset and expense types run debit; liability, equity and income types run credit. Note this is a sign carried by the *account type*, not a per-line convention: the \(DR - CR\) subtraction inside the balance definition already handles line direction.
+
+The cheapest available check follows: does an account's closing balance sit where its type says it should? A bank account with a credit balance is overdrawn. Possible — but staying that way for a whole period or more means a lag in accuracy or completeness rather than a real position.
+
+**Contra accounts are the complication.** Accumulated Depreciation is a Fixed Asset that always carries a credit balance, because it exists to reduce a sibling asset on the same side of the sheet. Allowances, sales discounts and treasury stock behave the same way. Reporting them every period would bury the real signal, and nothing in a chart of accounts marks them explicitly.
+
+So contra status is **inferred**, from three pieces of evidence weighted so no weak one decides alone:
+
+| Evidence | Weight | Rationale |
+|----------|--------|-----------|
+| Sits opposite a same-type parent resolved from `Parent:Child` chart hierarchy | +2 | A contra is characteristically a child of the balance it reduces |
+| Has been on the non-natural side in every period it carried a balance, over ≥3 periods **and covering ≥60% of its life** | +2 | A contra is off-side by construction, from inception |
+| Name matches a known contra form | +1 | Corroboration only — a label is not evidence about the books |
+
+Two rules matter more than the weights:
+
+- **Peer comparison is not scored.** An account sitting opposite its same-type peers is equally consistent with a contra and with an error, so it cannot discriminate.
+- **Coverage, not just consistency.** An account that is flat most months and dips the wrong way occasionally has *never* held a natural-side balance either — yet it is a timing problem, not a contra. Requiring the off-side condition to span most of the account's life separates them.
+
+An account is then reported when its balance sits opposite its *effective* natural side — flipped where contra was inferred — with the run length attached, since one period may be timing and several in a row is the signal.
 
 ---
 

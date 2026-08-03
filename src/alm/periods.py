@@ -26,6 +26,35 @@ def period_key(day: date, granularity: str = "month") -> str:
     raise ValueError(f"unknown granularity {granularity!r}; expected one of {GRANULARITIES}")
 
 
+def period_span(first: str, last: str, granularity: str = "month") -> list[str]:
+    """Every period label from `first` to `last` inclusive, including empty ones.
+
+    Deriving the series from observed transactions alone drops periods in which
+    the entity posted nothing, which would silently break any run-length count
+    over the series — an account sitting the wrong way through a dormant month is
+    still sitting the wrong way.
+    """
+    if first > last:
+        return []
+    if granularity == "year":
+        return [f"{y:04d}" for y in range(int(first), int(last) + 1)]
+
+    def parse(label: str) -> tuple[int, int]:
+        year, slot = label.split("-", 1)
+        return int(year), int(slot.lstrip("Q"))
+
+    per_year = 12 if granularity == "month" else 4
+    (y0, s0), (y1, s1) = parse(first), parse(last)
+    out: list[str] = []
+    y, s = y0, s0
+    while (y, s) <= (y1, s1):
+        out.append(f"{y:04d}-{s:02d}" if granularity == "month" else f"{y:04d}-Q{s}")
+        s += 1
+        if s > per_year:
+            y, s = y + 1, 1
+    return out
+
+
 def filter_lines(
     lines: list[Line],
     *,

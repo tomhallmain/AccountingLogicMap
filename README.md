@@ -56,14 +56,14 @@ python -m alm build --accounts data/history/accounts.tsv \
   --from 2025-01-01 --out out/hist/open --label open
 ```
 
-The baseline keeps 1202 of 1251 lines and reports `24 month period(s) 2023-01 .. 2024-12`.
+The baseline keeps 1404 of 1469 lines and reports `24 month period(s) 2023-01 .. 2024-12`.
 Because `2025-01` is genuinely outside the map, `data/history/holdout.tsv` is a
 real prediction holdout:
 
 ```bash
 python -m alm eval --map out/hist/baseline --holdout data/history/holdout.tsv --out out/hist/eval
-# predict_hit@5_from_debit  [all] hit_rate=1.000  random=0.263  (n=15)
-# predict_hit@5_from_credit [all] hit_rate=0.867  random=0.263  (n=15)
+# predict_hit@5_from_debit  [all] hit_rate=1.000  random=0.208  (n=20)
+# predict_hit@5_from_credit [all] hit_rate=0.800  random=0.208  (n=20)
 ```
 
 **2. Per-period activity and forward expectation.** The projection from concept §7,
@@ -75,8 +75,8 @@ python -m alm periods --accounts data/history/accounts.tsv \
   --transactions data/history/transactions.tsv \
   --granularity month --baseline-periods 12 --out out/hist/periods
 # forward expectation for 2025-01 from trailing 12 closed period(s) 2024-01 .. 2024-12:
-#   weight   expected=121858.06  actual=130718.46  variance=+8860.40 (+7.3%)
-#   txns     expected=23.2       actual=24
+#   weight   expected=162497.51  actual=162768.77  variance=+271.26 (+0.2%)
+#   txns     expected=29.4       actual=32
 ```
 
 **3. Seasonal prediction.** Averaging a counterpart distribution over the whole
@@ -84,21 +84,41 @@ window buries anything that only happens part of the year. `--season` conditions
 the same month in prior years instead:
 
 ```bash
-python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 8
-#  4. 6200 Advertising   p=0.060   6. 6100 Fuel   p=0.049   8. 6400 Office   p=0.016
+python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 10
+#  8. 6100 Fuel   p=0.019       10. 6400 Office   p=0.010
 
-python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 8 --season 2025-01
+python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 10 --season 2025-01
 # conditioning on season 2025-01 → periods 2023-01, 2024-01
-#  3. 6100 Fuel   p=0.148        6400 Office absent
+#  5. 6100 Fuel   p=0.027        6400 Office absent
 
-python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 8 --season 2025-07
+python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 10 --season 2025-07
 # conditioning on season 2025-07 → periods 2023-07, 2024-07
-#  4. 6400 Office   p=0.073      6100 Fuel absent
+#  5. 6400 Office  p=0.055       6100 Fuel absent
 ```
 
 The garage buys bulk heating fuel direct from the bank in winter and season supplies
 in summer. Unconditioned, both sit near the bottom of the ranking; conditioned, the
 in-season one rises and the out-of-season one drops out entirely.
+
+**4. Natural-balance quality signal.** Does each account's balance sit on the side
+its type implies? Contra accounts legitimately do not, so they are inferred rather
+than flagged:
+
+```bash
+python -m alm balances --accounts data/history/accounts.tsv \
+  --transactions data/history/transactions.tsv --min-consecutive 2 --out out/hist/balances
+# contra 1510 Accum Depreciation (score 5)
+#     - sits opposite its parent '1500 Equipment'
+#     - on the credit side in all 25 periods it carried a balance, covering 100% of its life
+#     - name matches a known contra form
+# WARNING [high] 1010 Bank Payroll (Bank) expects a debit balance,
+#                held credit -8607.36 for 6 consecutive period(s) to 2025-01
+```
+
+Accumulated Depreciation is a Fixed Asset carrying a credit balance for 25 straight
+periods and is *not* reported; the payroll clearing bank went overdrawn after a
+short funding transfer and was never trued up, so it is. See §Natural balance in the
+concept doc for how the two are told apart.
 
 `--granularity` also accepts `quarter` and `year`.
 

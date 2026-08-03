@@ -1,7 +1,7 @@
 # History fixture — 25 months
 
-Synthetic garage books spanning **2023-01 … 2025-01**: 605 transactions, 1251
-lines, 19 accounts. Generated deterministically.
+Synthetic garage books spanning **2023-01 … 2025-01**: 714 transactions, 1469
+lines, 24 accounts. Generated deterministically.
 
 `data/sample/` is deliberately small and exists to exercise specific corner cases
 (self-loops, ambiguous pairings, verify verdicts, injected anomalies). Three
@@ -29,6 +29,8 @@ comparable across the series:
 - a floor-plan payment as a `(2,1)` journal — principal + interest against bank
 - 2–4 fuel and 1–2 office charges on the card
 - a `2×2` quarter-end split in March, June, September and December
+- monthly payroll: a transfer into `1010 Bank Payroll`, then the payroll run out of it
+- monthly straight-line depreciation into `1510 Accum Depreciation`
 - an occasional owner contribution
 
 Overlaid on that: a mild upward trend (~1.2% per month) and a seasonal lift in
@@ -49,6 +51,18 @@ distinct rather than an amount shift. Utilities also run high in winter and low 
 summer. The open month, `2025-01`, is a winter month — so the winter edge is in the
 holdout.
 
+**Natural-balance cases.** The chart carries one of each situation the balance
+signal has to separate:
+
+| Account | Type | Behaviour | Expected outcome |
+|---------|------|-----------|------------------|
+| `1510 Accum Depreciation` | Fixed Assets | credit balance every period since inception; named `Equipment:Accumulated Depreciation` so it resolves to parent `1500 Equipment` | inferred **contra**, never flagged |
+| `1010 Bank Payroll` | Bank | funded in full each month until 2024-06…2024-09, when the transfer is posted at 35% of wages and never trued up | flagged **high**, overdrawn from then on |
+
+The two are distinguished by coverage, not by consistency: the payroll account is
+only ever *negative* once it breaks, but that covers a minority of its life, whereas
+the contra covers all of it.
+
 ## Closed / open split
 
 The last month, **2025-01**, is the open period. Builds for the baseline exclude
@@ -60,11 +74,11 @@ python -m alm build --accounts data/history/accounts.tsv \
   --to 2024-12-31 --out out/hist/baseline --label closed
 ```
 
-`holdout.tsv` is the set of distinct edges produced by the 24 transactions in
+`holdout.tsv` is the set of distinct edges produced by the 32 transactions in
 2025-01 — transactions the baseline map has never seen. That is what makes the
 prediction hit-rate a generalisation measure.
 
-Note that all 15 holdout edge types also occur in the baseline. **This is not
+Note that all 20 holdout edge types also occur in the baseline. **This is not
 leakage.** A going concern repeats its edges every month; that recurrence is
 precisely the regularity the map claims to capture. What makes the holdout honest
 is that the *transactions* were excluded, which `tests/test_periods.py` asserts

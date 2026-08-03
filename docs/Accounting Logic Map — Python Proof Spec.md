@@ -79,6 +79,7 @@ AccountingLogicMap/
     io_tsv.py
     io_excel.py             # optional
     periods.py              # period keys, windowing, forward expectation
+    balances.py             # natural balance + contra inference
   out/                      # gitignored generated TSV + logs
   tests/
     test_rewrite.py
@@ -88,6 +89,7 @@ AccountingLogicMap/
     test_reference_parity.py
     test_eval_outputs.py
     test_periods.py
+    test_balances.py
   requirements.txt          # openpyxl optional extra, or note in README
   README.md                 # how to run the proof
 ```
@@ -334,6 +336,31 @@ suggests 12–18 months, and fewer makes the mean too noisy to read against.
 
 ---
 
+### 7.9 Natural balance (`balances`)
+
+Implements concept §6.1. Lives in `alm.balances`; independent of the edge map,
+since it reads position rather than flow.
+
+1. `period_balances(txns, granularity=)` — closing balance per account per period,
+   signed debit-positive, cumulative to each period end. The period series is
+   **contiguous** (`periods.period_span`), not just the periods that had activity:
+   an account sitting the wrong way through a dormant month is still sitting the
+   wrong way, and a gap would break the run-length count.
+2. `infer_contra(accounts, closing)` — scores hierarchy (+2), coverage-weighted
+   lifetime persistence (+2) and name (+1); contra at ≥2. See concept §6.1 for why
+   peer minority is deliberately unscored and why coverage is required alongside
+   consistency.
+3. `unnatural_balances(...)` — reports accounts whose latest closing balance sits
+   opposite their effective natural side, with `periods_off`, `consecutive_off`
+   and severity. Bank and Credit Card are `high` (an impossible cash position);
+   anything off-side ≥3 consecutive periods escalates to `high`.
+
+`--min-consecutive N` suppresses transient cases. Output `balances.tsv` carries the
+findings *and* the inferred contras, because the contras explain which accounts are
+absent from the list.
+
+---
+
 ## 8. CLI surface
 
 ```text
@@ -383,6 +410,11 @@ python -m alm periods \
   --transactions data/history/transactions.tsv \
   --granularity month --baseline-periods 12 --out out/hist/periods
 
+python -m alm balances \
+  --accounts data/history/accounts.tsv \
+  --transactions data/history/transactions.tsv \
+  --min-consecutive 2 --out out/hist/balances
+
 # Pre-aggregated edge list, no Excel required
 python -m alm build-from-edges \
   --edges data/reference/reference_edges.tsv \
@@ -418,6 +450,7 @@ Command outputs:
 | `anomalies` | `anomaly_edges.tsv` — one row per edge; `signals` is a comma-joined list |
 | `eval` | `eval_summary.tsv`, `eval_detail.tsv` |
 | `periods` | `periods.tsv` — one row per period plus a final `forward_expectation` row |
+| `balances` | `balances.tsv` — `unnatural_balance` rows plus `inferred_contra` rows |
 
 `build` also writes `edge_periods.tsv` (debit_id, credit_id, period, weight, depth) so
 per-period mass survives a round-trip and `predict --season` works against a saved map.
@@ -526,6 +559,7 @@ Tests live under `tests/` and are part of the proof (not optional).
 | `test_anomalies` | Injected new/missing edges appear in anomaly output |
 | `test_reference_parity` | Globals, normed blend, and predict probabilities match the spreadsheet prototype on `data/reference/` |
 | `test_eval_outputs` | `eval_summary.tsv` keeps every metric family's columns; predict cohorts computed |
+| `test_balances` | Natural side per type; parent resolution with/without account codes; name alone is not contra; coverage separates a contra from an occasional dip; fixture end-to-end — the contra is silent, the overdrawn bank is `high` |
 | `test_periods` | Period keys sort and bound correctly; windows never split a journal; period weights sum to the map total; forward expectation is the trailing mean; prediction beats random on transactions outside the map; seasonal conditioning reranks in-season counterparts and drops out-of-season ones |
 
 Run: `python -m unittest discover -s tests -v`

@@ -18,3 +18,8 @@ account_id	name	account_type
 6300 Utilities	Utilities	Expense
 6400 Office	Office Expense	Expense
 7000 Interest Exp	Interest Expense	Expense
+1010 Bank Payroll	Payroll Clearing Bank	Bank
+1500 Equipment	Shop Equipment	Fixed Assets
+1510 Accum Depreciation	Equipment:Accumulated Depreciation	Fixed Assets
+6500 Depreciation	Depreciation Expense	Expenses
+6600 Payroll Expense	Wages and Payroll	Expenses

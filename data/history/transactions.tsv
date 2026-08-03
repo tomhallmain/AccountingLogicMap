@@ -1,1252 +1,1470 @@
 txn_id	date	account_id	side	amount	memo
-H0001	2023-01-09	1000 Bank	debit	10012.48	cash vehicle sale
-H0001	2023-01-09	4000 Vehicle Sales	credit	10012.48	cash vehicle sale
-H0002	2023-01-09	5000 COGS Vehicles	debit	6783.37	cost of vehicle sold
-H0002	2023-01-09	1300 Inventory	credit	6783.37	cost of vehicle sold
-H0003	2023-01-27	1000 Bank	debit	8258.00	cash vehicle sale
-H0003	2023-01-27	4000 Vehicle Sales	credit	8258.00	cash vehicle sale
-H0004	2023-01-27	5000 COGS Vehicles	debit	5986.55	cost of vehicle sold
-H0004	2023-01-27	1300 Inventory	credit	5986.55	cost of vehicle sold
-H0005	2023-01-10	1100 AR	debit	6350.26	vehicle sale on account
-H0005	2023-01-10	4000 Vehicle Sales	credit	6350.26	vehicle sale on account
-H0006	2023-01-19	1000 Bank	debit	6350.26	customer settles invoice
-H0006	2023-01-19	1100 AR	credit	6350.26	customer settles invoice
-H0007	2023-01-10	5000 COGS Vehicles	debit	4083.03	cost of vehicle sold
-H0007	2023-01-10	1300 Inventory	credit	4083.03	cost of vehicle sold
-H0008	2023-01-19	1300 Inventory	debit	10596.78	vehicle acquired on floor plan
-H0008	2023-01-19	2600 Loan	credit	10596.78	vehicle acquired on floor plan
-H0009	2023-01-20	1300 Inventory	debit	15826.28	vehicle acquired on floor plan
-H0009	2023-01-20	2600 Loan	credit	15826.28	vehicle acquired on floor plan
-H0010	2023-01-01	1300 Inventory	debit	16196.43	vehicle acquired on floor plan
-H0010	2023-01-01	2600 Loan	credit	16196.43	vehicle acquired on floor plan
-H0011	2023-01-23	1000 Bank	debit	593.75	parts sale
-H0011	2023-01-23	4100 Parts Income	credit	593.75	parts sale
-H0012	2023-01-23	5100 Parts COGS	debit	326.56	parts cost
-H0012	2023-01-23	2100 Card	credit	326.56	parts cost
-H0013	2023-01-22	1000 Bank	debit	450.91	parts sale
-H0013	2023-01-22	4100 Parts Income	credit	450.91	parts sale
-H0014	2023-01-22	5100 Parts COGS	debit	248.00	parts cost
-H0014	2023-01-22	2100 Card	credit	248.00	parts cost
-H0015	2023-01-18	1000 Bank	debit	300.16	parts sale
-H0015	2023-01-18	4100 Parts Income	credit	300.16	parts sale
-H0016	2023-01-18	5100 Parts COGS	debit	165.09	parts cost
-H0016	2023-01-18	2100 Card	credit	165.09	parts cost
-H0017	2023-01-01	6000 Rent	debit	2600.00	monthly rent
-H0017	2023-01-01	1000 Bank	credit	2600.00	monthly rent
-H0018	2023-01-12	6300 Utilities	debit	442.69	utilities
-H0018	2023-01-12	1000 Bank	credit	442.69	utilities
-H0019	2023-01-20	2600 Loan	debit	2127.65	floor plan payment
-H0019	2023-01-20	7000 Interest Exp	debit	199.54	floor plan payment
-H0019	2023-01-20	1000 Bank	credit	2327.19	floor plan payment
-H0020	2023-01-03	6100 Fuel	debit	107.78	fuel
-H0020	2023-01-03	2100 Card	credit	107.78	fuel
-H0021	2023-01-19	6100 Fuel	debit	143.67	fuel
-H0021	2023-01-19	2100 Card	credit	143.67	fuel
-H0022	2023-01-17	6100 Fuel	debit	68.65	fuel
-H0022	2023-01-17	2100 Card	credit	68.65	fuel
-H0023	2023-01-24	6100 Fuel	debit	171.94	fuel
-H0023	2023-01-24	2100 Card	credit	171.94	fuel
-H0024	2023-01-27	6400 Office	debit	82.99	office supplies
-H0024	2023-01-27	2100 Card	credit	82.99	office supplies
-H0025	2023-01-07	6200 Advertising	debit	287.66	advertising
-H0025	2023-01-07	1000 Bank	credit	287.66	advertising
-H0026	2023-01-26	2100 Card	debit	695.89	credit card payment
-H0026	2023-01-26	1000 Bank	credit	695.89	credit card payment
-H0027	2023-01-26	6100 Fuel	debit	995.19	bulk heating/plow fuel delivery, paid direct
-H0027	2023-01-26	1000 Bank	credit	995.19	bulk heating/plow fuel delivery, paid direct
-H0028	2023-02-14	1000 Bank	debit	9318.13	cash vehicle sale
-H0028	2023-02-14	4000 Vehicle Sales	credit	9318.13	cash vehicle sale
-H0029	2023-02-14	5000 COGS Vehicles	debit	6896.72	cost of vehicle sold
-H0029	2023-02-14	1300 Inventory	credit	6896.72	cost of vehicle sold
-H0030	2023-02-18	1000 Bank	debit	12030.80	cash vehicle sale
-H0030	2023-02-18	4000 Vehicle Sales	credit	12030.80	cash vehicle sale
-H0031	2023-02-18	5000 COGS Vehicles	debit	9373.55	cost of vehicle sold
-H0031	2023-02-18	1300 Inventory	credit	9373.55	cost of vehicle sold
-H0032	2023-02-23	1000 Bank	debit	6611.28	cash vehicle sale
-H0032	2023-02-23	4000 Vehicle Sales	credit	6611.28	cash vehicle sale
-H0033	2023-02-23	5000 COGS Vehicles	debit	4410.37	cost of vehicle sold
-H0033	2023-02-23	1300 Inventory	credit	4410.37	cost of vehicle sold
-H0034	2023-02-15	1000 Bank	debit	12143.84	cash vehicle sale
-H0034	2023-02-15	4000 Vehicle Sales	credit	12143.84	cash vehicle sale
-H0035	2023-02-15	5000 COGS Vehicles	debit	7989.99	cost of vehicle sold
-H0035	2023-02-15	1300 Inventory	credit	7989.99	cost of vehicle sold
-H0036	2023-02-23	1300 Inventory	debit	8246.51	vehicle acquired on floor plan
-H0036	2023-02-23	2600 Loan	credit	8246.51	vehicle acquired on floor plan
-H0037	2023-02-09	1000 Bank	debit	178.84	parts sale
-H0037	2023-02-09	4100 Parts Income	credit	178.84	parts sale
-H0038	2023-02-09	5100 Parts COGS	debit	98.36	parts cost
-H0038	2023-02-09	2100 Card	credit	98.36	parts cost
-H0039	2023-02-01	6000 Rent	debit	2600.00	monthly rent
-H0039	2023-02-01	1000 Bank	credit	2600.00	monthly rent
-H0040	2023-02-12	6300 Utilities	debit	505.25	utilities
-H0040	2023-02-12	1000 Bank	credit	505.25	utilities
-H0041	2023-02-20	2600 Loan	debit	2116.13	floor plan payment
-H0041	2023-02-20	7000 Interest Exp	debit	239.82	floor plan payment
-H0041	2023-02-20	1000 Bank	credit	2355.95	floor plan payment
-H0042	2023-02-17	6100 Fuel	debit	141.38	fuel
-H0042	2023-02-17	2100 Card	credit	141.38	fuel
-H0043	2023-02-05	6100 Fuel	debit	55.33	fuel
-H0043	2023-02-05	2100 Card	credit	55.33	fuel
-H0044	2023-02-27	6100 Fuel	debit	79.57	fuel
-H0044	2023-02-27	2100 Card	credit	79.57	fuel
-H0045	2023-02-05	6100 Fuel	debit	140.27	fuel
-H0045	2023-02-05	2100 Card	credit	140.27	fuel
-H0046	2023-02-22	6400 Office	debit	39.69	office supplies
-H0046	2023-02-22	2100 Card	credit	39.69	office supplies
-H0047	2023-02-21	6200 Advertising	debit	196.67	advertising
-H0047	2023-02-21	1000 Bank	credit	196.67	advertising
-H0048	2023-02-26	2100 Card	debit	1069.02	credit card payment
-H0048	2023-02-26	1000 Bank	credit	1069.02	credit card payment
-H0049	2023-02-20	6100 Fuel	debit	1075.20	bulk heating/plow fuel delivery, paid direct
-H0049	2023-02-20	1000 Bank	credit	1075.20	bulk heating/plow fuel delivery, paid direct
-H0050	2023-02-11	6100 Fuel	debit	888.12	bulk heating/plow fuel delivery, paid direct
-H0050	2023-02-11	1000 Bank	credit	888.12	bulk heating/plow fuel delivery, paid direct
-H0051	2023-03-08	1000 Bank	debit	10796.84	cash vehicle sale
-H0051	2023-03-08	4000 Vehicle Sales	credit	10796.84	cash vehicle sale
-H0052	2023-03-08	5000 COGS Vehicles	debit	8012.83	cost of vehicle sold
-H0052	2023-03-08	1300 Inventory	credit	8012.83	cost of vehicle sold
-H0053	2023-03-25	1000 Bank	debit	13681.83	cash vehicle sale
-H0053	2023-03-25	4000 Vehicle Sales	credit	13681.83	cash vehicle sale
-H0054	2023-03-25	5000 COGS Vehicles	debit	9225.06	cost of vehicle sold
-H0054	2023-03-25	1300 Inventory	credit	9225.06	cost of vehicle sold
-H0055	2023-03-02	1100 AR	debit	14937.81	vehicle sale on account
-H0055	2023-03-02	4000 Vehicle Sales	credit	14937.81	vehicle sale on account
-H0056	2023-03-11	1000 Bank	debit	14937.81	customer settles invoice
-H0056	2023-03-11	1100 AR	credit	14937.81	customer settles invoice
-H0057	2023-03-02	5000 COGS Vehicles	debit	11632.29	cost of vehicle sold
-H0057	2023-03-02	1300 Inventory	credit	11632.29	cost of vehicle sold
-H0058	2023-03-02	1300 Inventory	debit	16180.11	vehicle acquired on floor plan
-H0058	2023-03-02	2600 Loan	credit	16180.11	vehicle acquired on floor plan
-H0059	2023-03-04	1300 Inventory	debit	18585.83	vehicle acquired on floor plan
-H0059	2023-03-04	2600 Loan	credit	18585.83	vehicle acquired on floor plan
-H0060	2023-03-12	1300 Inventory	debit	23480.85	vehicle acquired on floor plan
-H0060	2023-03-12	2600 Loan	credit	23480.85	vehicle acquired on floor plan
-H0061	2023-03-14	1000 Bank	debit	506.64	parts sale
-H0061	2023-03-14	4100 Parts Income	credit	506.64	parts sale
-H0062	2023-03-14	5100 Parts COGS	debit	278.65	parts cost
-H0062	2023-03-14	2100 Card	credit	278.65	parts cost
-H0063	2023-03-05	1000 Bank	debit	661.66	parts sale
-H0063	2023-03-05	4100 Parts Income	credit	661.66	parts sale
-H0064	2023-03-05	5100 Parts COGS	debit	363.91	parts cost
-H0064	2023-03-05	2100 Card	credit	363.91	parts cost
-H0065	2023-03-28	1000 Bank	debit	455.61	parts sale
-H0065	2023-03-28	4100 Parts Income	credit	455.61	parts sale
-H0066	2023-03-28	5100 Parts COGS	debit	250.59	parts cost
-H0066	2023-03-28	2100 Card	credit	250.59	parts cost
-H0067	2023-03-01	6000 Rent	debit	2600.00	monthly rent
-H0067	2023-03-01	1000 Bank	credit	2600.00	monthly rent
-H0068	2023-03-12	6300 Utilities	debit	365.88	utilities
-H0068	2023-03-12	1000 Bank	credit	365.88	utilities
-H0069	2023-03-20	2600 Loan	debit	1943.61	floor plan payment
-H0069	2023-03-20	7000 Interest Exp	debit	198.93	floor plan payment
-H0069	2023-03-20	1000 Bank	credit	2142.54	floor plan payment
-H0070	2023-03-05	6100 Fuel	debit	135.21	fuel
-H0070	2023-03-05	2100 Card	credit	135.21	fuel
-H0071	2023-03-17	6100 Fuel	debit	145.54	fuel
-H0071	2023-03-17	2100 Card	credit	145.54	fuel
-H0072	2023-03-10	6400 Office	debit	60.30	office supplies
-H0072	2023-03-10	2100 Card	credit	60.30	office supplies
-H0073	2023-03-09	6200 Advertising	debit	263.71	advertising
-H0073	2023-03-09	1000 Bank	credit	263.71	advertising
-H0074	2023-03-26	2100 Card	debit	1442.51	credit card payment
-H0074	2023-03-26	1000 Bank	credit	1442.51	credit card payment
-H0075	2023-03-28	6300 Utilities	debit	380.52	quarter-end split across bank and card
-H0075	2023-03-28	6200 Advertising	debit	375.26	quarter-end split across bank and card
-H0075	2023-03-28	1000 Bank	credit	378.03	quarter-end split across bank and card
-H0075	2023-03-28	2100 Card	credit	377.75	quarter-end split across bank and card
-H0076	2023-04-18	1000 Bank	debit	17647.09	cash vehicle sale
-H0076	2023-04-18	4000 Vehicle Sales	credit	17647.09	cash vehicle sale
-H0077	2023-04-18	5000 COGS Vehicles	debit	12636.79	cost of vehicle sold
-H0077	2023-04-18	1300 Inventory	credit	12636.79	cost of vehicle sold
-H0078	2023-04-25	1000 Bank	debit	16903.58	cash vehicle sale
-H0078	2023-04-25	4000 Vehicle Sales	credit	16903.58	cash vehicle sale
-H0079	2023-04-25	5000 COGS Vehicles	debit	11993.49	cost of vehicle sold
-H0079	2023-04-25	1300 Inventory	credit	11993.49	cost of vehicle sold
-H0080	2023-04-08	1000 Bank	debit	16954.97	cash vehicle sale
-H0080	2023-04-08	4000 Vehicle Sales	credit	16954.97	cash vehicle sale
-H0081	2023-04-08	5000 COGS Vehicles	debit	11411.80	cost of vehicle sold
-H0081	2023-04-08	1300 Inventory	credit	11411.80	cost of vehicle sold
-H0082	2023-04-03	1000 Bank	debit	9034.55	cash vehicle sale
-H0082	2023-04-03	4000 Vehicle Sales	credit	9034.55	cash vehicle sale
-H0083	2023-04-03	5000 COGS Vehicles	debit	5957.81	cost of vehicle sold
-H0083	2023-04-03	1300 Inventory	credit	5957.81	cost of vehicle sold
-H0084	2023-04-16	1300 Inventory	debit	21157.86	vehicle acquired on floor plan
-H0084	2023-04-16	2600 Loan	credit	21157.86	vehicle acquired on floor plan
-H0085	2023-04-18	1300 Inventory	debit	23682.11	vehicle acquired on floor plan
-H0085	2023-04-18	2600 Loan	credit	23682.11	vehicle acquired on floor plan
-H0086	2023-04-23	1300 Inventory	debit	10999.81	vehicle acquired on floor plan
-H0086	2023-04-23	2600 Loan	credit	10999.81	vehicle acquired on floor plan
-H0087	2023-04-22	1000 Bank	debit	609.69	parts sale
-H0087	2023-04-22	4100 Parts Income	credit	609.69	parts sale
-H0088	2023-04-22	5100 Parts COGS	debit	335.33	parts cost
-H0088	2023-04-22	2100 Card	credit	335.33	parts cost
-H0089	2023-04-11	1000 Bank	debit	884.16	parts sale
-H0089	2023-04-11	4100 Parts Income	credit	884.16	parts sale
-H0090	2023-04-11	5100 Parts COGS	debit	486.29	parts cost
-H0090	2023-04-11	2100 Card	credit	486.29	parts cost
-H0091	2023-04-01	6000 Rent	debit	2600.00	monthly rent
-H0091	2023-04-01	1000 Bank	credit	2600.00	monthly rent
-H0092	2023-04-12	6300 Utilities	debit	440.28	utilities
-H0092	2023-04-12	1000 Bank	credit	440.28	utilities
-H0093	2023-04-20	2600 Loan	debit	2170.01	floor plan payment
-H0093	2023-04-20	7000 Interest Exp	debit	339.60	floor plan payment
-H0093	2023-04-20	1000 Bank	credit	2509.61	floor plan payment
-H0094	2023-04-19	6100 Fuel	debit	143.27	fuel
-H0094	2023-04-19	2100 Card	credit	143.27	fuel
-H0095	2023-04-04	6100 Fuel	debit	186.93	fuel
-H0095	2023-04-04	2100 Card	credit	186.93	fuel
-H0096	2023-04-03	6400 Office	debit	52.76	office supplies
-H0096	2023-04-03	2100 Card	credit	52.76	office supplies
-H0097	2023-04-08	6200 Advertising	debit	682.96	advertising
-H0097	2023-04-08	1000 Bank	credit	682.96	advertising
-H0098	2023-04-26	2100 Card	debit	1731.51	credit card payment
-H0098	2023-04-26	1000 Bank	credit	1731.51	credit card payment
-H0099	2023-05-11	1000 Bank	debit	9550.47	cash vehicle sale
-H0099	2023-05-11	4000 Vehicle Sales	credit	9550.47	cash vehicle sale
-H0100	2023-05-11	5000 COGS Vehicles	debit	6975.73	cost of vehicle sold
-H0100	2023-05-11	1300 Inventory	credit	6975.73	cost of vehicle sold
-H0101	2023-05-23	1000 Bank	debit	14875.70	cash vehicle sale
-H0101	2023-05-23	4000 Vehicle Sales	credit	14875.70	cash vehicle sale
-H0102	2023-05-23	5000 COGS Vehicles	debit	11459.20	cost of vehicle sold
-H0102	2023-05-23	1300 Inventory	credit	11459.20	cost of vehicle sold
-H0103	2023-05-15	1100 AR	debit	16663.50	vehicle sale on account
-H0103	2023-05-15	4000 Vehicle Sales	credit	16663.50	vehicle sale on account
-H0104	2023-05-24	1000 Bank	debit	16663.50	customer settles invoice
-H0104	2023-05-24	1100 AR	credit	16663.50	customer settles invoice
-H0105	2023-05-15	5000 COGS Vehicles	debit	11063.43	cost of vehicle sold
-H0105	2023-05-15	1300 Inventory	credit	11063.43	cost of vehicle sold
-H0106	2023-05-03	1300 Inventory	debit	22262.56	vehicle acquired on floor plan
-H0106	2023-05-03	2600 Loan	credit	22262.56	vehicle acquired on floor plan
-H0107	2023-05-03	1000 Bank	debit	586.21	parts sale
-H0107	2023-05-03	4100 Parts Income	credit	586.21	parts sale
-H0108	2023-05-03	5100 Parts COGS	debit	322.42	parts cost
-H0108	2023-05-03	2100 Card	credit	322.42	parts cost
-H0109	2023-05-01	6000 Rent	debit	2600.00	monthly rent
-H0109	2023-05-01	1000 Bank	credit	2600.00	monthly rent
-H0110	2023-05-12	6300 Utilities	debit	367.56	utilities
-H0110	2023-05-12	1000 Bank	credit	367.56	utilities
-H0111	2023-05-20	2600 Loan	debit	2088.22	floor plan payment
-H0111	2023-05-20	7000 Interest Exp	debit	247.36	floor plan payment
-H0111	2023-05-20	1000 Bank	credit	2335.58	floor plan payment
-H0112	2023-05-24	6100 Fuel	debit	153.64	fuel
-H0112	2023-05-24	2100 Card	credit	153.64	fuel
-H0113	2023-05-12	6100 Fuel	debit	116.44	fuel
-H0113	2023-05-12	2100 Card	credit	116.44	fuel
-H0114	2023-05-19	6400 Office	debit	53.88	office supplies
-H0114	2023-05-19	2100 Card	credit	53.88	office supplies
-H0115	2023-05-21	6400 Office	debit	81.11	office supplies
-H0115	2023-05-21	2100 Card	credit	81.11	office supplies
-H0116	2023-05-16	6200 Advertising	debit	671.30	advertising
-H0116	2023-05-16	1000 Bank	credit	671.30	advertising
-H0117	2023-05-26	2100 Card	debit	837.40	credit card payment
-H0117	2023-05-26	1000 Bank	credit	837.40	credit card payment
-H0118	2023-06-03	1000 Bank	debit	10206.89	cash vehicle sale
-H0118	2023-06-03	4000 Vehicle Sales	credit	10206.89	cash vehicle sale
-H0119	2023-06-03	5000 COGS Vehicles	debit	6355.82	cost of vehicle sold
-H0119	2023-06-03	1300 Inventory	credit	6355.82	cost of vehicle sold
-H0120	2023-06-05	1000 Bank	debit	11077.00	cash vehicle sale
-H0120	2023-06-05	4000 Vehicle Sales	credit	11077.00	cash vehicle sale
-H0121	2023-06-05	5000 COGS Vehicles	debit	7000.88	cost of vehicle sold
-H0121	2023-06-05	1300 Inventory	credit	7000.88	cost of vehicle sold
-H0122	2023-06-04	1000 Bank	debit	10563.40	cash vehicle sale
-H0122	2023-06-04	4000 Vehicle Sales	credit	10563.40	cash vehicle sale
-H0123	2023-06-04	5000 COGS Vehicles	debit	6987.72	cost of vehicle sold
-H0123	2023-06-04	1300 Inventory	credit	6987.72	cost of vehicle sold
-H0124	2023-06-10	1100 AR	debit	12461.97	vehicle sale on account
-H0124	2023-06-10	4000 Vehicle Sales	credit	12461.97	vehicle sale on account
-H0125	2023-06-19	1000 Bank	debit	12461.97	customer settles invoice
-H0125	2023-06-19	1100 AR	credit	12461.97	customer settles invoice
-H0126	2023-06-10	5000 COGS Vehicles	debit	8667.18	cost of vehicle sold
-H0126	2023-06-10	1300 Inventory	credit	8667.18	cost of vehicle sold
-H0127	2023-06-24	1300 Inventory	debit	13411.47	vehicle acquired on floor plan
-H0127	2023-06-24	2600 Loan	credit	13411.47	vehicle acquired on floor plan
-H0128	2023-06-22	1000 Bank	debit	786.20	parts sale
-H0128	2023-06-22	4100 Parts Income	credit	786.20	parts sale
-H0129	2023-06-22	5100 Parts COGS	debit	432.41	parts cost
-H0129	2023-06-22	2100 Card	credit	432.41	parts cost
-H0130	2023-06-23	1000 Bank	debit	605.40	parts sale
-H0130	2023-06-23	4100 Parts Income	credit	605.40	parts sale
-H0131	2023-06-23	5100 Parts COGS	debit	332.97	parts cost
-H0131	2023-06-23	2100 Card	credit	332.97	parts cost
-H0132	2023-06-01	6000 Rent	debit	2600.00	monthly rent
-H0132	2023-06-01	1000 Bank	credit	2600.00	monthly rent
-H0133	2023-06-12	6300 Utilities	debit	223.74	utilities
-H0133	2023-06-12	1000 Bank	credit	223.74	utilities
-H0134	2023-06-20	2600 Loan	debit	1597.31	floor plan payment
-H0134	2023-06-20	7000 Interest Exp	debit	199.01	floor plan payment
-H0134	2023-06-20	1000 Bank	credit	1796.32	floor plan payment
-H0135	2023-06-22	6100 Fuel	debit	102.93	fuel
-H0135	2023-06-22	2100 Card	credit	102.93	fuel
-H0136	2023-06-17	6100 Fuel	debit	67.93	fuel
-H0136	2023-06-17	2100 Card	credit	67.93	fuel
-H0137	2023-06-05	6100 Fuel	debit	115.74	fuel
-H0137	2023-06-05	2100 Card	credit	115.74	fuel
-H0138	2023-06-11	6100 Fuel	debit	185.34	fuel
-H0138	2023-06-11	2100 Card	credit	185.34	fuel
-H0139	2023-06-26	6400 Office	debit	62.95	office supplies
-H0139	2023-06-26	2100 Card	credit	62.95	office supplies
-H0140	2023-06-10	6400 Office	debit	57.81	office supplies
-H0140	2023-06-10	2100 Card	credit	57.81	office supplies
-H0141	2023-06-16	6200 Advertising	debit	433.10	advertising
-H0141	2023-06-16	1000 Bank	credit	433.10	advertising
-H0142	2023-06-26	2100 Card	debit	1492.05	credit card payment
-H0142	2023-06-26	1000 Bank	credit	1492.05	credit card payment
-H0143	2023-06-20	6400 Office	debit	323.16	summer season supplies, paid direct
-H0143	2023-06-20	1000 Bank	credit	323.16	summer season supplies, paid direct
-H0144	2023-06-05	6400 Office	debit	276.26	summer season supplies, paid direct
-H0144	2023-06-05	1000 Bank	credit	276.26	summer season supplies, paid direct
-H0145	2023-06-28	6300 Utilities	debit	303.63	quarter-end split across bank and card
-H0145	2023-06-28	6200 Advertising	debit	424.93	quarter-end split across bank and card
-H0145	2023-06-28	1000 Bank	credit	331.84	quarter-end split across bank and card
-H0145	2023-06-28	2100 Card	credit	396.72	quarter-end split across bank and card
-H0146	2023-07-20	1000 Bank	debit	14371.56	cash vehicle sale
-H0146	2023-07-20	4000 Vehicle Sales	credit	14371.56	cash vehicle sale
-H0147	2023-07-20	5000 COGS Vehicles	debit	9215.12	cost of vehicle sold
-H0147	2023-07-20	1300 Inventory	credit	9215.12	cost of vehicle sold
-H0148	2023-07-08	1000 Bank	debit	12653.03	cash vehicle sale
-H0148	2023-07-08	4000 Vehicle Sales	credit	12653.03	cash vehicle sale
-H0149	2023-07-08	5000 COGS Vehicles	debit	9865.04	cost of vehicle sold
-H0149	2023-07-08	1300 Inventory	credit	9865.04	cost of vehicle sold
-H0150	2023-07-16	1000 Bank	debit	18138.64	cash vehicle sale
-H0150	2023-07-16	4000 Vehicle Sales	credit	18138.64	cash vehicle sale
-H0151	2023-07-16	5000 COGS Vehicles	debit	12319.87	cost of vehicle sold
-H0151	2023-07-16	1300 Inventory	credit	12319.87	cost of vehicle sold
-H0152	2023-07-09	1000 Bank	debit	19363.91	cash vehicle sale
-H0152	2023-07-09	4000 Vehicle Sales	credit	19363.91	cash vehicle sale
-H0153	2023-07-09	5000 COGS Vehicles	debit	14192.15	cost of vehicle sold
-H0153	2023-07-09	1300 Inventory	credit	14192.15	cost of vehicle sold
-H0154	2023-07-15	1100 AR	debit	10747.75	vehicle sale on account
-H0154	2023-07-15	4000 Vehicle Sales	credit	10747.75	vehicle sale on account
-H0155	2023-07-24	1000 Bank	debit	10747.75	customer settles invoice
-H0155	2023-07-24	1100 AR	credit	10747.75	customer settles invoice
-H0156	2023-07-15	5000 COGS Vehicles	debit	6713.96	cost of vehicle sold
-H0156	2023-07-15	1300 Inventory	credit	6713.96	cost of vehicle sold
-H0157	2023-07-13	1300 Inventory	debit	10462.76	vehicle acquired on floor plan
-H0157	2023-07-13	2600 Loan	credit	10462.76	vehicle acquired on floor plan
-H0158	2023-07-08	1300 Inventory	debit	9915.18	vehicle acquired on floor plan
-H0158	2023-07-08	2600 Loan	credit	9915.18	vehicle acquired on floor plan
-H0159	2023-07-17	1000 Bank	debit	329.58	parts sale
-H0159	2023-07-17	4100 Parts Income	credit	329.58	parts sale
-H0160	2023-07-17	5100 Parts COGS	debit	181.27	parts cost
-H0160	2023-07-17	2100 Card	credit	181.27	parts cost
-H0161	2023-07-13	1000 Bank	debit	241.51	parts sale
-H0161	2023-07-13	4100 Parts Income	credit	241.51	parts sale
-H0162	2023-07-13	5100 Parts COGS	debit	132.83	parts cost
-H0162	2023-07-13	2100 Card	credit	132.83	parts cost
-H0163	2023-07-26	1000 Bank	debit	160.66	parts sale
-H0163	2023-07-26	4100 Parts Income	credit	160.66	parts sale
-H0164	2023-07-26	5100 Parts COGS	debit	88.36	parts cost
-H0164	2023-07-26	2100 Card	credit	88.36	parts cost
-H0165	2023-07-01	6000 Rent	debit	2600.00	monthly rent
-H0165	2023-07-01	1000 Bank	credit	2600.00	monthly rent
-H0166	2023-07-12	6300 Utilities	debit	234.51	utilities
-H0166	2023-07-12	1000 Bank	credit	234.51	utilities
-H0167	2023-07-20	2600 Loan	debit	1939.71	floor plan payment
-H0167	2023-07-20	7000 Interest Exp	debit	214.24	floor plan payment
-H0167	2023-07-20	1000 Bank	credit	2153.95	floor plan payment
-H0168	2023-07-23	6100 Fuel	debit	134.38	fuel
-H0168	2023-07-23	2100 Card	credit	134.38	fuel
-H0169	2023-07-23	6100 Fuel	debit	183.84	fuel
-H0169	2023-07-23	2100 Card	credit	183.84	fuel
-H0170	2023-07-03	6400 Office	debit	104.89	office supplies
-H0170	2023-07-03	2100 Card	credit	104.89	office supplies
-H0171	2023-07-26	2100 Card	debit	1702.34	credit card payment
-H0171	2023-07-26	1000 Bank	credit	1702.34	credit card payment
-H0172	2023-07-15	6400 Office	debit	286.56	summer season supplies, paid direct
-H0172	2023-07-15	1000 Bank	credit	286.56	summer season supplies, paid direct
-H0173	2023-07-21	6400 Office	debit	288.92	summer season supplies, paid direct
-H0173	2023-07-21	1000 Bank	credit	288.92	summer season supplies, paid direct
-H0174	2023-08-23	1000 Bank	debit	14266.19	cash vehicle sale
-H0174	2023-08-23	4000 Vehicle Sales	credit	14266.19	cash vehicle sale
-H0175	2023-08-23	5000 COGS Vehicles	debit	11097.77	cost of vehicle sold
-H0175	2023-08-23	1300 Inventory	credit	11097.77	cost of vehicle sold
-H0176	2023-08-11	1000 Bank	debit	19362.86	cash vehicle sale
-H0176	2023-08-11	4000 Vehicle Sales	credit	19362.86	cash vehicle sale
-H0177	2023-08-11	5000 COGS Vehicles	debit	12095.08	cost of vehicle sold
-H0177	2023-08-11	1300 Inventory	credit	12095.08	cost of vehicle sold
-H0178	2023-08-09	1100 AR	debit	16137.10	vehicle sale on account
-H0178	2023-08-09	4000 Vehicle Sales	credit	16137.10	vehicle sale on account
-H0179	2023-08-18	1000 Bank	debit	16137.10	customer settles invoice
-H0179	2023-08-18	1100 AR	credit	16137.10	customer settles invoice
-H0180	2023-08-09	5000 COGS Vehicles	debit	12212.31	cost of vehicle sold
-H0180	2023-08-09	1300 Inventory	credit	12212.31	cost of vehicle sold
-H0181	2023-08-04	1300 Inventory	debit	24606.33	vehicle acquired on floor plan
-H0181	2023-08-04	2600 Loan	credit	24606.33	vehicle acquired on floor plan
-H0182	2023-08-25	1000 Bank	debit	276.97	parts sale
-H0182	2023-08-25	4100 Parts Income	credit	276.97	parts sale
-H0183	2023-08-25	5100 Parts COGS	debit	152.33	parts cost
-H0183	2023-08-25	2100 Card	credit	152.33	parts cost
-H0184	2023-08-12	1000 Bank	debit	619.62	parts sale
-H0184	2023-08-12	4100 Parts Income	credit	619.62	parts sale
-H0185	2023-08-12	5100 Parts COGS	debit	340.79	parts cost
-H0185	2023-08-12	2100 Card	credit	340.79	parts cost
-H0186	2023-08-23	1000 Bank	debit	444.98	parts sale
-H0186	2023-08-23	4100 Parts Income	credit	444.98	parts sale
-H0187	2023-08-23	5100 Parts COGS	debit	244.74	parts cost
-H0187	2023-08-23	2100 Card	credit	244.74	parts cost
-H0188	2023-08-01	6000 Rent	debit	2600.00	monthly rent
-H0188	2023-08-01	1000 Bank	credit	2600.00	monthly rent
-H0189	2023-08-12	6300 Utilities	debit	258.07	utilities
-H0189	2023-08-12	1000 Bank	credit	258.07	utilities
-H0190	2023-08-20	2600 Loan	debit	1421.80	floor plan payment
-H0190	2023-08-20	7000 Interest Exp	debit	229.85	floor plan payment
-H0190	2023-08-20	1000 Bank	credit	1651.65	floor plan payment
-H0191	2023-08-20	6100 Fuel	debit	98.11	fuel
-H0191	2023-08-20	2100 Card	credit	98.11	fuel
-H0192	2023-08-16	6100 Fuel	debit	55.96	fuel
-H0192	2023-08-16	2100 Card	credit	55.96	fuel
-H0193	2023-08-08	6100 Fuel	debit	167.46	fuel
-H0193	2023-08-08	2100 Card	credit	167.46	fuel
-H0194	2023-08-07	6100 Fuel	debit	110.75	fuel
-H0194	2023-08-07	2100 Card	credit	110.75	fuel
-H0195	2023-08-22	6400 Office	debit	68.42	office supplies
-H0195	2023-08-22	2100 Card	credit	68.42	office supplies
-H0196	2023-08-11	6400 Office	debit	81.82	office supplies
-H0196	2023-08-11	2100 Card	credit	81.82	office supplies
-H0197	2023-08-08	6200 Advertising	debit	405.99	advertising
-H0197	2023-08-08	1000 Bank	credit	405.99	advertising
-H0198	2023-08-26	2100 Card	debit	1129.78	credit card payment
-H0198	2023-08-26	1000 Bank	credit	1129.78	credit card payment
-H0199	2023-08-13	6400 Office	debit	376.82	summer season supplies, paid direct
-H0199	2023-08-13	1000 Bank	credit	376.82	summer season supplies, paid direct
-H0200	2023-09-22	1000 Bank	debit	9634.61	cash vehicle sale
-H0200	2023-09-22	4000 Vehicle Sales	credit	9634.61	cash vehicle sale
-H0201	2023-09-22	5000 COGS Vehicles	debit	7385.48	cost of vehicle sold
-H0201	2023-09-22	1300 Inventory	credit	7385.48	cost of vehicle sold
-H0202	2023-09-27	1000 Bank	debit	12767.86	cash vehicle sale
-H0202	2023-09-27	4000 Vehicle Sales	credit	12767.86	cash vehicle sale
-H0203	2023-09-27	5000 COGS Vehicles	debit	9928.14	cost of vehicle sold
-H0203	2023-09-27	1300 Inventory	credit	9928.14	cost of vehicle sold
-H0204	2023-09-04	1100 AR	debit	5744.39	vehicle sale on account
-H0204	2023-09-04	4000 Vehicle Sales	credit	5744.39	vehicle sale on account
-H0205	2023-09-13	1000 Bank	debit	5744.39	customer settles invoice
-H0205	2023-09-13	1100 AR	credit	5744.39	customer settles invoice
-H0206	2023-09-04	5000 COGS Vehicles	debit	3946.34	cost of vehicle sold
-H0206	2023-09-04	1300 Inventory	credit	3946.34	cost of vehicle sold
-H0207	2023-09-24	1300 Inventory	debit	14472.02	vehicle acquired on floor plan
-H0207	2023-09-24	2600 Loan	credit	14472.02	vehicle acquired on floor plan
-H0208	2023-09-24	1300 Inventory	debit	16164.05	vehicle acquired on floor plan
-H0208	2023-09-24	2600 Loan	credit	16164.05	vehicle acquired on floor plan
-H0209	2023-09-21	1000 Bank	debit	570.32	parts sale
-H0209	2023-09-21	4100 Parts Income	credit	570.32	parts sale
-H0210	2023-09-21	5100 Parts COGS	debit	313.68	parts cost
-H0210	2023-09-21	2100 Card	credit	313.68	parts cost
-H0211	2023-09-15	1000 Bank	debit	838.03	parts sale
-H0211	2023-09-15	4100 Parts Income	credit	838.03	parts sale
-H0212	2023-09-15	5100 Parts COGS	debit	460.92	parts cost
-H0212	2023-09-15	2100 Card	credit	460.92	parts cost
-H0213	2023-09-08	1000 Bank	debit	449.94	parts sale
-H0213	2023-09-08	4100 Parts Income	credit	449.94	parts sale
-H0214	2023-09-08	5100 Parts COGS	debit	247.47	parts cost
-H0214	2023-09-08	2100 Card	credit	247.47	parts cost
-H0215	2023-09-01	6000 Rent	debit	2600.00	monthly rent
-H0215	2023-09-01	1000 Bank	credit	2600.00	monthly rent
-H0216	2023-09-12	6300 Utilities	debit	307.59	utilities
-H0216	2023-09-12	1000 Bank	credit	307.59	utilities
-H0217	2023-09-20	2600 Loan	debit	1768.94	floor plan payment
-H0217	2023-09-20	7000 Interest Exp	debit	277.48	floor plan payment
-H0217	2023-09-20	1000 Bank	credit	2046.42	floor plan payment
-H0218	2023-09-27	6100 Fuel	debit	91.63	fuel
-H0218	2023-09-27	2100 Card	credit	91.63	fuel
-H0219	2023-09-26	6100 Fuel	debit	124.20	fuel
-H0219	2023-09-26	2100 Card	credit	124.20	fuel
-H0220	2023-09-20	6100 Fuel	debit	153.75	fuel
-H0220	2023-09-20	2100 Card	credit	153.75	fuel
-H0221	2023-09-09	6100 Fuel	debit	54.77	fuel
-H0221	2023-09-09	2100 Card	credit	54.77	fuel
-H0222	2023-09-21	6400 Office	debit	25.84	office supplies
-H0222	2023-09-21	2100 Card	credit	25.84	office supplies
-H0223	2023-09-02	6400 Office	debit	76.91	office supplies
-H0223	2023-09-02	2100 Card	credit	76.91	office supplies
-H0224	2023-09-26	2100 Card	debit	909.41	credit card payment
-H0224	2023-09-26	1000 Bank	credit	909.41	credit card payment
-H0225	2023-09-28	6300 Utilities	debit	355.90	quarter-end split across bank and card
-H0225	2023-09-28	6200 Advertising	debit	420.31	quarter-end split across bank and card
-H0225	2023-09-28	1000 Bank	credit	473.85	quarter-end split across bank and card
-H0225	2023-09-28	2100 Card	credit	302.36	quarter-end split across bank and card
-H0226	2023-10-12	1000 Bank	debit	9036.98	cash vehicle sale
-H0226	2023-10-12	4000 Vehicle Sales	credit	9036.98	cash vehicle sale
-H0227	2023-10-12	5000 COGS Vehicles	debit	6716.08	cost of vehicle sold
-H0227	2023-10-12	1300 Inventory	credit	6716.08	cost of vehicle sold
-H0228	2023-10-09	1000 Bank	debit	8798.05	cash vehicle sale
-H0228	2023-10-09	4000 Vehicle Sales	credit	8798.05	cash vehicle sale
-H0229	2023-10-09	5000 COGS Vehicles	debit	5480.87	cost of vehicle sold
-H0229	2023-10-09	1300 Inventory	credit	5480.87	cost of vehicle sold
-H0230	2023-10-03	1100 AR	debit	7444.49	vehicle sale on account
-H0230	2023-10-03	4000 Vehicle Sales	credit	7444.49	vehicle sale on account
-H0231	2023-10-12	1000 Bank	debit	7444.49	customer settles invoice
-H0231	2023-10-12	1100 AR	credit	7444.49	customer settles invoice
-H0232	2023-10-03	5000 COGS Vehicles	debit	5270.74	cost of vehicle sold
-H0232	2023-10-03	1300 Inventory	credit	5270.74	cost of vehicle sold
-H0233	2023-10-02	1300 Inventory	debit	15399.11	vehicle acquired on floor plan
-H0233	2023-10-02	2600 Loan	credit	15399.11	vehicle acquired on floor plan
-H0234	2023-10-20	1300 Inventory	debit	17977.13	vehicle acquired on floor plan
-H0234	2023-10-20	2600 Loan	credit	17977.13	vehicle acquired on floor plan
-H0235	2023-10-11	1000 Bank	debit	577.94	parts sale
-H0235	2023-10-11	4100 Parts Income	credit	577.94	parts sale
-H0236	2023-10-11	5100 Parts COGS	debit	317.87	parts cost
-H0236	2023-10-11	2100 Card	credit	317.87	parts cost
-H0237	2023-10-04	1000 Bank	debit	724.74	parts sale
-H0237	2023-10-04	4100 Parts Income	credit	724.74	parts sale
-H0238	2023-10-04	5100 Parts COGS	debit	398.61	parts cost
-H0238	2023-10-04	2100 Card	credit	398.61	parts cost
-H0239	2023-10-09	1000 Bank	debit	870.26	parts sale
-H0239	2023-10-09	4100 Parts Income	credit	870.26	parts sale
-H0240	2023-10-09	5100 Parts COGS	debit	478.64	parts cost
-H0240	2023-10-09	2100 Card	credit	478.64	parts cost
-H0241	2023-10-01	6000 Rent	debit	2600.00	monthly rent
-H0241	2023-10-01	1000 Bank	credit	2600.00	monthly rent
-H0242	2023-10-12	6300 Utilities	debit	349.95	utilities
-H0242	2023-10-12	1000 Bank	credit	349.95	utilities
-H0243	2023-10-20	2600 Loan	debit	1517.56	floor plan payment
-H0243	2023-10-20	7000 Interest Exp	debit	289.41	floor plan payment
-H0243	2023-10-20	1000 Bank	credit	1806.97	floor plan payment
-H0244	2023-10-14	6100 Fuel	debit	147.04	fuel
-H0244	2023-10-14	2100 Card	credit	147.04	fuel
-H0245	2023-10-03	6100 Fuel	debit	151.46	fuel
-H0245	2023-10-03	2100 Card	credit	151.46	fuel
-H0246	2023-10-24	6400 Office	debit	87.74	office supplies
-H0246	2023-10-24	2100 Card	credit	87.74	office supplies
-H0247	2023-10-19	6200 Advertising	debit	629.06	advertising
-H0247	2023-10-19	1000 Bank	credit	629.06	advertising
-H0248	2023-10-26	2100 Card	debit	1894.20	credit card payment
-H0248	2023-10-26	1000 Bank	credit	1894.20	credit card payment
-H0249	2023-11-17	1000 Bank	debit	9656.91	cash vehicle sale
-H0249	2023-11-17	4000 Vehicle Sales	credit	9656.91	cash vehicle sale
-H0250	2023-11-17	5000 COGS Vehicles	debit	6589.67	cost of vehicle sold
-H0250	2023-11-17	1300 Inventory	credit	6589.67	cost of vehicle sold
-H0251	2023-11-18	1000 Bank	debit	7303.62	cash vehicle sale
-H0251	2023-11-18	4000 Vehicle Sales	credit	7303.62	cash vehicle sale
-H0252	2023-11-18	5000 COGS Vehicles	debit	5240.71	cost of vehicle sold
-H0252	2023-11-18	1300 Inventory	credit	5240.71	cost of vehicle sold
-H0253	2023-11-10	1000 Bank	debit	14817.86	cash vehicle sale
-H0253	2023-11-10	4000 Vehicle Sales	credit	14817.86	cash vehicle sale
-H0254	2023-11-10	5000 COGS Vehicles	debit	10718.94	cost of vehicle sold
-H0254	2023-11-10	1300 Inventory	credit	10718.94	cost of vehicle sold
-H0255	2023-11-04	1000 Bank	debit	8845.04	cash vehicle sale
-H0255	2023-11-04	4000 Vehicle Sales	credit	8845.04	cash vehicle sale
-H0256	2023-11-04	5000 COGS Vehicles	debit	6023.22	cost of vehicle sold
-H0256	2023-11-04	1300 Inventory	credit	6023.22	cost of vehicle sold
-H0257	2023-11-13	1100 AR	debit	13324.11	vehicle sale on account
-H0257	2023-11-13	4000 Vehicle Sales	credit	13324.11	vehicle sale on account
-H0258	2023-11-22	1000 Bank	debit	13324.11	customer settles invoice
-H0258	2023-11-22	1100 AR	credit	13324.11	customer settles invoice
-H0259	2023-11-13	5000 COGS Vehicles	debit	8780.47	cost of vehicle sold
-H0259	2023-11-13	1300 Inventory	credit	8780.47	cost of vehicle sold
-H0260	2023-11-08	1300 Inventory	debit	14311.58	vehicle acquired on floor plan
-H0260	2023-11-08	2600 Loan	credit	14311.58	vehicle acquired on floor plan
-H0261	2023-11-02	1300 Inventory	debit	18980.57	vehicle acquired on floor plan
-H0261	2023-11-02	2600 Loan	credit	18980.57	vehicle acquired on floor plan
-H0262	2023-11-12	1300 Inventory	debit	10095.13	vehicle acquired on floor plan
-H0262	2023-11-12	2600 Loan	credit	10095.13	vehicle acquired on floor plan
-H0263	2023-11-09	1000 Bank	debit	340.41	parts sale
-H0263	2023-11-09	4100 Parts Income	credit	340.41	parts sale
-H0264	2023-11-09	5100 Parts COGS	debit	187.23	parts cost
-H0264	2023-11-09	2100 Card	credit	187.23	parts cost
-H0265	2023-11-01	6000 Rent	debit	2600.00	monthly rent
-H0265	2023-11-01	1000 Bank	credit	2600.00	monthly rent
-H0266	2023-11-12	6300 Utilities	debit	468.59	utilities
-H0266	2023-11-12	1000 Bank	credit	468.59	utilities
-H0267	2023-11-20	2600 Loan	debit	1631.28	floor plan payment
-H0267	2023-11-20	7000 Interest Exp	debit	203.58	floor plan payment
-H0267	2023-11-20	1000 Bank	credit	1834.86	floor plan payment
-H0268	2023-11-09	6100 Fuel	debit	116.46	fuel
-H0268	2023-11-09	2100 Card	credit	116.46	fuel
-H0269	2023-11-25	6100 Fuel	debit	82.16	fuel
-H0269	2023-11-25	2100 Card	credit	82.16	fuel
-H0270	2023-11-10	6100 Fuel	debit	99.29	fuel
-H0270	2023-11-10	2100 Card	credit	99.29	fuel
-H0271	2023-11-11	6400 Office	debit	82.78	office supplies
-H0271	2023-11-11	2100 Card	credit	82.78	office supplies
-H0272	2023-11-19	6400 Office	debit	93.72	office supplies
-H0272	2023-11-19	2100 Card	credit	93.72	office supplies
-H0273	2023-11-26	2100 Card	debit	1027.82	credit card payment
-H0273	2023-11-26	1000 Bank	credit	1027.82	credit card payment
-H0274	2023-11-06	1000 Bank	debit	4864.60	owner contribution
-H0274	2023-11-06	3000 Equity	credit	4864.60	owner contribution
-H0275	2023-12-15	1000 Bank	debit	7538.21	cash vehicle sale
-H0275	2023-12-15	4000 Vehicle Sales	credit	7538.21	cash vehicle sale
-H0276	2023-12-15	5000 COGS Vehicles	debit	5443.03	cost of vehicle sold
-H0276	2023-12-15	1300 Inventory	credit	5443.03	cost of vehicle sold
-H0277	2023-12-23	1000 Bank	debit	8751.29	cash vehicle sale
-H0277	2023-12-23	4000 Vehicle Sales	credit	8751.29	cash vehicle sale
-H0278	2023-12-23	5000 COGS Vehicles	debit	5717.93	cost of vehicle sold
-H0278	2023-12-23	1300 Inventory	credit	5717.93	cost of vehicle sold
-H0279	2023-12-27	1000 Bank	debit	15046.11	cash vehicle sale
-H0279	2023-12-27	4000 Vehicle Sales	credit	15046.11	cash vehicle sale
-H0280	2023-12-27	5000 COGS Vehicles	debit	9958.50	cost of vehicle sold
-H0280	2023-12-27	1300 Inventory	credit	9958.50	cost of vehicle sold
-H0281	2023-12-25	1000 Bank	debit	12978.16	cash vehicle sale
-H0281	2023-12-25	4000 Vehicle Sales	credit	12978.16	cash vehicle sale
-H0282	2023-12-25	5000 COGS Vehicles	debit	9520.39	cost of vehicle sold
-H0282	2023-12-25	1300 Inventory	credit	9520.39	cost of vehicle sold
-H0283	2023-12-13	1100 AR	debit	9873.39	vehicle sale on account
-H0283	2023-12-13	4000 Vehicle Sales	credit	9873.39	vehicle sale on account
-H0284	2023-12-22	1000 Bank	debit	9873.39	customer settles invoice
-H0284	2023-12-22	1100 AR	credit	9873.39	customer settles invoice
-H0285	2023-12-13	5000 COGS Vehicles	debit	7274.19	cost of vehicle sold
-H0285	2023-12-13	1300 Inventory	credit	7274.19	cost of vehicle sold
-H0286	2023-12-08	1300 Inventory	debit	16305.35	vehicle acquired on floor plan
-H0286	2023-12-08	2600 Loan	credit	16305.35	vehicle acquired on floor plan
-H0287	2023-12-22	1300 Inventory	debit	9279.80	vehicle acquired on floor plan
-H0287	2023-12-22	2600 Loan	credit	9279.80	vehicle acquired on floor plan
-H0288	2023-12-25	1000 Bank	debit	356.94	parts sale
-H0288	2023-12-25	4100 Parts Income	credit	356.94	parts sale
-H0289	2023-12-25	5100 Parts COGS	debit	196.32	parts cost
-H0289	2023-12-25	2100 Card	credit	196.32	parts cost
-H0290	2023-12-03	1000 Bank	debit	860.02	parts sale
-H0290	2023-12-03	4100 Parts Income	credit	860.02	parts sale
-H0291	2023-12-03	5100 Parts COGS	debit	473.01	parts cost
-H0291	2023-12-03	2100 Card	credit	473.01	parts cost
-H0292	2023-12-01	6000 Rent	debit	2600.00	monthly rent
-H0292	2023-12-01	1000 Bank	credit	2600.00	monthly rent
-H0293	2023-12-12	6300 Utilities	debit	475.59	utilities
-H0293	2023-12-12	1000 Bank	credit	475.59	utilities
-H0294	2023-12-20	2600 Loan	debit	1943.14	floor plan payment
-H0294	2023-12-20	7000 Interest Exp	debit	315.21	floor plan payment
-H0294	2023-12-20	1000 Bank	credit	2258.35	floor plan payment
-H0295	2023-12-11	6100 Fuel	debit	140.58	fuel
-H0295	2023-12-11	2100 Card	credit	140.58	fuel
-H0296	2023-12-27	6100 Fuel	debit	113.60	fuel
-H0296	2023-12-27	2100 Card	credit	113.60	fuel
-H0297	2023-12-03	6400 Office	debit	54.91	office supplies
-H0297	2023-12-03	2100 Card	credit	54.91	office supplies
-H0298	2023-12-07	6400 Office	debit	84.95	office supplies
-H0298	2023-12-07	2100 Card	credit	84.95	office supplies
-H0299	2023-12-09	6200 Advertising	debit	489.09	advertising
-H0299	2023-12-09	1000 Bank	credit	489.09	advertising
-H0300	2023-12-26	2100 Card	debit	1002.70	credit card payment
-H0300	2023-12-26	1000 Bank	credit	1002.70	credit card payment
-H0301	2023-12-03	6100 Fuel	debit	1300.99	bulk heating/plow fuel delivery, paid direct
-H0301	2023-12-03	1000 Bank	credit	1300.99	bulk heating/plow fuel delivery, paid direct
-H0302	2023-12-05	6100 Fuel	debit	1374.11	bulk heating/plow fuel delivery, paid direct
-H0302	2023-12-05	1000 Bank	credit	1374.11	bulk heating/plow fuel delivery, paid direct
-H0303	2023-12-28	6300 Utilities	debit	207.40	quarter-end split across bank and card
-H0303	2023-12-28	6200 Advertising	debit	494.70	quarter-end split across bank and card
-H0303	2023-12-28	1000 Bank	credit	319.62	quarter-end split across bank and card
-H0303	2023-12-28	2100 Card	credit	382.48	quarter-end split across bank and card
-H0304	2024-01-13	1000 Bank	debit	8935.21	cash vehicle sale
-H0304	2024-01-13	4000 Vehicle Sales	credit	8935.21	cash vehicle sale
-H0305	2024-01-13	5000 COGS Vehicles	debit	6223.70	cost of vehicle sold
-H0305	2024-01-13	1300 Inventory	credit	6223.70	cost of vehicle sold
-H0306	2024-01-19	1000 Bank	debit	15010.08	cash vehicle sale
-H0306	2024-01-19	4000 Vehicle Sales	credit	15010.08	cash vehicle sale
-H0307	2024-01-19	5000 COGS Vehicles	debit	10132.33	cost of vehicle sold
-H0307	2024-01-19	1300 Inventory	credit	10132.33	cost of vehicle sold
-H0308	2024-01-23	1300 Inventory	debit	18679.16	vehicle acquired on floor plan
-H0308	2024-01-23	2600 Loan	credit	18679.16	vehicle acquired on floor plan
-H0309	2024-01-03	1300 Inventory	debit	8626.04	vehicle acquired on floor plan
-H0309	2024-01-03	2600 Loan	credit	8626.04	vehicle acquired on floor plan
-H0310	2024-01-19	1300 Inventory	debit	13720.14	vehicle acquired on floor plan
-H0310	2024-01-19	2600 Loan	credit	13720.14	vehicle acquired on floor plan
-H0311	2024-01-05	1000 Bank	debit	839.33	parts sale
-H0311	2024-01-05	4100 Parts Income	credit	839.33	parts sale
-H0312	2024-01-05	5100 Parts COGS	debit	461.63	parts cost
-H0312	2024-01-05	2100 Card	credit	461.63	parts cost
-H0313	2024-01-01	6000 Rent	debit	2600.00	monthly rent
-H0313	2024-01-01	1000 Bank	credit	2600.00	monthly rent
-H0314	2024-01-12	6300 Utilities	debit	488.84	utilities
-H0314	2024-01-12	1000 Bank	credit	488.84	utilities
-H0315	2024-01-20	2600 Loan	debit	1685.72	floor plan payment
-H0315	2024-01-20	7000 Interest Exp	debit	222.64	floor plan payment
-H0315	2024-01-20	1000 Bank	credit	1908.36	floor plan payment
-H0316	2024-01-03	6100 Fuel	debit	48.35	fuel
-H0316	2024-01-03	2100 Card	credit	48.35	fuel
-H0317	2024-01-27	6100 Fuel	debit	184.68	fuel
-H0317	2024-01-27	2100 Card	credit	184.68	fuel
-H0318	2024-01-02	6100 Fuel	debit	115.20	fuel
-H0318	2024-01-02	2100 Card	credit	115.20	fuel
-H0319	2024-01-25	6100 Fuel	debit	67.56	fuel
-H0319	2024-01-25	2100 Card	credit	67.56	fuel
-H0320	2024-01-24	6400 Office	debit	56.47	office supplies
-H0320	2024-01-24	2100 Card	credit	56.47	office supplies
-H0321	2024-01-14	6200 Advertising	debit	371.98	advertising
-H0321	2024-01-14	1000 Bank	credit	371.98	advertising
-H0322	2024-01-26	2100 Card	debit	722.14	credit card payment
-H0322	2024-01-26	1000 Bank	credit	722.14	credit card payment
-H0323	2024-01-20	6100 Fuel	debit	1158.42	bulk heating/plow fuel delivery, paid direct
-H0323	2024-01-20	1000 Bank	credit	1158.42	bulk heating/plow fuel delivery, paid direct
-H0324	2024-02-16	1000 Bank	debit	10988.59	cash vehicle sale
-H0324	2024-02-16	4000 Vehicle Sales	credit	10988.59	cash vehicle sale
-H0325	2024-02-16	5000 COGS Vehicles	debit	7032.31	cost of vehicle sold
-H0325	2024-02-16	1300 Inventory	credit	7032.31	cost of vehicle sold
-H0326	2024-02-17	1000 Bank	debit	10824.56	cash vehicle sale
-H0326	2024-02-17	4000 Vehicle Sales	credit	10824.56	cash vehicle sale
-H0327	2024-02-17	5000 COGS Vehicles	debit	6771.47	cost of vehicle sold
-H0327	2024-02-17	1300 Inventory	credit	6771.47	cost of vehicle sold
-H0328	2024-02-23	1300 Inventory	debit	19602.37	vehicle acquired on floor plan
-H0328	2024-02-23	2600 Loan	credit	19602.37	vehicle acquired on floor plan
-H0329	2024-02-24	1300 Inventory	debit	11132.75	vehicle acquired on floor plan
-H0329	2024-02-24	2600 Loan	credit	11132.75	vehicle acquired on floor plan
-H0330	2024-02-11	1000 Bank	debit	589.69	parts sale
-H0330	2024-02-11	4100 Parts Income	credit	589.69	parts sale
-H0331	2024-02-11	5100 Parts COGS	debit	324.33	parts cost
-H0331	2024-02-11	2100 Card	credit	324.33	parts cost
-H0332	2024-02-15	1000 Bank	debit	468.30	parts sale
-H0332	2024-02-15	4100 Parts Income	credit	468.30	parts sale
-H0333	2024-02-15	5100 Parts COGS	debit	257.57	parts cost
-H0333	2024-02-15	2100 Card	credit	257.57	parts cost
-H0334	2024-02-20	1000 Bank	debit	485.13	parts sale
-H0334	2024-02-20	4100 Parts Income	credit	485.13	parts sale
-H0335	2024-02-20	5100 Parts COGS	debit	266.82	parts cost
-H0335	2024-02-20	2100 Card	credit	266.82	parts cost
-H0336	2024-02-01	6000 Rent	debit	2600.00	monthly rent
-H0336	2024-02-01	1000 Bank	credit	2600.00	monthly rent
-H0337	2024-02-12	6300 Utilities	debit	539.87	utilities
-H0337	2024-02-12	1000 Bank	credit	539.87	utilities
-H0338	2024-02-20	2600 Loan	debit	2019.67	floor plan payment
-H0338	2024-02-20	7000 Interest Exp	debit	289.94	floor plan payment
-H0338	2024-02-20	1000 Bank	credit	2309.61	floor plan payment
-H0339	2024-02-07	6100 Fuel	debit	115.49	fuel
-H0339	2024-02-07	2100 Card	credit	115.49	fuel
-H0340	2024-02-18	6100 Fuel	debit	182.76	fuel
-H0340	2024-02-18	2100 Card	credit	182.76	fuel
-H0341	2024-02-08	6100 Fuel	debit	87.67	fuel
-H0341	2024-02-08	2100 Card	credit	87.67	fuel
-H0342	2024-02-23	6400 Office	debit	115.78	office supplies
-H0342	2024-02-23	2100 Card	credit	115.78	office supplies
-H0343	2024-02-04	6400 Office	debit	64.32	office supplies
-H0343	2024-02-04	2100 Card	credit	64.32	office supplies
-H0344	2024-02-09	6200 Advertising	debit	379.62	advertising
-H0344	2024-02-09	1000 Bank	credit	379.62	advertising
-H0345	2024-02-26	2100 Card	debit	1531.76	credit card payment
-H0345	2024-02-26	1000 Bank	credit	1531.76	credit card payment
-H0346	2024-02-18	6100 Fuel	debit	1008.08	bulk heating/plow fuel delivery, paid direct
-H0346	2024-02-18	1000 Bank	credit	1008.08	bulk heating/plow fuel delivery, paid direct
-H0347	2024-03-06	1000 Bank	debit	16793.92	cash vehicle sale
-H0347	2024-03-06	4000 Vehicle Sales	credit	16793.92	cash vehicle sale
-H0348	2024-03-06	5000 COGS Vehicles	debit	12433.55	cost of vehicle sold
-H0348	2024-03-06	1300 Inventory	credit	12433.55	cost of vehicle sold
-H0349	2024-03-02	1000 Bank	debit	9822.23	cash vehicle sale
-H0349	2024-03-02	4000 Vehicle Sales	credit	9822.23	cash vehicle sale
-H0350	2024-03-02	5000 COGS Vehicles	debit	7621.40	cost of vehicle sold
-H0350	2024-03-02	1300 Inventory	credit	7621.40	cost of vehicle sold
-H0351	2024-03-07	1000 Bank	debit	17780.95	cash vehicle sale
-H0351	2024-03-07	4000 Vehicle Sales	credit	17780.95	cash vehicle sale
-H0352	2024-03-07	5000 COGS Vehicles	debit	12105.73	cost of vehicle sold
-H0352	2024-03-07	1300 Inventory	credit	12105.73	cost of vehicle sold
-H0353	2024-03-04	1300 Inventory	debit	18977.99	vehicle acquired on floor plan
-H0353	2024-03-04	2600 Loan	credit	18977.99	vehicle acquired on floor plan
-H0354	2024-03-23	1300 Inventory	debit	11152.83	vehicle acquired on floor plan
-H0354	2024-03-23	2600 Loan	credit	11152.83	vehicle acquired on floor plan
-H0355	2024-03-11	1300 Inventory	debit	16375.58	vehicle acquired on floor plan
-H0355	2024-03-11	2600 Loan	credit	16375.58	vehicle acquired on floor plan
-H0356	2024-03-06	1000 Bank	debit	317.20	parts sale
-H0356	2024-03-06	4100 Parts Income	credit	317.20	parts sale
-H0357	2024-03-06	5100 Parts COGS	debit	174.46	parts cost
-H0357	2024-03-06	2100 Card	credit	174.46	parts cost
-H0358	2024-03-18	1000 Bank	debit	433.31	parts sale
-H0358	2024-03-18	4100 Parts Income	credit	433.31	parts sale
-H0359	2024-03-18	5100 Parts COGS	debit	238.32	parts cost
-H0359	2024-03-18	2100 Card	credit	238.32	parts cost
-H0360	2024-03-01	6000 Rent	debit	2600.00	monthly rent
-H0360	2024-03-01	1000 Bank	credit	2600.00	monthly rent
-H0361	2024-03-12	6300 Utilities	debit	412.49	utilities
-H0361	2024-03-12	1000 Bank	credit	412.49	utilities
-H0362	2024-03-20	2600 Loan	debit	1896.62	floor plan payment
-H0362	2024-03-20	7000 Interest Exp	debit	203.36	floor plan payment
-H0362	2024-03-20	1000 Bank	credit	2099.98	floor plan payment
-H0363	2024-03-18	6100 Fuel	debit	102.98	fuel
-H0363	2024-03-18	2100 Card	credit	102.98	fuel
-H0364	2024-03-22	6100 Fuel	debit	143.39	fuel
-H0364	2024-03-22	2100 Card	credit	143.39	fuel
-H0365	2024-03-06	6100 Fuel	debit	85.92	fuel
-H0365	2024-03-06	2100 Card	credit	85.92	fuel
-H0366	2024-03-19	6100 Fuel	debit	126.69	fuel
-H0366	2024-03-19	2100 Card	credit	126.69	fuel
-H0367	2024-03-15	6400 Office	debit	125.45	office supplies
-H0367	2024-03-15	2100 Card	credit	125.45	office supplies
-H0368	2024-03-06	6200 Advertising	debit	564.40	advertising
-H0368	2024-03-06	1000 Bank	credit	564.40	advertising
-H0369	2024-03-26	2100 Card	debit	1693.07	credit card payment
-H0369	2024-03-26	1000 Bank	credit	1693.07	credit card payment
-H0370	2024-03-28	6300 Utilities	debit	242.02	quarter-end split across bank and card
-H0370	2024-03-28	6200 Advertising	debit	253.38	quarter-end split across bank and card
-H0370	2024-03-28	1000 Bank	credit	270.84	quarter-end split across bank and card
-H0370	2024-03-28	2100 Card	credit	224.56	quarter-end split across bank and card
-H0371	2024-04-02	1000 Bank	debit	13632.52	cash vehicle sale
-H0371	2024-04-02	4000 Vehicle Sales	credit	13632.52	cash vehicle sale
-H0372	2024-04-02	5000 COGS Vehicles	debit	10498.27	cost of vehicle sold
-H0372	2024-04-02	1300 Inventory	credit	10498.27	cost of vehicle sold
-H0373	2024-04-25	1000 Bank	debit	10748.69	cash vehicle sale
-H0373	2024-04-25	4000 Vehicle Sales	credit	10748.69	cash vehicle sale
-H0374	2024-04-25	5000 COGS Vehicles	debit	7912.53	cost of vehicle sold
-H0374	2024-04-25	1300 Inventory	credit	7912.53	cost of vehicle sold
-H0375	2024-04-18	1300 Inventory	debit	12836.49	vehicle acquired on floor plan
-H0375	2024-04-18	2600 Loan	credit	12836.49	vehicle acquired on floor plan
-H0376	2024-04-18	1000 Bank	debit	586.95	parts sale
-H0376	2024-04-18	4100 Parts Income	credit	586.95	parts sale
-H0377	2024-04-18	5100 Parts COGS	debit	322.82	parts cost
-H0377	2024-04-18	2100 Card	credit	322.82	parts cost
-H0378	2024-04-23	1000 Bank	debit	886.39	parts sale
-H0378	2024-04-23	4100 Parts Income	credit	886.39	parts sale
-H0379	2024-04-23	5100 Parts COGS	debit	487.51	parts cost
-H0379	2024-04-23	2100 Card	credit	487.51	parts cost
-H0380	2024-04-01	6000 Rent	debit	2600.00	monthly rent
-H0380	2024-04-01	1000 Bank	credit	2600.00	monthly rent
-H0381	2024-04-12	6300 Utilities	debit	390.52	utilities
-H0381	2024-04-12	1000 Bank	credit	390.52	utilities
-H0382	2024-04-20	2600 Loan	debit	1794.67	floor plan payment
-H0382	2024-04-20	7000 Interest Exp	debit	288.99	floor plan payment
-H0382	2024-04-20	1000 Bank	credit	2083.66	floor plan payment
-H0383	2024-04-21	6100 Fuel	debit	98.12	fuel
-H0383	2024-04-21	2100 Card	credit	98.12	fuel
-H0384	2024-04-25	6100 Fuel	debit	58.17	fuel
-H0384	2024-04-25	2100 Card	credit	58.17	fuel
-H0385	2024-04-06	6100 Fuel	debit	72.58	fuel
-H0385	2024-04-06	2100 Card	credit	72.58	fuel
-H0386	2024-04-26	6400 Office	debit	82.51	office supplies
-H0386	2024-04-26	2100 Card	credit	82.51	office supplies
-H0387	2024-04-26	2100 Card	debit	1473.81	credit card payment
-H0387	2024-04-26	1000 Bank	credit	1473.81	credit card payment
-H0388	2024-05-25	1000 Bank	debit	20582.97	cash vehicle sale
-H0388	2024-05-25	4000 Vehicle Sales	credit	20582.97	cash vehicle sale
-H0389	2024-05-25	5000 COGS Vehicles	debit	13898.90	cost of vehicle sold
-H0389	2024-05-25	1300 Inventory	credit	13898.90	cost of vehicle sold
-H0390	2024-05-24	1000 Bank	debit	14634.95	cash vehicle sale
-H0390	2024-05-24	4000 Vehicle Sales	credit	14634.95	cash vehicle sale
-H0391	2024-05-24	5000 COGS Vehicles	debit	11225.87	cost of vehicle sold
-H0391	2024-05-24	1300 Inventory	credit	11225.87	cost of vehicle sold
-H0392	2024-05-16	1000 Bank	debit	9840.10	cash vehicle sale
-H0392	2024-05-16	4000 Vehicle Sales	credit	9840.10	cash vehicle sale
-H0393	2024-05-16	5000 COGS Vehicles	debit	6529.73	cost of vehicle sold
-H0393	2024-05-16	1300 Inventory	credit	6529.73	cost of vehicle sold
-H0394	2024-05-08	1100 AR	debit	10650.76	vehicle sale on account
-H0394	2024-05-08	4000 Vehicle Sales	credit	10650.76	vehicle sale on account
-H0395	2024-05-17	1000 Bank	debit	10650.76	customer settles invoice
-H0395	2024-05-17	1100 AR	credit	10650.76	customer settles invoice
-H0396	2024-05-08	5000 COGS Vehicles	debit	8222.69	cost of vehicle sold
-H0396	2024-05-08	1300 Inventory	credit	8222.69	cost of vehicle sold
-H0397	2024-05-07	1300 Inventory	debit	17545.54	vehicle acquired on floor plan
-H0397	2024-05-07	2600 Loan	credit	17545.54	vehicle acquired on floor plan
-H0398	2024-05-09	1300 Inventory	debit	14328.84	vehicle acquired on floor plan
-H0398	2024-05-09	2600 Loan	credit	14328.84	vehicle acquired on floor plan
-H0399	2024-05-14	1000 Bank	debit	864.08	parts sale
-H0399	2024-05-14	4100 Parts Income	credit	864.08	parts sale
-H0400	2024-05-14	5100 Parts COGS	debit	475.24	parts cost
-H0400	2024-05-14	2100 Card	credit	475.24	parts cost
-H0401	2024-05-19	1000 Bank	debit	463.64	parts sale
-H0401	2024-05-19	4100 Parts Income	credit	463.64	parts sale
-H0402	2024-05-19	5100 Parts COGS	debit	255.00	parts cost
-H0402	2024-05-19	2100 Card	credit	255.00	parts cost
-H0403	2024-05-01	6000 Rent	debit	2600.00	monthly rent
-H0403	2024-05-01	1000 Bank	credit	2600.00	monthly rent
-H0404	2024-05-12	6300 Utilities	debit	431.53	utilities
-H0404	2024-05-12	1000 Bank	credit	431.53	utilities
-H0405	2024-05-20	2600 Loan	debit	1615.69	floor plan payment
-H0405	2024-05-20	7000 Interest Exp	debit	263.45	floor plan payment
-H0405	2024-05-20	1000 Bank	credit	1879.14	floor plan payment
-H0406	2024-05-11	6100 Fuel	debit	133.14	fuel
-H0406	2024-05-11	2100 Card	credit	133.14	fuel
-H0407	2024-05-02	6100 Fuel	debit	133.46	fuel
-H0407	2024-05-02	2100 Card	credit	133.46	fuel
-H0408	2024-05-16	6100 Fuel	debit	118.99	fuel
-H0408	2024-05-16	2100 Card	credit	118.99	fuel
-H0409	2024-05-02	6400 Office	debit	68.38	office supplies
-H0409	2024-05-02	2100 Card	credit	68.38	office supplies
-H0410	2024-05-17	6200 Advertising	debit	522.25	advertising
-H0410	2024-05-17	1000 Bank	credit	522.25	advertising
-H0411	2024-05-26	2100 Card	debit	1315.48	credit card payment
-H0411	2024-05-26	1000 Bank	credit	1315.48	credit card payment
-H0412	2024-06-24	1000 Bank	debit	16962.07	cash vehicle sale
-H0412	2024-06-24	4000 Vehicle Sales	credit	16962.07	cash vehicle sale
-H0413	2024-06-24	5000 COGS Vehicles	debit	11785.85	cost of vehicle sold
-H0413	2024-06-24	1300 Inventory	credit	11785.85	cost of vehicle sold
-H0414	2024-06-05	1000 Bank	debit	13927.51	cash vehicle sale
-H0414	2024-06-05	4000 Vehicle Sales	credit	13927.51	cash vehicle sale
-H0415	2024-06-05	5000 COGS Vehicles	debit	10120.15	cost of vehicle sold
-H0415	2024-06-05	1300 Inventory	credit	10120.15	cost of vehicle sold
-H0416	2024-06-22	1000 Bank	debit	12636.79	cash vehicle sale
-H0416	2024-06-22	4000 Vehicle Sales	credit	12636.79	cash vehicle sale
-H0417	2024-06-22	5000 COGS Vehicles	debit	8266.04	cost of vehicle sold
-H0417	2024-06-22	1300 Inventory	credit	8266.04	cost of vehicle sold
-H0418	2024-06-15	1100 AR	debit	13650.61	vehicle sale on account
-H0418	2024-06-15	4000 Vehicle Sales	credit	13650.61	vehicle sale on account
-H0419	2024-06-24	1000 Bank	debit	13650.61	customer settles invoice
-H0419	2024-06-24	1100 AR	credit	13650.61	customer settles invoice
-H0420	2024-06-15	5000 COGS Vehicles	debit	10373.54	cost of vehicle sold
-H0420	2024-06-15	1300 Inventory	credit	10373.54	cost of vehicle sold
-H0421	2024-06-13	1300 Inventory	debit	22857.72	vehicle acquired on floor plan
-H0421	2024-06-13	2600 Loan	credit	22857.72	vehicle acquired on floor plan
-H0422	2024-06-08	1000 Bank	debit	719.56	parts sale
-H0422	2024-06-08	4100 Parts Income	credit	719.56	parts sale
-H0423	2024-06-08	5100 Parts COGS	debit	395.76	parts cost
-H0423	2024-06-08	2100 Card	credit	395.76	parts cost
-H0424	2024-06-10	1000 Bank	debit	588.61	parts sale
-H0424	2024-06-10	4100 Parts Income	credit	588.61	parts sale
-H0425	2024-06-10	5100 Parts COGS	debit	323.74	parts cost
-H0425	2024-06-10	2100 Card	credit	323.74	parts cost
-H0426	2024-06-01	6000 Rent	debit	2600.00	monthly rent
-H0426	2024-06-01	1000 Bank	credit	2600.00	monthly rent
-H0427	2024-06-12	6300 Utilities	debit	307.97	utilities
-H0427	2024-06-12	1000 Bank	credit	307.97	utilities
-H0428	2024-06-20	2600 Loan	debit	1539.61	floor plan payment
-H0428	2024-06-20	7000 Interest Exp	debit	186.66	floor plan payment
-H0428	2024-06-20	1000 Bank	credit	1726.27	floor plan payment
-H0429	2024-06-14	6100 Fuel	debit	188.90	fuel
-H0429	2024-06-14	2100 Card	credit	188.90	fuel
-H0430	2024-06-08	6100 Fuel	debit	120.74	fuel
-H0430	2024-06-08	2100 Card	credit	120.74	fuel
-H0431	2024-06-12	6100 Fuel	debit	114.27	fuel
-H0431	2024-06-12	2100 Card	credit	114.27	fuel
-H0432	2024-06-07	6400 Office	debit	128.02	office supplies
-H0432	2024-06-07	2100 Card	credit	128.02	office supplies
-H0433	2024-06-19	6200 Advertising	debit	429.67	advertising
-H0433	2024-06-19	1000 Bank	credit	429.67	advertising
-H0434	2024-06-26	2100 Card	debit	1523.97	credit card payment
-H0434	2024-06-26	1000 Bank	credit	1523.97	credit card payment
-H0435	2024-06-19	6400 Office	debit	260.44	summer season supplies, paid direct
-H0435	2024-06-19	1000 Bank	credit	260.44	summer season supplies, paid direct
-H0436	2024-06-28	6300 Utilities	debit	197.82	quarter-end split across bank and card
-H0436	2024-06-28	6200 Advertising	debit	395.11	quarter-end split across bank and card
-H0436	2024-06-28	1000 Bank	credit	279.50	quarter-end split across bank and card
-H0436	2024-06-28	2100 Card	credit	313.43	quarter-end split across bank and card
-H0437	2024-07-19	1000 Bank	debit	9984.14	cash vehicle sale
-H0437	2024-07-19	4000 Vehicle Sales	credit	9984.14	cash vehicle sale
-H0438	2024-07-19	5000 COGS Vehicles	debit	6339.79	cost of vehicle sold
-H0438	2024-07-19	1300 Inventory	credit	6339.79	cost of vehicle sold
-H0439	2024-07-12	1000 Bank	debit	13601.65	cash vehicle sale
-H0439	2024-07-12	4000 Vehicle Sales	credit	13601.65	cash vehicle sale
-H0440	2024-07-12	5000 COGS Vehicles	debit	9328.83	cost of vehicle sold
-H0440	2024-07-12	1300 Inventory	credit	9328.83	cost of vehicle sold
-H0441	2024-07-18	1000 Bank	debit	17250.97	cash vehicle sale
-H0441	2024-07-18	4000 Vehicle Sales	credit	17250.97	cash vehicle sale
-H0442	2024-07-18	5000 COGS Vehicles	debit	12801.38	cost of vehicle sold
-H0442	2024-07-18	1300 Inventory	credit	12801.38	cost of vehicle sold
-H0443	2024-07-03	1100 AR	debit	17169.37	vehicle sale on account
-H0443	2024-07-03	4000 Vehicle Sales	credit	17169.37	vehicle sale on account
-H0444	2024-07-12	1000 Bank	debit	17169.37	customer settles invoice
-H0444	2024-07-12	1100 AR	credit	17169.37	customer settles invoice
-H0445	2024-07-03	5000 COGS Vehicles	debit	11279.69	cost of vehicle sold
-H0445	2024-07-03	1300 Inventory	credit	11279.69	cost of vehicle sold
-H0446	2024-07-19	1300 Inventory	debit	24027.28	vehicle acquired on floor plan
-H0446	2024-07-19	2600 Loan	credit	24027.28	vehicle acquired on floor plan
-H0447	2024-07-22	1000 Bank	debit	368.34	parts sale
-H0447	2024-07-22	4100 Parts Income	credit	368.34	parts sale
-H0448	2024-07-22	5100 Parts COGS	debit	202.59	parts cost
-H0448	2024-07-22	2100 Card	credit	202.59	parts cost
-H0449	2024-07-25	1000 Bank	debit	221.30	parts sale
-H0449	2024-07-25	4100 Parts Income	credit	221.30	parts sale
-H0450	2024-07-25	5100 Parts COGS	debit	121.72	parts cost
-H0450	2024-07-25	2100 Card	credit	121.72	parts cost
-H0451	2024-07-01	6000 Rent	debit	2600.00	monthly rent
-H0451	2024-07-01	1000 Bank	credit	2600.00	monthly rent
-H0452	2024-07-12	6300 Utilities	debit	234.54	utilities
-H0452	2024-07-12	1000 Bank	credit	234.54	utilities
-H0453	2024-07-20	2600 Loan	debit	2084.02	floor plan payment
-H0453	2024-07-20	7000 Interest Exp	debit	260.25	floor plan payment
-H0453	2024-07-20	1000 Bank	credit	2344.27	floor plan payment
-H0454	2024-07-05	6100 Fuel	debit	74.23	fuel
-H0454	2024-07-05	2100 Card	credit	74.23	fuel
-H0455	2024-07-09	6100 Fuel	debit	170.61	fuel
-H0455	2024-07-09	2100 Card	credit	170.61	fuel
-H0456	2024-07-13	6100 Fuel	debit	163.40	fuel
-H0456	2024-07-13	2100 Card	credit	163.40	fuel
-H0457	2024-07-16	6400 Office	debit	71.83	office supplies
-H0457	2024-07-16	2100 Card	credit	71.83	office supplies
-H0458	2024-07-07	6400 Office	debit	96.17	office supplies
-H0458	2024-07-07	2100 Card	credit	96.17	office supplies
-H0459	2024-07-25	6200 Advertising	debit	607.68	advertising
-H0459	2024-07-25	1000 Bank	credit	607.68	advertising
-H0460	2024-07-26	2100 Card	debit	856.34	credit card payment
-H0460	2024-07-26	1000 Bank	credit	856.34	credit card payment
-H0461	2024-07-16	6400 Office	debit	200.98	summer season supplies, paid direct
-H0461	2024-07-16	1000 Bank	credit	200.98	summer season supplies, paid direct
-H0462	2024-07-18	6400 Office	debit	270.52	summer season supplies, paid direct
-H0462	2024-07-18	1000 Bank	credit	270.52	summer season supplies, paid direct
-H0463	2024-08-18	1000 Bank	debit	13128.81	cash vehicle sale
-H0463	2024-08-18	4000 Vehicle Sales	credit	13128.81	cash vehicle sale
-H0464	2024-08-18	5000 COGS Vehicles	debit	9200.71	cost of vehicle sold
-H0464	2024-08-18	1300 Inventory	credit	9200.71	cost of vehicle sold
-H0465	2024-08-27	1000 Bank	debit	15375.96	cash vehicle sale
-H0465	2024-08-27	4000 Vehicle Sales	credit	15375.96	cash vehicle sale
-H0466	2024-08-27	5000 COGS Vehicles	debit	10044.43	cost of vehicle sold
-H0466	2024-08-27	1300 Inventory	credit	10044.43	cost of vehicle sold
-H0467	2024-08-04	1000 Bank	debit	15501.35	cash vehicle sale
-H0467	2024-08-04	4000 Vehicle Sales	credit	15501.35	cash vehicle sale
-H0468	2024-08-04	5000 COGS Vehicles	debit	9735.70	cost of vehicle sold
-H0468	2024-08-04	1300 Inventory	credit	9735.70	cost of vehicle sold
-H0469	2024-08-10	1300 Inventory	debit	21299.29	vehicle acquired on floor plan
-H0469	2024-08-10	2600 Loan	credit	21299.29	vehicle acquired on floor plan
-H0470	2024-08-02	1000 Bank	debit	442.95	parts sale
-H0470	2024-08-02	4100 Parts Income	credit	442.95	parts sale
-H0471	2024-08-02	5100 Parts COGS	debit	243.62	parts cost
-H0471	2024-08-02	2100 Card	credit	243.62	parts cost
-H0472	2024-08-04	1000 Bank	debit	192.16	parts sale
-H0472	2024-08-04	4100 Parts Income	credit	192.16	parts sale
-H0473	2024-08-04	5100 Parts COGS	debit	105.69	parts cost
-H0473	2024-08-04	2100 Card	credit	105.69	parts cost
-H0474	2024-08-12	1000 Bank	debit	573.06	parts sale
-H0474	2024-08-12	4100 Parts Income	credit	573.06	parts sale
-H0475	2024-08-12	5100 Parts COGS	debit	315.18	parts cost
-H0475	2024-08-12	2100 Card	credit	315.18	parts cost
-H0476	2024-08-01	6000 Rent	debit	2600.00	monthly rent
-H0476	2024-08-01	1000 Bank	credit	2600.00	monthly rent
-H0477	2024-08-12	6300 Utilities	debit	245.19	utilities
-H0477	2024-08-12	1000 Bank	credit	245.19	utilities
-H0478	2024-08-20	2600 Loan	debit	1707.42	floor plan payment
-H0478	2024-08-20	7000 Interest Exp	debit	231.87	floor plan payment
-H0478	2024-08-20	1000 Bank	credit	1939.29	floor plan payment
-H0479	2024-08-19	6100 Fuel	debit	171.55	fuel
-H0479	2024-08-19	2100 Card	credit	171.55	fuel
-H0480	2024-08-27	6100 Fuel	debit	51.87	fuel
-H0480	2024-08-27	2100 Card	credit	51.87	fuel
-H0481	2024-08-23	6400 Office	debit	33.08	office supplies
-H0481	2024-08-23	2100 Card	credit	33.08	office supplies
-H0482	2024-08-16	6200 Advertising	debit	677.17	advertising
-H0482	2024-08-16	1000 Bank	credit	677.17	advertising
-H0483	2024-08-26	2100 Card	debit	1777.16	credit card payment
-H0483	2024-08-26	1000 Bank	credit	1777.16	credit card payment
-H0484	2024-08-07	6400 Office	debit	250.86	summer season supplies, paid direct
-H0484	2024-08-07	1000 Bank	credit	250.86	summer season supplies, paid direct
-H0485	2024-08-24	6400 Office	debit	346.38	summer season supplies, paid direct
-H0485	2024-08-24	1000 Bank	credit	346.38	summer season supplies, paid direct
-H0486	2024-08-06	1000 Bank	debit	3958.71	owner contribution
-H0486	2024-08-06	3000 Equity	credit	3958.71	owner contribution
-H0487	2024-09-16	1000 Bank	debit	14798.50	cash vehicle sale
-H0487	2024-09-16	4000 Vehicle Sales	credit	14798.50	cash vehicle sale
-H0488	2024-09-16	5000 COGS Vehicles	debit	10927.63	cost of vehicle sold
-H0488	2024-09-16	1300 Inventory	credit	10927.63	cost of vehicle sold
-H0489	2024-09-25	1000 Bank	debit	13334.96	cash vehicle sale
-H0489	2024-09-25	4000 Vehicle Sales	credit	13334.96	cash vehicle sale
-H0490	2024-09-25	5000 COGS Vehicles	debit	8783.15	cost of vehicle sold
-H0490	2024-09-25	1300 Inventory	credit	8783.15	cost of vehicle sold
-H0491	2024-09-06	1000 Bank	debit	15148.14	cash vehicle sale
-H0491	2024-09-06	4000 Vehicle Sales	credit	15148.14	cash vehicle sale
-H0492	2024-09-06	5000 COGS Vehicles	debit	10190.02	cost of vehicle sold
-H0492	2024-09-06	1300 Inventory	credit	10190.02	cost of vehicle sold
-H0493	2024-09-18	1100 AR	debit	13313.26	vehicle sale on account
-H0493	2024-09-18	4000 Vehicle Sales	credit	13313.26	vehicle sale on account
-H0494	2024-09-27	1000 Bank	debit	13313.26	customer settles invoice
-H0494	2024-09-27	1100 AR	credit	13313.26	customer settles invoice
-H0495	2024-09-18	5000 COGS Vehicles	debit	9871.84	cost of vehicle sold
-H0495	2024-09-18	1300 Inventory	credit	9871.84	cost of vehicle sold
-H0496	2024-09-17	1300 Inventory	debit	20798.02	vehicle acquired on floor plan
-H0496	2024-09-17	2600 Loan	credit	20798.02	vehicle acquired on floor plan
-H0497	2024-09-08	1300 Inventory	debit	19150.80	vehicle acquired on floor plan
-H0497	2024-09-08	2600 Loan	credit	19150.80	vehicle acquired on floor plan
-H0498	2024-09-20	1300 Inventory	debit	18654.44	vehicle acquired on floor plan
-H0498	2024-09-20	2600 Loan	credit	18654.44	vehicle acquired on floor plan
-H0499	2024-09-19	1000 Bank	debit	753.11	parts sale
-H0499	2024-09-19	4100 Parts Income	credit	753.11	parts sale
-H0500	2024-09-19	5100 Parts COGS	debit	414.21	parts cost
-H0500	2024-09-19	2100 Card	credit	414.21	parts cost
-H0501	2024-09-01	6000 Rent	debit	2600.00	monthly rent
-H0501	2024-09-01	1000 Bank	credit	2600.00	monthly rent
-H0502	2024-09-12	6300 Utilities	debit	329.13	utilities
-H0502	2024-09-12	1000 Bank	credit	329.13	utilities
-H0503	2024-09-20	2600 Loan	debit	1628.56	floor plan payment
-H0503	2024-09-20	7000 Interest Exp	debit	332.12	floor plan payment
-H0503	2024-09-20	1000 Bank	credit	1960.68	floor plan payment
-H0504	2024-09-15	6100 Fuel	debit	68.20	fuel
-H0504	2024-09-15	2100 Card	credit	68.20	fuel
-H0505	2024-09-17	6100 Fuel	debit	75.37	fuel
-H0505	2024-09-17	2100 Card	credit	75.37	fuel
-H0506	2024-09-22	6100 Fuel	debit	123.62	fuel
-H0506	2024-09-22	2100 Card	credit	123.62	fuel
-H0507	2024-09-08	6100 Fuel	debit	71.69	fuel
-H0507	2024-09-08	2100 Card	credit	71.69	fuel
-H0508	2024-09-03	6400 Office	debit	32.57	office supplies
-H0508	2024-09-03	2100 Card	credit	32.57	office supplies
-H0509	2024-09-07	6400 Office	debit	103.73	office supplies
-H0509	2024-09-07	2100 Card	credit	103.73	office supplies
-H0510	2024-09-17	6200 Advertising	debit	359.54	advertising
-H0510	2024-09-17	1000 Bank	credit	359.54	advertising
-H0511	2024-09-26	2100 Card	debit	791.85	credit card payment
-H0511	2024-09-26	1000 Bank	credit	791.85	credit card payment
-H0512	2024-09-28	6300 Utilities	debit	230.72	quarter-end split across bank and card
-H0512	2024-09-28	6200 Advertising	debit	477.62	quarter-end split across bank and card
-H0512	2024-09-28	1000 Bank	credit	407.27	quarter-end split across bank and card
-H0512	2024-09-28	2100 Card	credit	301.07	quarter-end split across bank and card
-H0513	2024-10-08	1000 Bank	debit	16070.07	cash vehicle sale
-H0513	2024-10-08	4000 Vehicle Sales	credit	16070.07	cash vehicle sale
-H0514	2024-10-08	5000 COGS Vehicles	debit	11005.93	cost of vehicle sold
-H0514	2024-10-08	1300 Inventory	credit	11005.93	cost of vehicle sold
-H0515	2024-10-13	1000 Bank	debit	9177.06	cash vehicle sale
-H0515	2024-10-13	4000 Vehicle Sales	credit	9177.06	cash vehicle sale
-H0516	2024-10-13	5000 COGS Vehicles	debit	6729.84	cost of vehicle sold
-H0516	2024-10-13	1300 Inventory	credit	6729.84	cost of vehicle sold
-H0517	2024-10-15	1100 AR	debit	7808.74	vehicle sale on account
-H0517	2024-10-15	4000 Vehicle Sales	credit	7808.74	vehicle sale on account
-H0518	2024-10-24	1000 Bank	debit	7808.74	customer settles invoice
-H0518	2024-10-24	1100 AR	credit	7808.74	customer settles invoice
-H0519	2024-10-15	5000 COGS Vehicles	debit	5309.90	cost of vehicle sold
-H0519	2024-10-15	1300 Inventory	credit	5309.90	cost of vehicle sold
-H0520	2024-10-11	1300 Inventory	debit	13375.03	vehicle acquired on floor plan
-H0520	2024-10-11	2600 Loan	credit	13375.03	vehicle acquired on floor plan
-H0521	2024-10-22	1300 Inventory	debit	15343.67	vehicle acquired on floor plan
-H0521	2024-10-22	2600 Loan	credit	15343.67	vehicle acquired on floor plan
-H0522	2024-10-24	1000 Bank	debit	603.29	parts sale
-H0522	2024-10-24	4100 Parts Income	credit	603.29	parts sale
-H0523	2024-10-24	5100 Parts COGS	debit	331.81	parts cost
-H0523	2024-10-24	2100 Card	credit	331.81	parts cost
-H0524	2024-10-01	6000 Rent	debit	2600.00	monthly rent
-H0524	2024-10-01	1000 Bank	credit	2600.00	monthly rent
-H0525	2024-10-12	6300 Utilities	debit	332.12	utilities
-H0525	2024-10-12	1000 Bank	credit	332.12	utilities
-H0526	2024-10-20	2600 Loan	debit	1987.34	floor plan payment
-H0526	2024-10-20	7000 Interest Exp	debit	292.89	floor plan payment
-H0526	2024-10-20	1000 Bank	credit	2280.23	floor plan payment
-H0527	2024-10-07	6100 Fuel	debit	72.90	fuel
-H0527	2024-10-07	2100 Card	credit	72.90	fuel
-H0528	2024-10-26	6100 Fuel	debit	147.82	fuel
-H0528	2024-10-26	2100 Card	credit	147.82	fuel
-H0529	2024-10-10	6100 Fuel	debit	75.46	fuel
-H0529	2024-10-10	2100 Card	credit	75.46	fuel
-H0530	2024-10-21	6400 Office	debit	23.63	office supplies
-H0530	2024-10-21	2100 Card	credit	23.63	office supplies
-H0531	2024-10-22	6400 Office	debit	104.23	office supplies
-H0531	2024-10-22	2100 Card	credit	104.23	office supplies
-H0532	2024-10-23	6200 Advertising	debit	293.08	advertising
-H0532	2024-10-23	1000 Bank	credit	293.08	advertising
-H0533	2024-10-26	2100 Card	debit	731.14	credit card payment
-H0533	2024-10-26	1000 Bank	credit	731.14	credit card payment
-H0534	2024-10-20	1000 Bank	debit	4442.91	owner contribution
-H0534	2024-10-20	3000 Equity	credit	4442.91	owner contribution
-H0535	2024-11-25	1000 Bank	debit	11575.52	cash vehicle sale
-H0535	2024-11-25	4000 Vehicle Sales	credit	11575.52	cash vehicle sale
-H0536	2024-11-25	5000 COGS Vehicles	debit	7490.07	cost of vehicle sold
-H0536	2024-11-25	1300 Inventory	credit	7490.07	cost of vehicle sold
-H0537	2024-11-15	1000 Bank	debit	13287.85	cash vehicle sale
-H0537	2024-11-15	4000 Vehicle Sales	credit	13287.85	cash vehicle sale
-H0538	2024-11-15	5000 COGS Vehicles	debit	8574.09	cost of vehicle sold
-H0538	2024-11-15	1300 Inventory	credit	8574.09	cost of vehicle sold
-H0539	2024-11-24	1000 Bank	debit	16040.05	cash vehicle sale
-H0539	2024-11-24	4000 Vehicle Sales	credit	16040.05	cash vehicle sale
-H0540	2024-11-24	5000 COGS Vehicles	debit	10650.38	cost of vehicle sold
-H0540	2024-11-24	1300 Inventory	credit	10650.38	cost of vehicle sold
-H0541	2024-11-26	1000 Bank	debit	14323.26	cash vehicle sale
-H0541	2024-11-26	4000 Vehicle Sales	credit	14323.26	cash vehicle sale
-H0542	2024-11-26	5000 COGS Vehicles	debit	11113.53	cost of vehicle sold
-H0542	2024-11-26	1300 Inventory	credit	11113.53	cost of vehicle sold
-H0543	2024-11-11	1300 Inventory	debit	13634.71	vehicle acquired on floor plan
-H0543	2024-11-11	2600 Loan	credit	13634.71	vehicle acquired on floor plan
-H0544	2024-11-10	1300 Inventory	debit	11834.48	vehicle acquired on floor plan
-H0544	2024-11-10	2600 Loan	credit	11834.48	vehicle acquired on floor plan
-H0545	2024-11-09	1300 Inventory	debit	16082.50	vehicle acquired on floor plan
-H0545	2024-11-09	2600 Loan	credit	16082.50	vehicle acquired on floor plan
-H0546	2024-11-02	1000 Bank	debit	508.90	parts sale
-H0546	2024-11-02	4100 Parts Income	credit	508.90	parts sale
-H0547	2024-11-02	5100 Parts COGS	debit	279.89	parts cost
-H0547	2024-11-02	2100 Card	credit	279.89	parts cost
-H0548	2024-11-01	6000 Rent	debit	2600.00	monthly rent
-H0548	2024-11-01	1000 Bank	credit	2600.00	monthly rent
-H0549	2024-11-12	6300 Utilities	debit	432.68	utilities
-H0549	2024-11-12	1000 Bank	credit	432.68	utilities
-H0550	2024-11-20	2600 Loan	debit	1722.75	floor plan payment
-H0550	2024-11-20	7000 Interest Exp	debit	181.65	floor plan payment
-H0550	2024-11-20	1000 Bank	credit	1904.40	floor plan payment
-H0551	2024-11-07	6100 Fuel	debit	98.39	fuel
-H0551	2024-11-07	2100 Card	credit	98.39	fuel
-H0552	2024-11-22	6100 Fuel	debit	156.86	fuel
-H0552	2024-11-22	2100 Card	credit	156.86	fuel
-H0553	2024-11-03	6400 Office	debit	126.35	office supplies
-H0553	2024-11-03	2100 Card	credit	126.35	office supplies
-H0554	2024-11-06	6400 Office	debit	24.11	office supplies
-H0554	2024-11-06	2100 Card	credit	24.11	office supplies
-H0555	2024-11-26	2100 Card	debit	1533.76	credit card payment
-H0555	2024-11-26	1000 Bank	credit	1533.76	credit card payment
-H0556	2024-12-16	1000 Bank	debit	11630.68	cash vehicle sale
-H0556	2024-12-16	4000 Vehicle Sales	credit	11630.68	cash vehicle sale
-H0557	2024-12-16	5000 COGS Vehicles	debit	7589.94	cost of vehicle sold
-H0557	2024-12-16	1300 Inventory	credit	7589.94	cost of vehicle sold
-H0558	2024-12-22	1000 Bank	debit	8115.01	cash vehicle sale
-H0558	2024-12-22	4000 Vehicle Sales	credit	8115.01	cash vehicle sale
-H0559	2024-12-22	5000 COGS Vehicles	debit	6213.16	cost of vehicle sold
-H0559	2024-12-22	1300 Inventory	credit	6213.16	cost of vehicle sold
-H0560	2024-12-19	1000 Bank	debit	15730.16	cash vehicle sale
-H0560	2024-12-19	4000 Vehicle Sales	credit	15730.16	cash vehicle sale
-H0561	2024-12-19	5000 COGS Vehicles	debit	10106.83	cost of vehicle sold
-H0561	2024-12-19	1300 Inventory	credit	10106.83	cost of vehicle sold
-H0562	2024-12-10	1100 AR	debit	9781.64	vehicle sale on account
-H0562	2024-12-10	4000 Vehicle Sales	credit	9781.64	vehicle sale on account
-H0563	2024-12-19	1000 Bank	debit	9781.64	customer settles invoice
-H0563	2024-12-19	1100 AR	credit	9781.64	customer settles invoice
-H0564	2024-12-10	5000 COGS Vehicles	debit	7115.81	cost of vehicle sold
-H0564	2024-12-10	1300 Inventory	credit	7115.81	cost of vehicle sold
-H0565	2024-12-06	1300 Inventory	debit	20981.24	vehicle acquired on floor plan
-H0565	2024-12-06	2600 Loan	credit	20981.24	vehicle acquired on floor plan
-H0566	2024-12-23	1300 Inventory	debit	8767.00	vehicle acquired on floor plan
-H0566	2024-12-23	2600 Loan	credit	8767.00	vehicle acquired on floor plan
-H0567	2024-12-19	1000 Bank	debit	140.28	parts sale
-H0567	2024-12-19	4100 Parts Income	credit	140.28	parts sale
-H0568	2024-12-19	5100 Parts COGS	debit	77.15	parts cost
-H0568	2024-12-19	2100 Card	credit	77.15	parts cost
-H0569	2024-12-01	6000 Rent	debit	2600.00	monthly rent
-H0569	2024-12-01	1000 Bank	credit	2600.00	monthly rent
-H0570	2024-12-12	6300 Utilities	debit	561.31	utilities
-H0570	2024-12-12	1000 Bank	credit	561.31	utilities
-H0571	2024-12-20	2600 Loan	debit	1973.57	floor plan payment
-H0571	2024-12-20	7000 Interest Exp	debit	221.70	floor plan payment
-H0571	2024-12-20	1000 Bank	credit	2195.27	floor plan payment
-H0572	2024-12-14	6100 Fuel	debit	140.63	fuel
-H0572	2024-12-14	2100 Card	credit	140.63	fuel
-H0573	2024-12-26	6100 Fuel	debit	91.02	fuel
-H0573	2024-12-26	2100 Card	credit	91.02	fuel
-H0574	2024-12-25	6100 Fuel	debit	140.95	fuel
-H0574	2024-12-25	2100 Card	credit	140.95	fuel
-H0575	2024-12-18	6100 Fuel	debit	165.03	fuel
-H0575	2024-12-18	2100 Card	credit	165.03	fuel
-H0576	2024-12-26	6400 Office	debit	59.97	office supplies
-H0576	2024-12-26	2100 Card	credit	59.97	office supplies
-H0577	2024-12-07	6400 Office	debit	89.11	office supplies
-H0577	2024-12-07	2100 Card	credit	89.11	office supplies
-H0578	2024-12-16	6200 Advertising	debit	543.39	advertising
-H0578	2024-12-16	1000 Bank	credit	543.39	advertising
-H0579	2024-12-26	2100 Card	debit	1849.13	credit card payment
-H0579	2024-12-26	1000 Bank	credit	1849.13	credit card payment
-H0580	2024-12-14	6100 Fuel	debit	839.88	bulk heating/plow fuel delivery, paid direct
-H0580	2024-12-14	1000 Bank	credit	839.88	bulk heating/plow fuel delivery, paid direct
-H0581	2024-12-28	6300 Utilities	debit	156.59	quarter-end split across bank and card
-H0581	2024-12-28	6200 Advertising	debit	350.82	quarter-end split across bank and card
-H0581	2024-12-28	1000 Bank	credit	323.23	quarter-end split across bank and card
-H0581	2024-12-28	2100 Card	credit	184.18	quarter-end split across bank and card
-H0582	2025-01-12	1000 Bank	debit	14865.50	cash vehicle sale
-H0582	2025-01-12	4000 Vehicle Sales	credit	14865.50	cash vehicle sale
-H0583	2025-01-12	5000 COGS Vehicles	debit	9733.22	cost of vehicle sold
-H0583	2025-01-12	1300 Inventory	credit	9733.22	cost of vehicle sold
-H0584	2025-01-06	1000 Bank	debit	16471.53	cash vehicle sale
-H0584	2025-01-06	4000 Vehicle Sales	credit	16471.53	cash vehicle sale
-H0585	2025-01-06	5000 COGS Vehicles	debit	11543.52	cost of vehicle sold
-H0585	2025-01-06	1300 Inventory	credit	11543.52	cost of vehicle sold
-H0586	2025-01-22	1000 Bank	debit	9314.09	cash vehicle sale
-H0586	2025-01-22	4000 Vehicle Sales	credit	9314.09	cash vehicle sale
-H0587	2025-01-22	5000 COGS Vehicles	debit	6149.48	cost of vehicle sold
-H0587	2025-01-22	1300 Inventory	credit	6149.48	cost of vehicle sold
-H0588	2025-01-15	1100 AR	debit	14871.47	vehicle sale on account
-H0588	2025-01-15	4000 Vehicle Sales	credit	14871.47	vehicle sale on account
-H0589	2025-01-24	1000 Bank	debit	14871.47	customer settles invoice
-H0589	2025-01-24	1100 AR	credit	14871.47	customer settles invoice
-H0590	2025-01-15	5000 COGS Vehicles	debit	11551.05	cost of vehicle sold
-H0590	2025-01-15	1300 Inventory	credit	11551.05	cost of vehicle sold
-H0591	2025-01-07	1300 Inventory	debit	10708.95	vehicle acquired on floor plan
-H0591	2025-01-07	2600 Loan	credit	10708.95	vehicle acquired on floor plan
-H0592	2025-01-20	1000 Bank	debit	885.29	parts sale
-H0592	2025-01-20	4100 Parts Income	credit	885.29	parts sale
-H0593	2025-01-20	5100 Parts COGS	debit	486.91	parts cost
-H0593	2025-01-20	2100 Card	credit	486.91	parts cost
-H0594	2025-01-22	1000 Bank	debit	666.60	parts sale
-H0594	2025-01-22	4100 Parts Income	credit	666.60	parts sale
-H0595	2025-01-22	5100 Parts COGS	debit	366.63	parts cost
-H0595	2025-01-22	2100 Card	credit	366.63	parts cost
-H0596	2025-01-17	1000 Bank	debit	427.44	parts sale
-H0596	2025-01-17	4100 Parts Income	credit	427.44	parts sale
-H0597	2025-01-17	5100 Parts COGS	debit	235.09	parts cost
-H0597	2025-01-17	2100 Card	credit	235.09	parts cost
-H0598	2025-01-01	6000 Rent	debit	2600.00	monthly rent
-H0598	2025-01-01	1000 Bank	credit	2600.00	monthly rent
-H0599	2025-01-12	6300 Utilities	debit	489.39	utilities
-H0599	2025-01-12	1000 Bank	credit	489.39	utilities
-H0600	2025-01-20	2600 Loan	debit	1859.82	floor plan payment
-H0600	2025-01-20	7000 Interest Exp	debit	305.84	floor plan payment
-H0600	2025-01-20	1000 Bank	credit	2165.66	floor plan payment
-H0601	2025-01-19	6100 Fuel	debit	170.36	fuel
-H0601	2025-01-19	2100 Card	credit	170.36	fuel
-H0602	2025-01-14	6100 Fuel	debit	170.90	fuel
-H0602	2025-01-14	2100 Card	credit	170.90	fuel
-H0603	2025-01-03	6400 Office	debit	64.88	office supplies
-H0603	2025-01-03	2100 Card	credit	64.88	office supplies
-H0604	2025-01-26	2100 Card	debit	978.62	credit card payment
-H0604	2025-01-26	1000 Bank	credit	978.62	credit card payment
-H0605	2025-01-04	6100 Fuel	debit	930.41	bulk heating/plow fuel delivery, paid direct
-H0605	2025-01-04	1000 Bank	credit	930.41	bulk heating/plow fuel delivery, paid direct
+H0012	2023-01-01	1300 Inventory	debit	16196.43	vehicle acquired on floor plan
+H0012	2023-01-01	2600 Loan	credit	16196.43	vehicle acquired on floor plan
+H0019	2023-01-01	6000 Rent	debit	2600.00	monthly rent
+H0019	2023-01-01	1000 Bank	credit	2600.00	monthly rent
+H0002	2023-01-03	1010 Bank Payroll	debit	9000.00	open payroll clearing account
+H0002	2023-01-03	1000 Bank	credit	9000.00	open payroll clearing account
+H0028	2023-01-05	6100 Fuel	debit	710.53	bulk heating/plow fuel delivery, paid direct
+H0028	2023-01-05	1000 Bank	credit	710.53	bulk heating/plow fuel delivery, paid direct
+H0024	2023-01-07	6100 Fuel	debit	141.28	fuel
+H0024	2023-01-07	2100 Card	credit	141.28	fuel
+H0027	2023-01-07	6200 Advertising	debit	287.66	advertising
+H0027	2023-01-07	1000 Bank	credit	287.66	advertising
+H0003	2023-01-09	1000 Bank	debit	10012.48	cash vehicle sale
+H0003	2023-01-09	4000 Vehicle Sales	credit	10012.48	cash vehicle sale
+H0004	2023-01-09	5000 COGS Vehicles	debit	6783.37	cost of vehicle sold
+H0004	2023-01-09	1300 Inventory	credit	6783.37	cost of vehicle sold
+H0001	2023-01-10	1500 Equipment	debit	48000.00	shop equipment purchase
+H0001	2023-01-10	1000 Bank	credit	48000.00	shop equipment purchase
+H0007	2023-01-10	1100 AR	debit	6350.26	vehicle sale on account
+H0007	2023-01-10	4000 Vehicle Sales	credit	6350.26	vehicle sale on account
+H0009	2023-01-10	5000 COGS Vehicles	debit	4083.03	cost of vehicle sold
+H0009	2023-01-10	1300 Inventory	credit	4083.03	cost of vehicle sold
+H0020	2023-01-12	6300 Utilities	debit	442.69	utilities
+H0020	2023-01-12	1000 Bank	credit	442.69	utilities
+H0031	2023-01-14	1010 Bank Payroll	debit	6091.58	fund payroll account
+H0031	2023-01-14	1000 Bank	credit	6091.58	fund payroll account
+H0022	2023-01-15	6100 Fuel	debit	189.08	fuel
+H0022	2023-01-15	2100 Card	credit	189.08	fuel
+H0032	2023-01-15	6600 Payroll Expense	debit	6091.58	payroll run
+H0032	2023-01-15	1010 Bank Payroll	credit	6091.58	payroll run
+H0017	2023-01-18	1000 Bank	debit	300.16	parts sale
+H0017	2023-01-18	4100 Parts Income	credit	300.16	parts sale
+H0018	2023-01-18	5100 Parts COGS	debit	165.09	parts cost
+H0018	2023-01-18	2100 Card	credit	165.09	parts cost
+H0008	2023-01-19	1000 Bank	debit	6350.26	customer settles invoice
+H0008	2023-01-19	1100 AR	credit	6350.26	customer settles invoice
+H0010	2023-01-19	1300 Inventory	debit	10596.78	vehicle acquired on floor plan
+H0010	2023-01-19	2600 Loan	credit	10596.78	vehicle acquired on floor plan
+H0011	2023-01-20	1300 Inventory	debit	15826.28	vehicle acquired on floor plan
+H0011	2023-01-20	2600 Loan	credit	15826.28	vehicle acquired on floor plan
+H0021	2023-01-20	2600 Loan	debit	2127.65	floor plan payment
+H0021	2023-01-20	7000 Interest Exp	debit	199.54	floor plan payment
+H0021	2023-01-20	1000 Bank	credit	2327.19	floor plan payment
+H0025	2023-01-20	6100 Fuel	debit	121.19	fuel
+H0025	2023-01-20	2100 Card	credit	121.19	fuel
+H0015	2023-01-22	1000 Bank	debit	450.91	parts sale
+H0015	2023-01-22	4100 Parts Income	credit	450.91	parts sale
+H0016	2023-01-22	5100 Parts COGS	debit	248.00	parts cost
+H0016	2023-01-22	2100 Card	credit	248.00	parts cost
+H0013	2023-01-23	1000 Bank	debit	593.75	parts sale
+H0013	2023-01-23	4100 Parts Income	credit	593.75	parts sale
+H0014	2023-01-23	5100 Parts COGS	debit	326.56	parts cost
+H0014	2023-01-23	2100 Card	credit	326.56	parts cost
+H0023	2023-01-23	6100 Fuel	debit	102.31	fuel
+H0023	2023-01-23	2100 Card	credit	102.31	fuel
+H0026	2023-01-23	6400 Office	debit	106.23	office supplies
+H0026	2023-01-23	2100 Card	credit	106.23	office supplies
+H0029	2023-01-26	2100 Card	debit	1118.11	credit card payment
+H0029	2023-01-26	1000 Bank	credit	1118.11	credit card payment
+H0005	2023-01-27	1000 Bank	debit	8258.00	cash vehicle sale
+H0005	2023-01-27	4000 Vehicle Sales	credit	8258.00	cash vehicle sale
+H0006	2023-01-27	5000 COGS Vehicles	debit	5986.55	cost of vehicle sold
+H0006	2023-01-27	1300 Inventory	credit	5986.55	cost of vehicle sold
+H0030	2023-01-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0030	2023-01-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0045	2023-02-01	6000 Rent	debit	2600.00	monthly rent
+H0045	2023-02-01	1000 Bank	credit	2600.00	monthly rent
+H0039	2023-02-02	1100 AR	debit	6793.26	vehicle sale on account
+H0039	2023-02-02	4000 Vehicle Sales	credit	6793.26	vehicle sale on account
+H0041	2023-02-02	5000 COGS Vehicles	debit	5251.87	cost of vehicle sold
+H0041	2023-02-02	1300 Inventory	credit	5251.87	cost of vehicle sold
+H0049	2023-02-05	6100 Fuel	debit	141.38	fuel
+H0049	2023-02-05	2100 Card	credit	141.38	fuel
+H0051	2023-02-05	6100 Fuel	debit	79.57	fuel
+H0051	2023-02-05	2100 Card	credit	79.57	fuel
+H0043	2023-02-09	1000 Bank	debit	178.84	parts sale
+H0043	2023-02-09	4100 Parts Income	credit	178.84	parts sale
+H0044	2023-02-09	5100 Parts COGS	debit	98.36	parts cost
+H0044	2023-02-09	2100 Card	credit	98.36	parts cost
+H0040	2023-02-11	1000 Bank	debit	6793.26	customer settles invoice
+H0040	2023-02-11	1100 AR	credit	6793.26	customer settles invoice
+H0054	2023-02-11	6100 Fuel	debit	864.45	bulk heating/plow fuel delivery, paid direct
+H0054	2023-02-11	1000 Bank	credit	864.45	bulk heating/plow fuel delivery, paid direct
+H0046	2023-02-12	6300 Utilities	debit	505.25	utilities
+H0046	2023-02-12	1000 Bank	credit	505.25	utilities
+H0058	2023-02-14	1010 Bank Payroll	debit	7112.35	fund payroll account
+H0058	2023-02-14	1000 Bank	credit	7112.35	fund payroll account
+H0033	2023-02-15	1000 Bank	debit	10261.38	cash vehicle sale
+H0033	2023-02-15	4000 Vehicle Sales	credit	10261.38	cash vehicle sale
+H0034	2023-02-15	5000 COGS Vehicles	debit	7740.95	cost of vehicle sold
+H0034	2023-02-15	1300 Inventory	credit	7740.95	cost of vehicle sold
+H0059	2023-02-15	6600 Payroll Expense	debit	7112.35	payroll run
+H0059	2023-02-15	1010 Bank Payroll	credit	7112.35	payroll run
+H0048	2023-02-17	6100 Fuel	debit	184.94	fuel
+H0048	2023-02-17	2100 Card	credit	184.94	fuel
+H0052	2023-02-19	6400 Office	debit	91.75	office supplies
+H0052	2023-02-19	2100 Card	credit	91.75	office supplies
+H0047	2023-02-20	2600 Loan	debit	2116.13	floor plan payment
+H0047	2023-02-20	7000 Interest Exp	debit	239.82	floor plan payment
+H0047	2023-02-20	1000 Bank	credit	2355.95	floor plan payment
+H0053	2023-02-21	6200 Advertising	debit	196.67	advertising
+H0053	2023-02-21	1000 Bank	credit	196.67	advertising
+H0055	2023-02-22	6100 Fuel	debit	1009.33	bulk heating/plow fuel delivery, paid direct
+H0055	2023-02-22	1000 Bank	credit	1009.33	bulk heating/plow fuel delivery, paid direct
+H0037	2023-02-23	1000 Bank	debit	6611.28	cash vehicle sale
+H0037	2023-02-23	4000 Vehicle Sales	credit	6611.28	cash vehicle sale
+H0038	2023-02-23	5000 COGS Vehicles	debit	4410.37	cost of vehicle sold
+H0038	2023-02-23	1300 Inventory	credit	4410.37	cost of vehicle sold
+H0042	2023-02-23	1300 Inventory	debit	8246.51	vehicle acquired on floor plan
+H0042	2023-02-23	2600 Loan	credit	8246.51	vehicle acquired on floor plan
+H0035	2023-02-26	1000 Bank	debit	10041.98	cash vehicle sale
+H0035	2023-02-26	4000 Vehicle Sales	credit	10041.98	cash vehicle sale
+H0036	2023-02-26	5000 COGS Vehicles	debit	7425.43	cost of vehicle sold
+H0036	2023-02-26	1300 Inventory	credit	7425.43	cost of vehicle sold
+H0056	2023-02-26	2100 Card	debit	720.27	credit card payment
+H0056	2023-02-26	1000 Bank	credit	720.27	credit card payment
+H0050	2023-02-27	6100 Fuel	debit	55.33	fuel
+H0050	2023-02-27	2100 Card	credit	55.33	fuel
+H0057	2023-02-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0057	2023-02-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0074	2023-03-01	6000 Rent	debit	2600.00	monthly rent
+H0074	2023-03-01	1000 Bank	credit	2600.00	monthly rent
+H0064	2023-03-03	1100 AR	debit	11571.80	vehicle sale on account
+H0064	2023-03-03	4000 Vehicle Sales	credit	11571.80	vehicle sale on account
+H0066	2023-03-03	5000 COGS Vehicles	debit	7401.15	cost of vehicle sold
+H0066	2023-03-03	1300 Inventory	credit	7401.15	cost of vehicle sold
+H0070	2023-03-05	1000 Bank	debit	661.66	parts sale
+H0070	2023-03-05	4100 Parts Income	credit	661.66	parts sale
+H0071	2023-03-05	5100 Parts COGS	debit	363.91	parts cost
+H0071	2023-03-05	2100 Card	credit	363.91	parts cost
+H0062	2023-03-12	1000 Bank	debit	13726.61	cash vehicle sale
+H0062	2023-03-12	4000 Vehicle Sales	credit	13726.61	cash vehicle sale
+H0063	2023-03-12	5000 COGS Vehicles	debit	10658.50	cost of vehicle sold
+H0063	2023-03-12	1300 Inventory	credit	10658.50	cost of vehicle sold
+H0065	2023-03-12	1000 Bank	debit	11571.80	customer settles invoice
+H0065	2023-03-12	1100 AR	credit	11571.80	customer settles invoice
+H0067	2023-03-12	1300 Inventory	debit	23480.85	vehicle acquired on floor plan
+H0067	2023-03-12	2600 Loan	credit	23480.85	vehicle acquired on floor plan
+H0075	2023-03-12	6300 Utilities	debit	365.88	utilities
+H0075	2023-03-12	1000 Bank	credit	365.88	utilities
+H0068	2023-03-14	1000 Bank	debit	506.64	parts sale
+H0068	2023-03-14	4100 Parts Income	credit	506.64	parts sale
+H0069	2023-03-14	5100 Parts COGS	debit	278.65	parts cost
+H0069	2023-03-14	2100 Card	credit	278.65	parts cost
+H0083	2023-03-14	1010 Bank Payroll	debit	5751.99	fund payroll account
+H0083	2023-03-14	1000 Bank	credit	5751.99	fund payroll account
+H0084	2023-03-15	6600 Payroll Expense	debit	5751.99	payroll run
+H0084	2023-03-15	1010 Bank Payroll	credit	5751.99	payroll run
+H0076	2023-03-20	2600 Loan	debit	1943.61	floor plan payment
+H0076	2023-03-20	7000 Interest Exp	debit	198.93	floor plan payment
+H0076	2023-03-20	1000 Bank	credit	2142.54	floor plan payment
+H0078	2023-03-20	6100 Fuel	debit	115.49	fuel
+H0078	2023-03-20	2100 Card	credit	115.49	fuel
+H0077	2023-03-21	6100 Fuel	debit	61.59	fuel
+H0077	2023-03-21	2100 Card	credit	61.59	fuel
+H0060	2023-03-26	1000 Bank	debit	15933.36	cash vehicle sale
+H0060	2023-03-26	4000 Vehicle Sales	credit	15933.36	cash vehicle sale
+H0061	2023-03-26	5000 COGS Vehicles	debit	11186.89	cost of vehicle sold
+H0061	2023-03-26	1300 Inventory	credit	11186.89	cost of vehicle sold
+H0079	2023-03-26	6400 Office	debit	48.26	office supplies
+H0079	2023-03-26	2100 Card	credit	48.26	office supplies
+H0081	2023-03-26	2100 Card	debit	1265.37	credit card payment
+H0081	2023-03-26	1000 Bank	credit	1265.37	credit card payment
+H0072	2023-03-28	1000 Bank	debit	455.61	parts sale
+H0072	2023-03-28	4100 Parts Income	credit	455.61	parts sale
+H0073	2023-03-28	5100 Parts COGS	debit	250.59	parts cost
+H0073	2023-03-28	2100 Card	credit	250.59	parts cost
+H0080	2023-03-28	6300 Utilities	debit	201.69	quarter-end split across bank and card
+H0080	2023-03-28	6200 Advertising	debit	394.42	quarter-end split across bank and card
+H0080	2023-03-28	1000 Bank	credit	378.18	quarter-end split across bank and card
+H0080	2023-03-28	2100 Card	credit	217.93	quarter-end split across bank and card
+H0082	2023-03-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0082	2023-03-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0100	2023-04-01	6000 Rent	debit	2600.00	monthly rent
+H0100	2023-04-01	1000 Bank	credit	2600.00	monthly rent
+H0091	2023-04-03	1000 Bank	debit	9034.55	cash vehicle sale
+H0091	2023-04-03	4000 Vehicle Sales	credit	9034.55	cash vehicle sale
+H0092	2023-04-03	5000 COGS Vehicles	debit	5957.81	cost of vehicle sold
+H0092	2023-04-03	1300 Inventory	credit	5957.81	cost of vehicle sold
+H0105	2023-04-03	6400 Office	debit	26.54	office supplies
+H0105	2023-04-03	2100 Card	credit	26.54	office supplies
+H0111	2023-04-06	1000 Bank	debit	3946.99	owner contribution
+H0111	2023-04-06	3000 Equity	credit	3946.99	owner contribution
+H0089	2023-04-08	1000 Bank	debit	16954.97	cash vehicle sale
+H0089	2023-04-08	4000 Vehicle Sales	credit	16954.97	cash vehicle sale
+H0090	2023-04-08	5000 COGS Vehicles	debit	11411.80	cost of vehicle sold
+H0090	2023-04-08	1300 Inventory	credit	11411.80	cost of vehicle sold
+H0106	2023-04-08	6200 Advertising	debit	682.96	advertising
+H0106	2023-04-08	1000 Bank	credit	682.96	advertising
+H0103	2023-04-09	6100 Fuel	debit	123.74	fuel
+H0103	2023-04-09	2100 Card	credit	123.74	fuel
+H0098	2023-04-11	1000 Bank	debit	884.16	parts sale
+H0098	2023-04-11	4100 Parts Income	credit	884.16	parts sale
+H0099	2023-04-11	5100 Parts COGS	debit	486.29	parts cost
+H0099	2023-04-11	2100 Card	credit	486.29	parts cost
+H0101	2023-04-12	6300 Utilities	debit	440.28	utilities
+H0101	2023-04-12	1000 Bank	credit	440.28	utilities
+H0104	2023-04-13	6100 Fuel	debit	58.42	fuel
+H0104	2023-04-13	2100 Card	credit	58.42	fuel
+H0109	2023-04-14	1010 Bank Payroll	debit	6347.92	fund payroll account
+H0109	2023-04-14	1000 Bank	credit	6347.92	fund payroll account
+H0110	2023-04-15	6600 Payroll Expense	debit	6347.92	payroll run
+H0110	2023-04-15	1010 Bank Payroll	credit	6347.92	payroll run
+H0093	2023-04-16	1300 Inventory	debit	21157.86	vehicle acquired on floor plan
+H0093	2023-04-16	2600 Loan	credit	21157.86	vehicle acquired on floor plan
+H0085	2023-04-18	1000 Bank	debit	17647.09	cash vehicle sale
+H0085	2023-04-18	4000 Vehicle Sales	credit	17647.09	cash vehicle sale
+H0086	2023-04-18	5000 COGS Vehicles	debit	12636.79	cost of vehicle sold
+H0086	2023-04-18	1300 Inventory	credit	12636.79	cost of vehicle sold
+H0094	2023-04-18	1300 Inventory	debit	23682.11	vehicle acquired on floor plan
+H0094	2023-04-18	2600 Loan	credit	23682.11	vehicle acquired on floor plan
+H0102	2023-04-20	2600 Loan	debit	2170.01	floor plan payment
+H0102	2023-04-20	7000 Interest Exp	debit	339.60	floor plan payment
+H0102	2023-04-20	1000 Bank	credit	2509.61	floor plan payment
+H0096	2023-04-22	1000 Bank	debit	609.69	parts sale
+H0096	2023-04-22	4100 Parts Income	credit	609.69	parts sale
+H0097	2023-04-22	5100 Parts COGS	debit	335.33	parts cost
+H0097	2023-04-22	2100 Card	credit	335.33	parts cost
+H0095	2023-04-23	1300 Inventory	debit	10999.81	vehicle acquired on floor plan
+H0095	2023-04-23	2600 Loan	credit	10999.81	vehicle acquired on floor plan
+H0087	2023-04-25	1000 Bank	debit	16903.58	cash vehicle sale
+H0087	2023-04-25	4000 Vehicle Sales	credit	16903.58	cash vehicle sale
+H0088	2023-04-25	5000 COGS Vehicles	debit	11993.49	cost of vehicle sold
+H0088	2023-04-25	1300 Inventory	credit	11993.49	cost of vehicle sold
+H0107	2023-04-26	2100 Card	debit	1148.59	credit card payment
+H0107	2023-04-26	1000 Bank	credit	1148.59	credit card payment
+H0108	2023-04-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0108	2023-04-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0126	2023-05-01	6000 Rent	debit	2600.00	monthly rent
+H0126	2023-05-01	1000 Bank	credit	2600.00	monthly rent
+H0116	2023-05-02	1100 AR	debit	7958.76	vehicle sale on account
+H0116	2023-05-02	4000 Vehicle Sales	credit	7958.76	vehicle sale on account
+H0118	2023-05-02	5000 COGS Vehicles	debit	6193.08	cost of vehicle sold
+H0118	2023-05-02	1300 Inventory	credit	6193.08	cost of vehicle sold
+H0122	2023-05-05	1000 Bank	debit	306.92	parts sale
+H0122	2023-05-05	4100 Parts Income	credit	306.92	parts sale
+H0123	2023-05-05	5100 Parts COGS	debit	168.81	parts cost
+H0123	2023-05-05	2100 Card	credit	168.81	parts cost
+H0133	2023-05-06	6200 Advertising	debit	233.92	advertising
+H0133	2023-05-06	1000 Bank	credit	233.92	advertising
+H0114	2023-05-09	1000 Bank	debit	17568.84	cash vehicle sale
+H0114	2023-05-09	4000 Vehicle Sales	credit	17568.84	cash vehicle sale
+H0115	2023-05-09	5000 COGS Vehicles	debit	12045.79	cost of vehicle sold
+H0115	2023-05-09	1300 Inventory	credit	12045.79	cost of vehicle sold
+H0117	2023-05-11	1000 Bank	debit	7958.76	customer settles invoice
+H0117	2023-05-11	1100 AR	credit	7958.76	customer settles invoice
+H0127	2023-05-12	6300 Utilities	debit	344.17	utilities
+H0127	2023-05-12	1000 Bank	credit	344.17	utilities
+H0131	2023-05-13	6100 Fuel	debit	146.98	fuel
+H0131	2023-05-13	2100 Card	credit	146.98	fuel
+H0120	2023-05-14	1000 Bank	debit	450.59	parts sale
+H0120	2023-05-14	4100 Parts Income	credit	450.59	parts sale
+H0121	2023-05-14	5100 Parts COGS	debit	247.82	parts cost
+H0121	2023-05-14	2100 Card	credit	247.82	parts cost
+H0129	2023-05-14	6100 Fuel	debit	133.45	fuel
+H0129	2023-05-14	2100 Card	credit	133.45	fuel
+H0136	2023-05-14	1010 Bank Payroll	debit	7313.48	fund payroll account
+H0136	2023-05-14	1000 Bank	credit	7313.48	fund payroll account
+H0137	2023-05-15	6600 Payroll Expense	debit	7313.48	payroll run
+H0137	2023-05-15	1010 Bank Payroll	credit	7313.48	payroll run
+H0119	2023-05-20	1300 Inventory	debit	23017.02	vehicle acquired on floor plan
+H0119	2023-05-20	2600 Loan	credit	23017.02	vehicle acquired on floor plan
+H0128	2023-05-20	2600 Loan	debit	1836.23	floor plan payment
+H0128	2023-05-20	7000 Interest Exp	debit	324.94	floor plan payment
+H0128	2023-05-20	1000 Bank	credit	2161.17	floor plan payment
+H0112	2023-05-23	1000 Bank	debit	14875.70	cash vehicle sale
+H0112	2023-05-23	4000 Vehicle Sales	credit	14875.70	cash vehicle sale
+H0113	2023-05-23	5000 COGS Vehicles	debit	11459.20	cost of vehicle sold
+H0113	2023-05-23	1300 Inventory	credit	11459.20	cost of vehicle sold
+H0124	2023-05-23	1000 Bank	debit	704.42	parts sale
+H0124	2023-05-23	4100 Parts Income	credit	704.42	parts sale
+H0125	2023-05-23	5100 Parts COGS	debit	387.43	parts cost
+H0125	2023-05-23	2100 Card	credit	387.43	parts cost
+H0130	2023-05-23	6100 Fuel	debit	81.43	fuel
+H0130	2023-05-23	2100 Card	credit	81.43	fuel
+H0132	2023-05-24	6400 Office	debit	30.35	office supplies
+H0132	2023-05-24	2100 Card	credit	30.35	office supplies
+H0134	2023-05-26	2100 Card	debit	957.81	credit card payment
+H0134	2023-05-26	1000 Bank	credit	957.81	credit card payment
+H0135	2023-05-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0135	2023-05-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0154	2023-06-01	6000 Rent	debit	2600.00	monthly rent
+H0154	2023-06-01	1000 Bank	credit	2600.00	monthly rent
+H0138	2023-06-02	1000 Bank	debit	9549.11	cash vehicle sale
+H0138	2023-06-02	4000 Vehicle Sales	credit	9549.11	cash vehicle sale
+H0139	2023-06-02	5000 COGS Vehicles	debit	6941.90	cost of vehicle sold
+H0139	2023-06-02	1300 Inventory	credit	6941.90	cost of vehicle sold
+H0142	2023-06-02	1100 AR	debit	14607.20	vehicle sale on account
+H0142	2023-06-02	4000 Vehicle Sales	credit	14607.20	vehicle sale on account
+H0144	2023-06-02	5000 COGS Vehicles	debit	10899.58	cost of vehicle sold
+H0144	2023-06-02	1300 Inventory	credit	10899.58	cost of vehicle sold
+H0147	2023-06-04	1300 Inventory	debit	18902.23	vehicle acquired on floor plan
+H0147	2023-06-04	2600 Loan	credit	18902.23	vehicle acquired on floor plan
+H0162	2023-06-05	6200 Advertising	debit	176.80	advertising
+H0162	2023-06-05	1000 Bank	credit	176.80	advertising
+H0150	2023-06-07	1000 Bank	debit	501.98	parts sale
+H0150	2023-06-07	4100 Parts Income	credit	501.98	parts sale
+H0151	2023-06-07	5100 Parts COGS	debit	276.09	parts cost
+H0151	2023-06-07	2100 Card	credit	276.09	parts cost
+H0164	2023-06-07	6400 Office	debit	509.27	summer season supplies, paid direct
+H0164	2023-06-07	1000 Bank	credit	509.27	summer season supplies, paid direct
+H0143	2023-06-11	1000 Bank	debit	14607.20	customer settles invoice
+H0143	2023-06-11	1100 AR	credit	14607.20	customer settles invoice
+H0155	2023-06-12	6300 Utilities	debit	216.22	utilities
+H0155	2023-06-12	1000 Bank	credit	216.22	utilities
+H0157	2023-06-12	6100 Fuel	debit	54.58	fuel
+H0157	2023-06-12	2100 Card	credit	54.58	fuel
+H0140	2023-06-14	1000 Bank	debit	11327.17	cash vehicle sale
+H0140	2023-06-14	4000 Vehicle Sales	credit	11327.17	cash vehicle sale
+H0141	2023-06-14	5000 COGS Vehicles	debit	7979.56	cost of vehicle sold
+H0141	2023-06-14	1300 Inventory	credit	7979.56	cost of vehicle sold
+H0146	2023-06-14	1300 Inventory	debit	12423.37	vehicle acquired on floor plan
+H0146	2023-06-14	2600 Loan	credit	12423.37	vehicle acquired on floor plan
+H0168	2023-06-14	1010 Bank Payroll	debit	6645.34	fund payroll account
+H0168	2023-06-14	1000 Bank	credit	6645.34	fund payroll account
+H0145	2023-06-15	1300 Inventory	debit	19992.84	vehicle acquired on floor plan
+H0145	2023-06-15	2600 Loan	credit	19992.84	vehicle acquired on floor plan
+H0169	2023-06-15	6600 Payroll Expense	debit	6645.34	payroll run
+H0169	2023-06-15	1010 Bank Payroll	credit	6645.34	payroll run
+H0161	2023-06-17	6400 Office	debit	27.03	office supplies
+H0161	2023-06-17	2100 Card	credit	27.03	office supplies
+H0159	2023-06-18	6100 Fuel	debit	178.96	fuel
+H0159	2023-06-18	2100 Card	credit	178.96	fuel
+H0156	2023-06-20	2600 Loan	debit	1416.77	floor plan payment
+H0156	2023-06-20	7000 Interest Exp	debit	225.35	floor plan payment
+H0156	2023-06-20	1000 Bank	credit	1642.12	floor plan payment
+H0158	2023-06-20	6100 Fuel	debit	106.88	fuel
+H0158	2023-06-20	2100 Card	credit	106.88	fuel
+H0148	2023-06-22	1000 Bank	debit	616.38	parts sale
+H0148	2023-06-22	4100 Parts Income	credit	616.38	parts sale
+H0149	2023-06-22	5100 Parts COGS	debit	339.01	parts cost
+H0149	2023-06-22	2100 Card	credit	339.01	parts cost
+H0160	2023-06-24	6400 Office	debit	80.72	office supplies
+H0160	2023-06-24	2100 Card	credit	80.72	office supplies
+H0152	2023-06-25	1000 Bank	debit	213.84	parts sale
+H0152	2023-06-25	4100 Parts Income	credit	213.84	parts sale
+H0153	2023-06-25	5100 Parts COGS	debit	117.61	parts cost
+H0153	2023-06-25	2100 Card	credit	117.61	parts cost
+H0163	2023-06-25	6400 Office	debit	381.70	summer season supplies, paid direct
+H0163	2023-06-25	1000 Bank	credit	381.70	summer season supplies, paid direct
+H0166	2023-06-26	2100 Card	debit	1696.21	credit card payment
+H0166	2023-06-26	1000 Bank	credit	1696.21	credit card payment
+H0165	2023-06-28	6300 Utilities	debit	240.66	quarter-end split across bank and card
+H0165	2023-06-28	6200 Advertising	debit	499.36	quarter-end split across bank and card
+H0165	2023-06-28	1000 Bank	credit	399.21	quarter-end split across bank and card
+H0165	2023-06-28	2100 Card	credit	340.81	quarter-end split across bank and card
+H0167	2023-06-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0167	2023-06-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0185	2023-07-01	6000 Rent	debit	2600.00	monthly rent
+H0185	2023-07-01	1000 Bank	credit	2600.00	monthly rent
+H0178	2023-07-02	1300 Inventory	debit	17219.63	vehicle acquired on floor plan
+H0178	2023-07-02	2600 Loan	credit	17219.63	vehicle acquired on floor plan
+H0194	2023-07-03	6400 Office	debit	407.28	summer season supplies, paid direct
+H0194	2023-07-03	1000 Bank	credit	407.28	summer season supplies, paid direct
+H0172	2023-07-06	1000 Bank	debit	8954.52	cash vehicle sale
+H0172	2023-07-06	4000 Vehicle Sales	credit	8954.52	cash vehicle sale
+H0173	2023-07-06	5000 COGS Vehicles	debit	6251.34	cost of vehicle sold
+H0173	2023-07-06	1300 Inventory	credit	6251.34	cost of vehicle sold
+H0179	2023-07-07	1000 Bank	debit	646.59	parts sale
+H0179	2023-07-07	4100 Parts Income	credit	646.59	parts sale
+H0180	2023-07-07	5100 Parts COGS	debit	355.62	parts cost
+H0180	2023-07-07	2100 Card	credit	355.62	parts cost
+H0192	2023-07-07	6200 Advertising	debit	523.98	advertising
+H0192	2023-07-07	1000 Bank	credit	523.98	advertising
+H0186	2023-07-12	6300 Utilities	debit	286.37	utilities
+H0186	2023-07-12	1000 Bank	credit	286.37	utilities
+H0191	2023-07-12	6400 Office	debit	129.87	office supplies
+H0191	2023-07-12	2100 Card	credit	129.87	office supplies
+H0193	2023-07-12	6400 Office	debit	502.34	summer season supplies, paid direct
+H0193	2023-07-12	1000 Bank	credit	502.34	summer season supplies, paid direct
+H0188	2023-07-13	6100 Fuel	debit	53.40	fuel
+H0188	2023-07-13	2100 Card	credit	53.40	fuel
+H0174	2023-07-14	1000 Bank	debit	9079.87	cash vehicle sale
+H0174	2023-07-14	4000 Vehicle Sales	credit	9079.87	cash vehicle sale
+H0175	2023-07-14	5000 COGS Vehicles	debit	5989.20	cost of vehicle sold
+H0175	2023-07-14	1300 Inventory	credit	5989.20	cost of vehicle sold
+H0197	2023-07-14	1010 Bank Payroll	debit	7109.85	fund payroll account
+H0197	2023-07-14	1000 Bank	credit	7109.85	fund payroll account
+H0189	2023-07-15	6100 Fuel	debit	162.80	fuel
+H0189	2023-07-15	2100 Card	credit	162.80	fuel
+H0198	2023-07-15	6600 Payroll Expense	debit	7109.85	payroll run
+H0198	2023-07-15	1010 Bank Payroll	credit	7109.85	payroll run
+H0181	2023-07-20	1000 Bank	debit	807.13	parts sale
+H0181	2023-07-20	4100 Parts Income	credit	807.13	parts sale
+H0182	2023-07-20	5100 Parts COGS	debit	443.92	parts cost
+H0182	2023-07-20	2100 Card	credit	443.92	parts cost
+H0187	2023-07-20	2600 Loan	debit	2166.00	floor plan payment
+H0187	2023-07-20	7000 Interest Exp	debit	327.69	floor plan payment
+H0187	2023-07-20	1000 Bank	credit	2493.69	floor plan payment
+H0176	2023-07-23	1000 Bank	debit	16208.41	cash vehicle sale
+H0176	2023-07-23	4000 Vehicle Sales	credit	16208.41	cash vehicle sale
+H0177	2023-07-23	5000 COGS Vehicles	debit	11386.99	cost of vehicle sold
+H0177	2023-07-23	1300 Inventory	credit	11386.99	cost of vehicle sold
+H0170	2023-07-26	1000 Bank	debit	8637.30	cash vehicle sale
+H0170	2023-07-26	4000 Vehicle Sales	credit	8637.30	cash vehicle sale
+H0171	2023-07-26	5000 COGS Vehicles	debit	5934.09	cost of vehicle sold
+H0171	2023-07-26	1300 Inventory	credit	5934.09	cost of vehicle sold
+H0190	2023-07-26	6400 Office	debit	64.31	office supplies
+H0190	2023-07-26	2100 Card	credit	64.31	office supplies
+H0195	2023-07-26	2100 Card	debit	1163.41	credit card payment
+H0195	2023-07-26	1000 Bank	credit	1163.41	credit card payment
+H0183	2023-07-27	1000 Bank	debit	294.91	parts sale
+H0183	2023-07-27	4100 Parts Income	credit	294.91	parts sale
+H0184	2023-07-27	5100 Parts COGS	debit	162.20	parts cost
+H0184	2023-07-27	2100 Card	credit	162.20	parts cost
+H0196	2023-07-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0196	2023-07-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0203	2023-08-01	1300 Inventory	debit	16654.93	vehicle acquired on floor plan
+H0203	2023-08-01	2600 Loan	credit	16654.93	vehicle acquired on floor plan
+H0211	2023-08-01	6000 Rent	debit	2600.00	monthly rent
+H0211	2023-08-01	1000 Bank	credit	2600.00	monthly rent
+H0199	2023-08-05	1000 Bank	debit	19701.34	cash vehicle sale
+H0199	2023-08-05	4000 Vehicle Sales	credit	19701.34	cash vehicle sale
+H0200	2023-08-05	5000 COGS Vehicles	debit	14285.46	cost of vehicle sold
+H0200	2023-08-05	1300 Inventory	credit	14285.46	cost of vehicle sold
+H0201	2023-08-08	1000 Bank	debit	12016.43	cash vehicle sale
+H0201	2023-08-08	4000 Vehicle Sales	credit	12016.43	cash vehicle sale
+H0202	2023-08-08	5000 COGS Vehicles	debit	8681.70	cost of vehicle sold
+H0202	2023-08-08	1300 Inventory	credit	8681.70	cost of vehicle sold
+H0217	2023-08-09	6100 Fuel	debit	82.95	fuel
+H0217	2023-08-09	2100 Card	credit	82.95	fuel
+H0204	2023-08-10	1300 Inventory	debit	10484.11	vehicle acquired on floor plan
+H0204	2023-08-10	2600 Loan	credit	10484.11	vehicle acquired on floor plan
+H0209	2023-08-10	1000 Bank	debit	842.89	parts sale
+H0209	2023-08-10	4100 Parts Income	credit	842.89	parts sale
+H0210	2023-08-10	5100 Parts COGS	debit	463.59	parts cost
+H0210	2023-08-10	2100 Card	credit	463.59	parts cost
+H0214	2023-08-11	6100 Fuel	debit	108.83	fuel
+H0214	2023-08-11	2100 Card	credit	108.83	fuel
+H0219	2023-08-11	6200 Advertising	debit	498.17	advertising
+H0219	2023-08-11	1000 Bank	credit	498.17	advertising
+H0212	2023-08-12	6300 Utilities	debit	309.79	utilities
+H0212	2023-08-12	1000 Bank	credit	309.79	utilities
+H0223	2023-08-14	1010 Bank Payroll	debit	5381.97	fund payroll account
+H0223	2023-08-14	1000 Bank	credit	5381.97	fund payroll account
+H0220	2023-08-15	6400 Office	debit	226.59	summer season supplies, paid direct
+H0220	2023-08-15	1000 Bank	credit	226.59	summer season supplies, paid direct
+H0224	2023-08-15	6600 Payroll Expense	debit	5381.97	payroll run
+H0224	2023-08-15	1010 Bank Payroll	credit	5381.97	payroll run
+H0216	2023-08-16	6100 Fuel	debit	170.75	fuel
+H0216	2023-08-16	2100 Card	credit	170.75	fuel
+H0213	2023-08-20	2600 Loan	debit	1717.43	floor plan payment
+H0213	2023-08-20	7000 Interest Exp	debit	208.79	floor plan payment
+H0213	2023-08-20	1000 Bank	credit	1926.22	floor plan payment
+H0218	2023-08-20	6400 Office	debit	117.47	office supplies
+H0218	2023-08-20	2100 Card	credit	117.47	office supplies
+H0205	2023-08-21	1000 Bank	debit	574.78	parts sale
+H0205	2023-08-21	4100 Parts Income	credit	574.78	parts sale
+H0206	2023-08-21	5100 Parts COGS	debit	316.13	parts cost
+H0206	2023-08-21	2100 Card	credit	316.13	parts cost
+H0207	2023-08-21	1000 Bank	debit	469.14	parts sale
+H0207	2023-08-21	4100 Parts Income	credit	469.14	parts sale
+H0208	2023-08-21	5100 Parts COGS	debit	258.03	parts cost
+H0208	2023-08-21	2100 Card	credit	258.03	parts cost
+H0215	2023-08-21	6100 Fuel	debit	126.49	fuel
+H0215	2023-08-21	2100 Card	credit	126.49	fuel
+H0221	2023-08-26	2100 Card	debit	1770.34	credit card payment
+H0221	2023-08-26	1000 Bank	credit	1770.34	credit card payment
+H0222	2023-08-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0222	2023-08-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0237	2023-09-01	6000 Rent	debit	2600.00	monthly rent
+H0237	2023-09-01	1000 Bank	credit	2600.00	monthly rent
+H0233	2023-09-05	1000 Bank	debit	833.65	parts sale
+H0233	2023-09-05	4100 Parts Income	credit	833.65	parts sale
+H0234	2023-09-05	5100 Parts COGS	debit	458.51	parts cost
+H0234	2023-09-05	2100 Card	credit	458.51	parts cost
+H0238	2023-09-12	6300 Utilities	debit	448.06	utilities
+H0238	2023-09-12	1000 Bank	credit	448.06	utilities
+H0232	2023-09-13	1300 Inventory	debit	14263.63	vehicle acquired on floor plan
+H0232	2023-09-13	2600 Loan	credit	14263.63	vehicle acquired on floor plan
+H0246	2023-09-14	1010 Bank Payroll	debit	5683.10	fund payroll account
+H0246	2023-09-14	1000 Bank	credit	5683.10	fund payroll account
+H0225	2023-09-15	1000 Bank	debit	12555.78	cash vehicle sale
+H0225	2023-09-15	4000 Vehicle Sales	credit	12555.78	cash vehicle sale
+H0226	2023-09-15	5000 COGS Vehicles	debit	8150.08	cost of vehicle sold
+H0226	2023-09-15	1300 Inventory	credit	8150.08	cost of vehicle sold
+H0247	2023-09-15	6600 Payroll Expense	debit	5683.10	payroll run
+H0247	2023-09-15	1010 Bank Payroll	credit	5683.10	payroll run
+H0229	2023-09-16	1100 AR	debit	12450.27	vehicle sale on account
+H0229	2023-09-16	4000 Vehicle Sales	credit	12450.27	vehicle sale on account
+H0231	2023-09-16	5000 COGS Vehicles	debit	8202.25	cost of vehicle sold
+H0231	2023-09-16	1300 Inventory	credit	8202.25	cost of vehicle sold
+H0241	2023-09-17	6100 Fuel	debit	151.48	fuel
+H0241	2023-09-17	2100 Card	credit	151.48	fuel
+H0242	2023-09-18	6400 Office	debit	88.52	office supplies
+H0242	2023-09-18	2100 Card	credit	88.52	office supplies
+H0239	2023-09-20	2600 Loan	debit	1875.00	floor plan payment
+H0239	2023-09-20	7000 Interest Exp	debit	267.39	floor plan payment
+H0239	2023-09-20	1000 Bank	credit	2142.39	floor plan payment
+H0230	2023-09-25	1000 Bank	debit	12450.27	customer settles invoice
+H0230	2023-09-25	1100 AR	credit	12450.27	customer settles invoice
+H0227	2023-09-26	1000 Bank	debit	6868.84	cash vehicle sale
+H0227	2023-09-26	4000 Vehicle Sales	credit	6868.84	cash vehicle sale
+H0228	2023-09-26	5000 COGS Vehicles	debit	4958.90	cost of vehicle sold
+H0228	2023-09-26	1300 Inventory	credit	4958.90	cost of vehicle sold
+H0235	2023-09-26	1000 Bank	debit	370.85	parts sale
+H0235	2023-09-26	4100 Parts Income	credit	370.85	parts sale
+H0236	2023-09-26	5100 Parts COGS	debit	203.97	parts cost
+H0236	2023-09-26	2100 Card	credit	203.97	parts cost
+H0240	2023-09-26	6100 Fuel	debit	79.67	fuel
+H0240	2023-09-26	2100 Card	credit	79.67	fuel
+H0244	2023-09-26	2100 Card	debit	1316.14	credit card payment
+H0244	2023-09-26	1000 Bank	credit	1316.14	credit card payment
+H0243	2023-09-28	6300 Utilities	debit	307.18	quarter-end split across bank and card
+H0243	2023-09-28	6200 Advertising	debit	376.55	quarter-end split across bank and card
+H0243	2023-09-28	1000 Bank	credit	324.36	quarter-end split across bank and card
+H0243	2023-09-28	2100 Card	credit	359.37	quarter-end split across bank and card
+H0245	2023-09-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0245	2023-09-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0257	2023-10-01	1000 Bank	debit	206.77	parts sale
+H0257	2023-10-01	4100 Parts Income	credit	206.77	parts sale
+H0258	2023-10-01	5100 Parts COGS	debit	113.72	parts cost
+H0258	2023-10-01	2100 Card	credit	113.72	parts cost
+H0261	2023-10-01	6000 Rent	debit	2600.00	monthly rent
+H0261	2023-10-01	1000 Bank	credit	2600.00	monthly rent
+H0252	2023-10-03	1000 Bank	debit	8610.49	cash vehicle sale
+H0252	2023-10-03	4000 Vehicle Sales	credit	8610.49	cash vehicle sale
+H0253	2023-10-03	5000 COGS Vehicles	debit	6096.27	cost of vehicle sold
+H0253	2023-10-03	1300 Inventory	credit	6096.27	cost of vehicle sold
+H0250	2023-10-10	1000 Bank	debit	14140.68	cash vehicle sale
+H0250	2023-10-10	4000 Vehicle Sales	credit	14140.68	cash vehicle sale
+H0251	2023-10-10	5000 COGS Vehicles	debit	10223.57	cost of vehicle sold
+H0251	2023-10-10	1300 Inventory	credit	10223.57	cost of vehicle sold
+H0248	2023-10-11	1000 Bank	debit	13665.58	cash vehicle sale
+H0248	2023-10-11	4000 Vehicle Sales	credit	13665.58	cash vehicle sale
+H0249	2023-10-11	5000 COGS Vehicles	debit	9398.29	cost of vehicle sold
+H0249	2023-10-11	1300 Inventory	credit	9398.29	cost of vehicle sold
+H0262	2023-10-12	6300 Utilities	debit	427.10	utilities
+H0262	2023-10-12	1000 Bank	credit	427.10	utilities
+H0267	2023-10-14	6200 Advertising	debit	530.69	advertising
+H0267	2023-10-14	1000 Bank	credit	530.69	advertising
+H0270	2023-10-14	1010 Bank Payroll	debit	6399.70	fund payroll account
+H0270	2023-10-14	1000 Bank	credit	6399.70	fund payroll account
+H0271	2023-10-15	6600 Payroll Expense	debit	6399.70	payroll run
+H0271	2023-10-15	1010 Bank Payroll	credit	6399.70	payroll run
+H0255	2023-10-18	1000 Bank	debit	365.95	parts sale
+H0255	2023-10-18	4100 Parts Income	credit	365.95	parts sale
+H0256	2023-10-18	5100 Parts COGS	debit	201.27	parts cost
+H0256	2023-10-18	2100 Card	credit	201.27	parts cost
+H0263	2023-10-20	2600 Loan	debit	1552.79	floor plan payment
+H0263	2023-10-20	7000 Interest Exp	debit	333.51	floor plan payment
+H0263	2023-10-20	1000 Bank	credit	1886.30	floor plan payment
+H0266	2023-10-21	6400 Office	debit	39.14	office supplies
+H0266	2023-10-21	2100 Card	credit	39.14	office supplies
+H0254	2023-10-23	1300 Inventory	debit	14567.56	vehicle acquired on floor plan
+H0254	2023-10-23	2600 Loan	credit	14567.56	vehicle acquired on floor plan
+H0264	2023-10-24	6100 Fuel	debit	65.11	fuel
+H0264	2023-10-24	2100 Card	credit	65.11	fuel
+H0265	2023-10-25	6100 Fuel	debit	83.65	fuel
+H0265	2023-10-25	2100 Card	credit	83.65	fuel
+H0268	2023-10-26	2100 Card	debit	808.05	credit card payment
+H0268	2023-10-26	1000 Bank	credit	808.05	credit card payment
+H0259	2023-10-27	1000 Bank	debit	324.68	parts sale
+H0259	2023-10-27	4100 Parts Income	credit	324.68	parts sale
+H0260	2023-10-27	5100 Parts COGS	debit	178.57	parts cost
+H0260	2023-10-27	2100 Card	credit	178.57	parts cost
+H0269	2023-10-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0269	2023-10-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0288	2023-11-01	6000 Rent	debit	2600.00	monthly rent
+H0288	2023-11-01	1000 Bank	credit	2600.00	monthly rent
+H0284	2023-11-02	1000 Bank	debit	895.94	parts sale
+H0284	2023-11-02	4100 Parts Income	credit	895.94	parts sale
+H0285	2023-11-02	5100 Parts COGS	debit	492.77	parts cost
+H0285	2023-11-02	2100 Card	credit	492.77	parts cost
+H0291	2023-11-07	6100 Fuel	debit	132.62	fuel
+H0291	2023-11-07	2100 Card	credit	132.62	fuel
+H0276	2023-11-10	1000 Bank	debit	9009.42	cash vehicle sale
+H0276	2023-11-10	4000 Vehicle Sales	credit	9009.42	cash vehicle sale
+H0277	2023-11-10	5000 COGS Vehicles	debit	6629.58	cost of vehicle sold
+H0277	2023-11-10	1300 Inventory	credit	6629.58	cost of vehicle sold
+H0278	2023-11-10	1100 AR	debit	7045.35	vehicle sale on account
+H0278	2023-11-10	4000 Vehicle Sales	credit	7045.35	vehicle sale on account
+H0280	2023-11-10	5000 COGS Vehicles	debit	4966.15	cost of vehicle sold
+H0280	2023-11-10	1300 Inventory	credit	4966.15	cost of vehicle sold
+H0286	2023-11-12	1000 Bank	debit	289.27	parts sale
+H0286	2023-11-12	4100 Parts Income	credit	289.27	parts sale
+H0287	2023-11-12	5100 Parts COGS	debit	159.10	parts cost
+H0287	2023-11-12	2100 Card	credit	159.10	parts cost
+H0289	2023-11-12	6300 Utilities	debit	317.56	utilities
+H0289	2023-11-12	1000 Bank	credit	317.56	utilities
+H0294	2023-11-14	6200 Advertising	debit	314.35	advertising
+H0294	2023-11-14	1000 Bank	credit	314.35	advertising
+H0297	2023-11-14	1010 Bank Payroll	debit	6674.47	fund payroll account
+H0297	2023-11-14	1000 Bank	credit	6674.47	fund payroll account
+H0298	2023-11-15	6600 Payroll Expense	debit	6674.47	payroll run
+H0298	2023-11-15	1010 Bank Payroll	credit	6674.47	payroll run
+H0292	2023-11-17	6100 Fuel	debit	111.57	fuel
+H0292	2023-11-17	2100 Card	credit	111.57	fuel
+H0283	2023-11-18	1300 Inventory	debit	10294.48	vehicle acquired on floor plan
+H0283	2023-11-18	2600 Loan	credit	10294.48	vehicle acquired on floor plan
+H0274	2023-11-19	1000 Bank	debit	10955.51	cash vehicle sale
+H0274	2023-11-19	4000 Vehicle Sales	credit	10955.51	cash vehicle sale
+H0275	2023-11-19	5000 COGS Vehicles	debit	7466.42	cost of vehicle sold
+H0275	2023-11-19	1300 Inventory	credit	7466.42	cost of vehicle sold
+H0279	2023-11-19	1000 Bank	debit	7045.35	customer settles invoice
+H0279	2023-11-19	1100 AR	credit	7045.35	customer settles invoice
+H0282	2023-11-20	1300 Inventory	debit	10399.95	vehicle acquired on floor plan
+H0282	2023-11-20	2600 Loan	credit	10399.95	vehicle acquired on floor plan
+H0290	2023-11-20	2600 Loan	debit	2194.07	floor plan payment
+H0290	2023-11-20	7000 Interest Exp	debit	225.21	floor plan payment
+H0290	2023-11-20	1000 Bank	credit	2419.28	floor plan payment
+H0272	2023-11-22	1000 Bank	debit	10791.26	cash vehicle sale
+H0272	2023-11-22	4000 Vehicle Sales	credit	10791.26	cash vehicle sale
+H0273	2023-11-22	5000 COGS Vehicles	debit	8374.48	cost of vehicle sold
+H0273	2023-11-22	1300 Inventory	credit	8374.48	cost of vehicle sold
+H0281	2023-11-23	1300 Inventory	debit	15952.54	vehicle acquired on floor plan
+H0281	2023-11-23	2600 Loan	credit	15952.54	vehicle acquired on floor plan
+H0293	2023-11-25	6400 Office	debit	102.46	office supplies
+H0293	2023-11-25	2100 Card	credit	102.46	office supplies
+H0295	2023-11-26	2100 Card	debit	988.32	credit card payment
+H0295	2023-11-26	1000 Bank	credit	988.32	credit card payment
+H0296	2023-11-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0296	2023-11-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0316	2023-12-01	6000 Rent	debit	2600.00	monthly rent
+H0316	2023-12-01	1000 Bank	credit	2600.00	monthly rent
+H0299	2023-12-02	1000 Bank	debit	7149.24	cash vehicle sale
+H0299	2023-12-02	4000 Vehicle Sales	credit	7149.24	cash vehicle sale
+H0300	2023-12-02	5000 COGS Vehicles	debit	4554.15	cost of vehicle sold
+H0300	2023-12-02	1300 Inventory	credit	4554.15	cost of vehicle sold
+H0320	2023-12-02	6100 Fuel	debit	102.98	fuel
+H0320	2023-12-02	2100 Card	credit	102.98	fuel
+H0305	2023-12-03	1100 AR	debit	7787.33	vehicle sale on account
+H0305	2023-12-03	4000 Vehicle Sales	credit	7787.33	vehicle sale on account
+H0307	2023-12-03	5000 COGS Vehicles	debit	5733.52	cost of vehicle sold
+H0307	2023-12-03	1300 Inventory	credit	5733.52	cost of vehicle sold
+H0301	2023-12-05	1000 Bank	debit	11530.54	cash vehicle sale
+H0301	2023-12-05	4000 Vehicle Sales	credit	11530.54	cash vehicle sale
+H0302	2023-12-05	5000 COGS Vehicles	debit	7319.97	cost of vehicle sold
+H0302	2023-12-05	1300 Inventory	credit	7319.97	cost of vehicle sold
+H0323	2023-12-06	6200 Advertising	debit	324.57	advertising
+H0323	2023-12-06	1000 Bank	credit	324.57	advertising
+H0319	2023-12-08	6100 Fuel	debit	54.82	fuel
+H0319	2023-12-08	2100 Card	credit	54.82	fuel
+H0312	2023-12-11	1000 Bank	debit	782.51	parts sale
+H0312	2023-12-11	4100 Parts Income	credit	782.51	parts sale
+H0313	2023-12-11	5100 Parts COGS	debit	430.38	parts cost
+H0313	2023-12-11	2100 Card	credit	430.38	parts cost
+H0306	2023-12-12	1000 Bank	debit	7787.33	customer settles invoice
+H0306	2023-12-12	1100 AR	credit	7787.33	customer settles invoice
+H0317	2023-12-12	6300 Utilities	debit	574.16	utilities
+H0317	2023-12-12	1000 Bank	credit	574.16	utilities
+H0328	2023-12-14	1010 Bank Payroll	debit	5918.87	fund payroll account
+H0328	2023-12-14	1000 Bank	credit	5918.87	fund payroll account
+H0329	2023-12-15	6600 Payroll Expense	debit	5918.87	payroll run
+H0329	2023-12-15	1010 Bank Payroll	credit	5918.87	payroll run
+H0309	2023-12-17	1300 Inventory	debit	15289.38	vehicle acquired on floor plan
+H0309	2023-12-17	2600 Loan	credit	15289.38	vehicle acquired on floor plan
+H0322	2023-12-17	6400 Office	debit	94.59	office supplies
+H0322	2023-12-17	2100 Card	credit	94.59	office supplies
+H0318	2023-12-20	2600 Loan	debit	2020.67	floor plan payment
+H0318	2023-12-20	7000 Interest Exp	debit	260.86	floor plan payment
+H0318	2023-12-20	1000 Bank	credit	2281.53	floor plan payment
+H0324	2023-12-21	6100 Fuel	debit	680.85	bulk heating/plow fuel delivery, paid direct
+H0324	2023-12-21	1000 Bank	credit	680.85	bulk heating/plow fuel delivery, paid direct
+H0303	2023-12-22	1000 Bank	debit	10439.25	cash vehicle sale
+H0303	2023-12-22	4000 Vehicle Sales	credit	10439.25	cash vehicle sale
+H0304	2023-12-22	5000 COGS Vehicles	debit	6861.15	cost of vehicle sold
+H0304	2023-12-22	1300 Inventory	credit	6861.15	cost of vehicle sold
+H0308	2023-12-23	1300 Inventory	debit	15901.46	vehicle acquired on floor plan
+H0308	2023-12-23	2600 Loan	credit	15901.46	vehicle acquired on floor plan
+H0321	2023-12-23	6400 Office	debit	25.06	office supplies
+H0321	2023-12-23	2100 Card	credit	25.06	office supplies
+H0314	2023-12-24	1000 Bank	debit	606.98	parts sale
+H0314	2023-12-24	4100 Parts Income	credit	606.98	parts sale
+H0315	2023-12-24	5100 Parts COGS	debit	333.84	parts cost
+H0315	2023-12-24	2100 Card	credit	333.84	parts cost
+H0310	2023-12-26	1000 Bank	debit	689.14	parts sale
+H0310	2023-12-26	4100 Parts Income	credit	689.14	parts sale
+H0311	2023-12-26	5100 Parts COGS	debit	379.03	parts cost
+H0311	2023-12-26	2100 Card	credit	379.03	parts cost
+H0326	2023-12-26	2100 Card	debit	1781.38	credit card payment
+H0326	2023-12-26	1000 Bank	credit	1781.38	credit card payment
+H0325	2023-12-28	6300 Utilities	debit	363.09	quarter-end split across bank and card
+H0325	2023-12-28	6200 Advertising	debit	384.96	quarter-end split across bank and card
+H0325	2023-12-28	1000 Bank	credit	382.97	quarter-end split across bank and card
+H0325	2023-12-28	2100 Card	credit	365.08	quarter-end split across bank and card
+H0327	2023-12-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0327	2023-12-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0343	2024-01-01	6000 Rent	debit	2600.00	monthly rent
+H0343	2024-01-01	1000 Bank	credit	2600.00	monthly rent
+H0339	2024-01-03	1000 Bank	debit	176.61	parts sale
+H0339	2024-01-03	4100 Parts Income	credit	176.61	parts sale
+H0340	2024-01-03	5100 Parts COGS	debit	97.14	parts cost
+H0340	2024-01-03	2100 Card	credit	97.14	parts cost
+H0348	2024-01-03	6100 Fuel	debit	188.30	fuel
+H0348	2024-01-03	2100 Card	credit	188.30	fuel
+H0332	2024-01-04	1000 Bank	debit	14686.87	cash vehicle sale
+H0332	2024-01-04	4000 Vehicle Sales	credit	14686.87	cash vehicle sale
+H0333	2024-01-04	5000 COGS Vehicles	debit	9564.91	cost of vehicle sold
+H0333	2024-01-04	1300 Inventory	credit	9564.91	cost of vehicle sold
+H0330	2024-01-09	1000 Bank	debit	13045.78	cash vehicle sale
+H0330	2024-01-09	4000 Vehicle Sales	credit	13045.78	cash vehicle sale
+H0331	2024-01-09	5000 COGS Vehicles	debit	9411.95	cost of vehicle sold
+H0331	2024-01-09	1300 Inventory	credit	9411.95	cost of vehicle sold
+H0351	2024-01-09	6200 Advertising	debit	649.00	advertising
+H0351	2024-01-09	1000 Bank	credit	649.00	advertising
+H0344	2024-01-12	6300 Utilities	debit	622.76	utilities
+H0344	2024-01-12	1000 Bank	credit	622.76	utilities
+H0346	2024-01-13	6100 Fuel	debit	83.64	fuel
+H0346	2024-01-13	2100 Card	credit	83.64	fuel
+H0356	2024-01-14	1010 Bank Payroll	debit	6581.60	fund payroll account
+H0356	2024-01-14	1000 Bank	credit	6581.60	fund payroll account
+H0353	2024-01-15	6100 Fuel	debit	986.85	bulk heating/plow fuel delivery, paid direct
+H0353	2024-01-15	1000 Bank	credit	986.85	bulk heating/plow fuel delivery, paid direct
+H0357	2024-01-15	6600 Payroll Expense	debit	6581.60	payroll run
+H0357	2024-01-15	1010 Bank Payroll	credit	6581.60	payroll run
+H0352	2024-01-16	6100 Fuel	debit	645.73	bulk heating/plow fuel delivery, paid direct
+H0352	2024-01-16	1000 Bank	credit	645.73	bulk heating/plow fuel delivery, paid direct
+H0334	2024-01-17	1100 AR	debit	10546.10	vehicle sale on account
+H0334	2024-01-17	4000 Vehicle Sales	credit	10546.10	vehicle sale on account
+H0336	2024-01-17	5000 COGS Vehicles	debit	7462.53	cost of vehicle sold
+H0336	2024-01-17	1300 Inventory	credit	7462.53	cost of vehicle sold
+H0337	2024-01-17	1300 Inventory	debit	16656.50	vehicle acquired on floor plan
+H0337	2024-01-17	2600 Loan	credit	16656.50	vehicle acquired on floor plan
+H0350	2024-01-17	6400 Office	debit	115.73	office supplies
+H0350	2024-01-17	2100 Card	credit	115.73	office supplies
+H0341	2024-01-19	1000 Bank	debit	517.12	parts sale
+H0341	2024-01-19	4100 Parts Income	credit	517.12	parts sale
+H0342	2024-01-19	5100 Parts COGS	debit	284.42	parts cost
+H0342	2024-01-19	2100 Card	credit	284.42	parts cost
+H0345	2024-01-20	2600 Loan	debit	2110.26	floor plan payment
+H0345	2024-01-20	7000 Interest Exp	debit	201.79	floor plan payment
+H0345	2024-01-20	1000 Bank	credit	2312.05	floor plan payment
+H0347	2024-01-21	6100 Fuel	debit	60.13	fuel
+H0347	2024-01-21	2100 Card	credit	60.13	fuel
+H0338	2024-01-22	1300 Inventory	debit	15924.52	vehicle acquired on floor plan
+H0338	2024-01-22	2600 Loan	credit	15924.52	vehicle acquired on floor plan
+H0335	2024-01-26	1000 Bank	debit	10546.10	customer settles invoice
+H0335	2024-01-26	1100 AR	credit	10546.10	customer settles invoice
+H0354	2024-01-26	2100 Card	debit	817.34	credit card payment
+H0354	2024-01-26	1000 Bank	credit	817.34	credit card payment
+H0349	2024-01-27	6100 Fuel	debit	48.35	fuel
+H0349	2024-01-27	2100 Card	credit	48.35	fuel
+H0355	2024-01-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0355	2024-01-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0375	2024-02-01	6000 Rent	debit	2600.00	monthly rent
+H0375	2024-02-01	1000 Bank	credit	2600.00	monthly rent
+H0381	2024-02-02	6400 Office	debit	77.43	office supplies
+H0381	2024-02-02	2100 Card	credit	77.43	office supplies
+H0385	2024-02-03	6100 Fuel	debit	627.78	bulk heating/plow fuel delivery, paid direct
+H0385	2024-02-03	1000 Bank	credit	627.78	bulk heating/plow fuel delivery, paid direct
+H0378	2024-02-04	6100 Fuel	debit	140.59	fuel
+H0378	2024-02-04	2100 Card	credit	140.59	fuel
+H0373	2024-02-06	1000 Bank	debit	499.16	parts sale
+H0373	2024-02-06	4100 Parts Income	credit	499.16	parts sale
+H0374	2024-02-06	5100 Parts COGS	debit	274.54	parts cost
+H0374	2024-02-06	2100 Card	credit	274.54	parts cost
+H0380	2024-02-06	6100 Fuel	debit	187.03	fuel
+H0380	2024-02-06	2100 Card	credit	187.03	fuel
+H0383	2024-02-06	6200 Advertising	debit	693.52	advertising
+H0383	2024-02-06	1000 Bank	credit	693.52	advertising
+H0384	2024-02-07	6100 Fuel	debit	1089.15	bulk heating/plow fuel delivery, paid direct
+H0384	2024-02-07	1000 Bank	credit	1089.15	bulk heating/plow fuel delivery, paid direct
+H0358	2024-02-08	1000 Bank	debit	8594.42	cash vehicle sale
+H0358	2024-02-08	4000 Vehicle Sales	credit	8594.42	cash vehicle sale
+H0359	2024-02-08	5000 COGS Vehicles	debit	6392.69	cost of vehicle sold
+H0359	2024-02-08	1300 Inventory	credit	6392.69	cost of vehicle sold
+H0364	2024-02-12	1000 Bank	debit	13223.51	cash vehicle sale
+H0364	2024-02-12	4000 Vehicle Sales	credit	13223.51	cash vehicle sale
+H0365	2024-02-12	5000 COGS Vehicles	debit	9153.04	cost of vehicle sold
+H0365	2024-02-12	1300 Inventory	credit	9153.04	cost of vehicle sold
+H0366	2024-02-12	1100 AR	debit	10629.13	vehicle sale on account
+H0366	2024-02-12	4000 Vehicle Sales	credit	10629.13	vehicle sale on account
+H0368	2024-02-12	5000 COGS Vehicles	debit	7354.70	cost of vehicle sold
+H0368	2024-02-12	1300 Inventory	credit	7354.70	cost of vehicle sold
+H0376	2024-02-12	6300 Utilities	debit	538.36	utilities
+H0376	2024-02-12	1000 Bank	credit	538.36	utilities
+H0388	2024-02-14	1010 Bank Payroll	debit	7164.90	fund payroll account
+H0388	2024-02-14	1000 Bank	credit	7164.90	fund payroll account
+H0389	2024-02-15	6600 Payroll Expense	debit	7164.90	payroll run
+H0389	2024-02-15	1010 Bank Payroll	credit	7164.90	payroll run
+H0360	2024-02-16	1000 Bank	debit	10988.59	cash vehicle sale
+H0360	2024-02-16	4000 Vehicle Sales	credit	10988.59	cash vehicle sale
+H0361	2024-02-16	5000 COGS Vehicles	debit	7032.31	cost of vehicle sold
+H0361	2024-02-16	1300 Inventory	credit	7032.31	cost of vehicle sold
+H0362	2024-02-17	1000 Bank	debit	10824.56	cash vehicle sale
+H0362	2024-02-17	4000 Vehicle Sales	credit	10824.56	cash vehicle sale
+H0363	2024-02-17	5000 COGS Vehicles	debit	6771.47	cost of vehicle sold
+H0363	2024-02-17	1300 Inventory	credit	6771.47	cost of vehicle sold
+H0370	2024-02-17	1300 Inventory	debit	16017.70	vehicle acquired on floor plan
+H0370	2024-02-17	2600 Loan	credit	16017.70	vehicle acquired on floor plan
+H0369	2024-02-20	1300 Inventory	debit	13380.46	vehicle acquired on floor plan
+H0369	2024-02-20	2600 Loan	credit	13380.46	vehicle acquired on floor plan
+H0377	2024-02-20	2600 Loan	debit	1635.45	floor plan payment
+H0377	2024-02-20	7000 Interest Exp	debit	285.63	floor plan payment
+H0377	2024-02-20	1000 Bank	credit	1921.08	floor plan payment
+H0379	2024-02-20	6100 Fuel	debit	103.43	fuel
+H0379	2024-02-20	2100 Card	credit	103.43	fuel
+H0367	2024-02-21	1000 Bank	debit	10629.13	customer settles invoice
+H0367	2024-02-21	1100 AR	credit	10629.13	customer settles invoice
+H0371	2024-02-25	1000 Bank	debit	725.65	parts sale
+H0371	2024-02-25	4100 Parts Income	credit	725.65	parts sale
+H0372	2024-02-25	5100 Parts COGS	debit	399.11	parts cost
+H0372	2024-02-25	2100 Card	credit	399.11	parts cost
+H0386	2024-02-26	2100 Card	debit	1424.76	credit card payment
+H0386	2024-02-26	1000 Bank	credit	1424.76	credit card payment
+H0382	2024-02-27	6400 Office	debit	124.15	office supplies
+H0382	2024-02-27	2100 Card	credit	124.15	office supplies
+H0387	2024-02-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0387	2024-02-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0402	2024-03-01	6000 Rent	debit	2600.00	monthly rent
+H0402	2024-03-01	1000 Bank	credit	2600.00	monthly rent
+H0392	2024-03-05	1000 Bank	debit	15576.70	cash vehicle sale
+H0392	2024-03-05	4000 Vehicle Sales	credit	15576.70	cash vehicle sale
+H0393	2024-03-05	5000 COGS Vehicles	debit	11436.08	cost of vehicle sold
+H0393	2024-03-05	1300 Inventory	credit	11436.08	cost of vehicle sold
+H0408	2024-03-06	6200 Advertising	debit	564.40	advertising
+H0408	2024-03-06	1000 Bank	credit	564.40	advertising
+H0394	2024-03-08	1300 Inventory	debit	23180.06	vehicle acquired on floor plan
+H0394	2024-03-08	2600 Loan	credit	23180.06	vehicle acquired on floor plan
+H0407	2024-03-08	6400 Office	debit	65.19	office supplies
+H0407	2024-03-08	2100 Card	credit	65.19	office supplies
+H0395	2024-03-11	1300 Inventory	debit	13316.61	vehicle acquired on floor plan
+H0395	2024-03-11	2600 Loan	credit	13316.61	vehicle acquired on floor plan
+H0403	2024-03-12	6300 Utilities	debit	376.28	utilities
+H0403	2024-03-12	1000 Bank	credit	376.28	utilities
+H0390	2024-03-14	1000 Bank	debit	15679.63	cash vehicle sale
+H0390	2024-03-14	4000 Vehicle Sales	credit	15679.63	cash vehicle sale
+H0391	2024-03-14	5000 COGS Vehicles	debit	11629.90	cost of vehicle sold
+H0391	2024-03-14	1300 Inventory	credit	11629.90	cost of vehicle sold
+H0412	2024-03-14	1010 Bank Payroll	debit	7080.50	fund payroll account
+H0412	2024-03-14	1000 Bank	credit	7080.50	fund payroll account
+H0413	2024-03-15	6600 Payroll Expense	debit	7080.50	payroll run
+H0413	2024-03-15	1010 Bank Payroll	credit	7080.50	payroll run
+H0396	2024-03-18	1000 Bank	debit	433.31	parts sale
+H0396	2024-03-18	4100 Parts Income	credit	433.31	parts sale
+H0397	2024-03-18	5100 Parts COGS	debit	238.32	parts cost
+H0397	2024-03-18	2100 Card	credit	238.32	parts cost
+H0405	2024-03-19	6100 Fuel	debit	85.92	fuel
+H0405	2024-03-19	2100 Card	credit	85.92	fuel
+H0400	2024-03-20	1000 Bank	debit	599.44	parts sale
+H0400	2024-03-20	4100 Parts Income	credit	599.44	parts sale
+H0401	2024-03-20	5100 Parts COGS	debit	329.69	parts cost
+H0401	2024-03-20	2100 Card	credit	329.69	parts cost
+H0404	2024-03-20	2600 Loan	debit	1917.86	floor plan payment
+H0404	2024-03-20	7000 Interest Exp	debit	285.61	floor plan payment
+H0404	2024-03-20	1000 Bank	credit	2203.47	floor plan payment
+H0406	2024-03-22	6100 Fuel	debit	126.69	fuel
+H0406	2024-03-22	2100 Card	credit	126.69	fuel
+H0398	2024-03-23	1000 Bank	debit	379.35	parts sale
+H0398	2024-03-23	4100 Parts Income	credit	379.35	parts sale
+H0399	2024-03-23	5100 Parts COGS	debit	208.64	parts cost
+H0399	2024-03-23	2100 Card	credit	208.64	parts cost
+H0410	2024-03-26	2100 Card	debit	1248.22	credit card payment
+H0410	2024-03-26	1000 Bank	credit	1248.22	credit card payment
+H0409	2024-03-28	6300 Utilities	debit	360.21	quarter-end split across bank and card
+H0409	2024-03-28	6200 Advertising	debit	310.42	quarter-end split across bank and card
+H0409	2024-03-28	1000 Bank	credit	325.65	quarter-end split across bank and card
+H0409	2024-03-28	2100 Card	credit	344.98	quarter-end split across bank and card
+H0411	2024-03-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0411	2024-03-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0428	2024-04-01	6000 Rent	debit	2600.00	monthly rent
+H0428	2024-04-01	1000 Bank	credit	2600.00	monthly rent
+H0416	2024-04-02	1000 Bank	debit	18364.04	cash vehicle sale
+H0416	2024-04-02	4000 Vehicle Sales	credit	18364.04	cash vehicle sale
+H0417	2024-04-02	5000 COGS Vehicles	debit	14303.13	cost of vehicle sold
+H0417	2024-04-02	1300 Inventory	credit	14303.13	cost of vehicle sold
+H0418	2024-04-03	1000 Bank	debit	16238.08	cash vehicle sale
+H0418	2024-04-03	4000 Vehicle Sales	credit	16238.08	cash vehicle sale
+H0419	2024-04-03	5000 COGS Vehicles	debit	11810.79	cost of vehicle sold
+H0419	2024-04-03	1300 Inventory	credit	11810.79	cost of vehicle sold
+H0423	2024-04-04	1300 Inventory	debit	18889.47	vehicle acquired on floor plan
+H0423	2024-04-04	2600 Loan	credit	18889.47	vehicle acquired on floor plan
+H0426	2024-04-05	1000 Bank	debit	268.36	parts sale
+H0426	2024-04-05	4100 Parts Income	credit	268.36	parts sale
+H0427	2024-04-05	5100 Parts COGS	debit	147.60	parts cost
+H0427	2024-04-05	2100 Card	credit	147.60	parts cost
+H0436	2024-04-05	6200 Advertising	debit	402.29	advertising
+H0436	2024-04-05	1000 Bank	credit	402.29	advertising
+H0431	2024-04-06	6100 Fuel	debit	82.68	fuel
+H0431	2024-04-06	2100 Card	credit	82.68	fuel
+H0424	2024-04-11	1300 Inventory	debit	20534.75	vehicle acquired on floor plan
+H0424	2024-04-11	2600 Loan	credit	20534.75	vehicle acquired on floor plan
+H0429	2024-04-12	6300 Utilities	debit	303.43	utilities
+H0429	2024-04-12	1000 Bank	credit	303.43	utilities
+H0414	2024-04-13	1000 Bank	debit	20955.57	cash vehicle sale
+H0414	2024-04-13	4000 Vehicle Sales	credit	20955.57	cash vehicle sale
+H0415	2024-04-13	5000 COGS Vehicles	debit	15459.10	cost of vehicle sold
+H0415	2024-04-13	1300 Inventory	credit	15459.10	cost of vehicle sold
+H0433	2024-04-13	6100 Fuel	debit	174.14	fuel
+H0433	2024-04-13	2100 Card	credit	174.14	fuel
+H0439	2024-04-14	1010 Bank Payroll	debit	7184.96	fund payroll account
+H0439	2024-04-14	1000 Bank	credit	7184.96	fund payroll account
+H0434	2024-04-15	6100 Fuel	debit	88.13	fuel
+H0434	2024-04-15	2100 Card	credit	88.13	fuel
+H0440	2024-04-15	6600 Payroll Expense	debit	7184.96	payroll run
+H0440	2024-04-15	1010 Bank Payroll	credit	7184.96	payroll run
+H0435	2024-04-16	6400 Office	debit	69.34	office supplies
+H0435	2024-04-16	2100 Card	credit	69.34	office supplies
+H0420	2024-04-17	1100 AR	debit	15910.15	vehicle sale on account
+H0420	2024-04-17	4000 Vehicle Sales	credit	15910.15	vehicle sale on account
+H0422	2024-04-17	5000 COGS Vehicles	debit	11711.22	cost of vehicle sold
+H0422	2024-04-17	1300 Inventory	credit	11711.22	cost of vehicle sold
+H0430	2024-04-20	2600 Loan	debit	2096.52	floor plan payment
+H0430	2024-04-20	7000 Interest Exp	debit	270.92	floor plan payment
+H0430	2024-04-20	1000 Bank	credit	2367.44	floor plan payment
+H0425	2024-04-21	1300 Inventory	debit	22779.31	vehicle acquired on floor plan
+H0425	2024-04-21	2600 Loan	credit	22779.31	vehicle acquired on floor plan
+H0432	2024-04-25	6100 Fuel	debit	93.57	fuel
+H0432	2024-04-25	2100 Card	credit	93.57	fuel
+H0421	2024-04-26	1000 Bank	debit	15910.15	customer settles invoice
+H0421	2024-04-26	1100 AR	credit	15910.15	customer settles invoice
+H0437	2024-04-26	2100 Card	debit	722.06	credit card payment
+H0437	2024-04-26	1000 Bank	credit	722.06	credit card payment
+H0438	2024-04-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0438	2024-04-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0450	2024-05-01	1300 Inventory	debit	21001.70	vehicle acquired on floor plan
+H0450	2024-05-01	2600 Loan	credit	21001.70	vehicle acquired on floor plan
+H0457	2024-05-01	6000 Rent	debit	2600.00	monthly rent
+H0457	2024-05-01	1000 Bank	credit	2600.00	monthly rent
+H0452	2024-05-04	1300 Inventory	debit	11062.18	vehicle acquired on floor plan
+H0452	2024-05-04	2600 Loan	credit	11062.18	vehicle acquired on floor plan
+H0460	2024-05-04	6100 Fuel	debit	69.31	fuel
+H0460	2024-05-04	2100 Card	credit	69.31	fuel
+H0463	2024-05-08	6100 Fuel	debit	79.26	fuel
+H0463	2024-05-08	2100 Card	credit	79.26	fuel
+H0443	2024-05-10	1000 Bank	debit	12117.42	cash vehicle sale
+H0443	2024-05-10	4000 Vehicle Sales	credit	12117.42	cash vehicle sale
+H0444	2024-05-10	5000 COGS Vehicles	debit	8220.30	cost of vehicle sold
+H0444	2024-05-10	1300 Inventory	credit	8220.30	cost of vehicle sold
+H0447	2024-05-10	1100 AR	debit	10534.78	vehicle sale on account
+H0447	2024-05-10	4000 Vehicle Sales	credit	10534.78	vehicle sale on account
+H0449	2024-05-10	5000 COGS Vehicles	debit	7057.72	cost of vehicle sold
+H0449	2024-05-10	1300 Inventory	credit	7057.72	cost of vehicle sold
+H0458	2024-05-12	6300 Utilities	debit	384.57	utilities
+H0458	2024-05-12	1000 Bank	credit	384.57	utilities
+H0455	2024-05-13	1000 Bank	debit	647.92	parts sale
+H0455	2024-05-13	4100 Parts Income	credit	647.92	parts sale
+H0456	2024-05-13	5100 Parts COGS	debit	356.36	parts cost
+H0456	2024-05-13	2100 Card	credit	356.36	parts cost
+H0468	2024-05-14	1010 Bank Payroll	debit	7240.15	fund payroll account
+H0468	2024-05-14	1000 Bank	credit	7240.15	fund payroll account
+H0451	2024-05-15	1300 Inventory	debit	19359.92	vehicle acquired on floor plan
+H0451	2024-05-15	2600 Loan	credit	19359.92	vehicle acquired on floor plan
+H0461	2024-05-15	6100 Fuel	debit	59.73	fuel
+H0461	2024-05-15	2100 Card	credit	59.73	fuel
+H0464	2024-05-15	6400 Office	debit	99.90	office supplies
+H0464	2024-05-15	2100 Card	credit	99.90	office supplies
+H0469	2024-05-15	6600 Payroll Expense	debit	7240.15	payroll run
+H0469	2024-05-15	1010 Bank Payroll	credit	7240.15	payroll run
+H0453	2024-05-17	1000 Bank	debit	267.45	parts sale
+H0453	2024-05-17	4100 Parts Income	credit	267.45	parts sale
+H0454	2024-05-17	5100 Parts COGS	debit	147.10	parts cost
+H0454	2024-05-17	2100 Card	credit	147.10	parts cost
+H0465	2024-05-18	6200 Advertising	debit	209.19	advertising
+H0465	2024-05-18	1000 Bank	credit	209.19	advertising
+H0448	2024-05-19	1000 Bank	debit	10534.78	customer settles invoice
+H0448	2024-05-19	1100 AR	credit	10534.78	customer settles invoice
+H0445	2024-05-20	1000 Bank	debit	15030.90	cash vehicle sale
+H0445	2024-05-20	4000 Vehicle Sales	credit	15030.90	cash vehicle sale
+H0446	2024-05-20	5000 COGS Vehicles	debit	11237.20	cost of vehicle sold
+H0446	2024-05-20	1300 Inventory	credit	11237.20	cost of vehicle sold
+H0459	2024-05-20	2600 Loan	debit	1785.07	floor plan payment
+H0459	2024-05-20	7000 Interest Exp	debit	212.10	floor plan payment
+H0459	2024-05-20	1000 Bank	credit	1997.17	floor plan payment
+H0462	2024-05-22	6100 Fuel	debit	141.63	fuel
+H0462	2024-05-22	2100 Card	credit	141.63	fuel
+H0466	2024-05-26	2100 Card	debit	1014.55	credit card payment
+H0466	2024-05-26	1000 Bank	credit	1014.55	credit card payment
+H0441	2024-05-27	1000 Bank	debit	20018.98	cash vehicle sale
+H0441	2024-05-27	4000 Vehicle Sales	credit	20018.98	cash vehicle sale
+H0442	2024-05-27	5000 COGS Vehicles	debit	13692.85	cost of vehicle sold
+H0442	2024-05-27	1300 Inventory	credit	13692.85	cost of vehicle sold
+H0467	2024-05-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0467	2024-05-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0480	2024-06-01	1000 Bank	debit	674.38	parts sale
+H0480	2024-06-01	4100 Parts Income	credit	674.38	parts sale
+H0481	2024-06-01	5100 Parts COGS	debit	370.91	parts cost
+H0481	2024-06-01	2100 Card	credit	370.91	parts cost
+H0486	2024-06-01	6000 Rent	debit	2600.00	monthly rent
+H0486	2024-06-01	1000 Bank	credit	2600.00	monthly rent
+H0472	2024-06-03	1000 Bank	debit	12690.98	cash vehicle sale
+H0472	2024-06-03	4000 Vehicle Sales	credit	12690.98	cash vehicle sale
+H0473	2024-06-03	5000 COGS Vehicles	debit	9824.31	cost of vehicle sold
+H0473	2024-06-03	1300 Inventory	credit	9824.31	cost of vehicle sold
+H0482	2024-06-04	1000 Bank	debit	522.36	parts sale
+H0482	2024-06-04	4100 Parts Income	credit	522.36	parts sale
+H0483	2024-06-04	5100 Parts COGS	debit	287.30	parts cost
+H0483	2024-06-04	2100 Card	credit	287.30	parts cost
+H0489	2024-06-04	6100 Fuel	debit	47.25	fuel
+H0489	2024-06-04	2100 Card	credit	47.25	fuel
+H0484	2024-06-07	1000 Bank	debit	842.29	parts sale
+H0484	2024-06-07	4100 Parts Income	credit	842.29	parts sale
+H0485	2024-06-07	5100 Parts COGS	debit	463.26	parts cost
+H0485	2024-06-07	2100 Card	credit	463.26	parts cost
+H0491	2024-06-07	6100 Fuel	debit	184.36	fuel
+H0491	2024-06-07	2100 Card	credit	184.36	fuel
+H0470	2024-06-11	1000 Bank	debit	17178.87	cash vehicle sale
+H0470	2024-06-11	4000 Vehicle Sales	credit	17178.87	cash vehicle sale
+H0471	2024-06-11	5000 COGS Vehicles	debit	12933.78	cost of vehicle sold
+H0471	2024-06-11	1300 Inventory	credit	12933.78	cost of vehicle sold
+H0490	2024-06-11	6100 Fuel	debit	100.82	fuel
+H0490	2024-06-11	2100 Card	credit	100.82	fuel
+H0495	2024-06-11	6200 Advertising	debit	349.80	advertising
+H0495	2024-06-11	1000 Bank	credit	349.80	advertising
+H0487	2024-06-12	6300 Utilities	debit	239.00	utilities
+H0487	2024-06-12	1000 Bank	credit	239.00	utilities
+H0497	2024-06-12	6400 Office	debit	270.34	summer season supplies, paid direct
+H0497	2024-06-12	1000 Bank	credit	270.34	summer season supplies, paid direct
+H0474	2024-06-14	1000 Bank	debit	22058.92	cash vehicle sale
+H0474	2024-06-14	4000 Vehicle Sales	credit	22058.92	cash vehicle sale
+H0475	2024-06-14	5000 COGS Vehicles	debit	14351.38	cost of vehicle sold
+H0475	2024-06-14	1300 Inventory	credit	14351.38	cost of vehicle sold
+H0501	2024-06-14	1010 Bank Payroll	debit	2001.76	fund payroll account
+H0501	2024-06-14	1000 Bank	credit	2001.76	fund payroll account
+H0502	2024-06-15	6600 Payroll Expense	debit	5719.32	payroll run
+H0502	2024-06-15	1010 Bank Payroll	credit	5719.32	payroll run
+H0476	2024-06-17	1100 AR	debit	10098.55	vehicle sale on account
+H0476	2024-06-17	4000 Vehicle Sales	credit	10098.55	vehicle sale on account
+H0478	2024-06-17	5000 COGS Vehicles	debit	6516.76	cost of vehicle sold
+H0478	2024-06-17	1300 Inventory	credit	6516.76	cost of vehicle sold
+H0492	2024-06-18	6100 Fuel	debit	118.27	fuel
+H0492	2024-06-18	2100 Card	credit	118.27	fuel
+H0496	2024-06-19	6400 Office	debit	438.26	summer season supplies, paid direct
+H0496	2024-06-19	1000 Bank	credit	438.26	summer season supplies, paid direct
+H0479	2024-06-20	1300 Inventory	debit	23414.18	vehicle acquired on floor plan
+H0479	2024-06-20	2600 Loan	credit	23414.18	vehicle acquired on floor plan
+H0488	2024-06-20	2600 Loan	debit	1701.26	floor plan payment
+H0488	2024-06-20	7000 Interest Exp	debit	310.07	floor plan payment
+H0488	2024-06-20	1000 Bank	credit	2011.33	floor plan payment
+H0494	2024-06-24	6400 Office	debit	55.60	office supplies
+H0494	2024-06-24	2100 Card	credit	55.60	office supplies
+H0477	2024-06-26	1000 Bank	debit	10098.55	customer settles invoice
+H0477	2024-06-26	1100 AR	credit	10098.55	customer settles invoice
+H0499	2024-06-26	2100 Card	debit	1697.49	credit card payment
+H0499	2024-06-26	1000 Bank	credit	1697.49	credit card payment
+H0493	2024-06-27	6400 Office	debit	120.14	office supplies
+H0493	2024-06-27	2100 Card	credit	120.14	office supplies
+H0498	2024-06-28	6300 Utilities	debit	275.39	quarter-end split across bank and card
+H0498	2024-06-28	6200 Advertising	debit	456.51	quarter-end split across bank and card
+H0498	2024-06-28	1000 Bank	credit	377.53	quarter-end split across bank and card
+H0498	2024-06-28	2100 Card	credit	354.37	quarter-end split across bank and card
+H0500	2024-06-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0500	2024-06-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0520	2024-07-01	6000 Rent	debit	2600.00	monthly rent
+H0520	2024-07-01	1000 Bank	credit	2600.00	monthly rent
+H0529	2024-07-08	6400 Office	debit	467.22	summer season supplies, paid direct
+H0529	2024-07-08	1000 Bank	credit	467.22	summer season supplies, paid direct
+H0516	2024-07-10	1000 Bank	debit	282.12	parts sale
+H0516	2024-07-10	4100 Parts Income	credit	282.12	parts sale
+H0517	2024-07-10	5100 Parts COGS	debit	155.17	parts cost
+H0517	2024-07-10	2100 Card	credit	155.17	parts cost
+H0521	2024-07-12	6300 Utilities	debit	222.52	utilities
+H0521	2024-07-12	1000 Bank	credit	222.52	utilities
+H0526	2024-07-13	6400 Office	debit	83.89	office supplies
+H0526	2024-07-13	2100 Card	credit	83.89	office supplies
+H0527	2024-07-14	6400 Office	debit	84.75	office supplies
+H0527	2024-07-14	2100 Card	credit	84.75	office supplies
+H0532	2024-07-14	1010 Bank Payroll	debit	2420.87	fund payroll account
+H0532	2024-07-14	1000 Bank	credit	2420.87	fund payroll account
+H0533	2024-07-15	6600 Payroll Expense	debit	6916.78	payroll run
+H0533	2024-07-15	1010 Bank Payroll	credit	6916.78	payroll run
+H0505	2024-07-16	1000 Bank	debit	15718.95	cash vehicle sale
+H0505	2024-07-16	4000 Vehicle Sales	credit	15718.95	cash vehicle sale
+H0506	2024-07-16	5000 COGS Vehicles	debit	10188.53	cost of vehicle sold
+H0506	2024-07-16	1300 Inventory	credit	10188.53	cost of vehicle sold
+H0511	2024-07-17	1100 AR	debit	11368.74	vehicle sale on account
+H0511	2024-07-17	4000 Vehicle Sales	credit	11368.74	vehicle sale on account
+H0513	2024-07-17	5000 COGS Vehicles	debit	7798.66	cost of vehicle sold
+H0513	2024-07-17	1300 Inventory	credit	7798.66	cost of vehicle sold
+H0514	2024-07-17	1300 Inventory	debit	15469.49	vehicle acquired on floor plan
+H0514	2024-07-17	2600 Loan	credit	15469.49	vehicle acquired on floor plan
+H0515	2024-07-17	1300 Inventory	debit	19393.46	vehicle acquired on floor plan
+H0515	2024-07-17	2600 Loan	credit	19393.46	vehicle acquired on floor plan
+H0525	2024-07-17	6100 Fuel	debit	60.23	fuel
+H0525	2024-07-17	2100 Card	credit	60.23	fuel
+H0509	2024-07-20	1000 Bank	debit	12270.48	cash vehicle sale
+H0509	2024-07-20	4000 Vehicle Sales	credit	12270.48	cash vehicle sale
+H0510	2024-07-20	5000 COGS Vehicles	debit	8239.90	cost of vehicle sold
+H0510	2024-07-20	1300 Inventory	credit	8239.90	cost of vehicle sold
+H0522	2024-07-20	2600 Loan	debit	2157.89	floor plan payment
+H0522	2024-07-20	7000 Interest Exp	debit	226.25	floor plan payment
+H0522	2024-07-20	1000 Bank	credit	2384.14	floor plan payment
+H0523	2024-07-21	6100 Fuel	debit	130.58	fuel
+H0523	2024-07-21	2100 Card	credit	130.58	fuel
+H0528	2024-07-22	6200 Advertising	debit	630.02	advertising
+H0528	2024-07-22	1000 Bank	credit	630.02	advertising
+H0512	2024-07-26	1000 Bank	debit	11368.74	customer settles invoice
+H0512	2024-07-26	1100 AR	credit	11368.74	customer settles invoice
+H0524	2024-07-26	6100 Fuel	debit	51.20	fuel
+H0524	2024-07-26	2100 Card	credit	51.20	fuel
+H0530	2024-07-26	2100 Card	debit	1109.90	credit card payment
+H0530	2024-07-26	1000 Bank	credit	1109.90	credit card payment
+H0503	2024-07-27	1000 Bank	debit	17478.55	cash vehicle sale
+H0503	2024-07-27	4000 Vehicle Sales	credit	17478.55	cash vehicle sale
+H0504	2024-07-27	5000 COGS Vehicles	debit	13306.10	cost of vehicle sold
+H0504	2024-07-27	1300 Inventory	credit	13306.10	cost of vehicle sold
+H0507	2024-07-27	1000 Bank	debit	18163.62	cash vehicle sale
+H0507	2024-07-27	4000 Vehicle Sales	credit	18163.62	cash vehicle sale
+H0508	2024-07-27	5000 COGS Vehicles	debit	14145.52	cost of vehicle sold
+H0508	2024-07-27	1300 Inventory	credit	14145.52	cost of vehicle sold
+H0518	2024-07-28	1000 Bank	debit	181.48	parts sale
+H0518	2024-07-28	4100 Parts Income	credit	181.48	parts sale
+H0519	2024-07-28	5100 Parts COGS	debit	99.81	parts cost
+H0519	2024-07-28	2100 Card	credit	99.81	parts cost
+H0531	2024-07-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0531	2024-07-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0547	2024-08-01	6000 Rent	debit	2600.00	monthly rent
+H0547	2024-08-01	1000 Bank	credit	2600.00	monthly rent
+H0542	2024-08-04	1300 Inventory	debit	19595.88	vehicle acquired on floor plan
+H0542	2024-08-04	2600 Loan	credit	19595.88	vehicle acquired on floor plan
+H0538	2024-08-06	1100 AR	debit	10827.89	vehicle sale on account
+H0538	2024-08-06	4000 Vehicle Sales	credit	10827.89	vehicle sale on account
+H0540	2024-08-06	5000 COGS Vehicles	debit	8334.05	cost of vehicle sold
+H0540	2024-08-06	1300 Inventory	credit	8334.05	cost of vehicle sold
+H0541	2024-08-07	1300 Inventory	debit	12722.40	vehicle acquired on floor plan
+H0541	2024-08-07	2600 Loan	credit	12722.40	vehicle acquired on floor plan
+H0548	2024-08-12	6300 Utilities	debit	295.26	utilities
+H0548	2024-08-12	1000 Bank	credit	295.26	utilities
+H0550	2024-08-12	6100 Fuel	debit	163.77	fuel
+H0550	2024-08-12	2100 Card	credit	163.77	fuel
+H0536	2024-08-13	1000 Bank	debit	22067.52	cash vehicle sale
+H0536	2024-08-13	4000 Vehicle Sales	credit	22067.52	cash vehicle sale
+H0537	2024-08-13	5000 COGS Vehicles	debit	16879.04	cost of vehicle sold
+H0537	2024-08-13	1300 Inventory	credit	16879.04	cost of vehicle sold
+H0557	2024-08-14	1010 Bank Payroll	debit	2552.06	fund payroll account
+H0557	2024-08-14	1000 Bank	credit	2552.06	fund payroll account
+H0539	2024-08-15	1000 Bank	debit	10827.89	customer settles invoice
+H0539	2024-08-15	1100 AR	credit	10827.89	customer settles invoice
+H0543	2024-08-15	1000 Bank	debit	730.16	parts sale
+H0543	2024-08-15	4100 Parts Income	credit	730.16	parts sale
+H0544	2024-08-15	5100 Parts COGS	debit	401.59	parts cost
+H0544	2024-08-15	2100 Card	credit	401.59	parts cost
+H0552	2024-08-15	6400 Office	debit	95.46	office supplies
+H0552	2024-08-15	2100 Card	credit	95.46	office supplies
+H0558	2024-08-15	6600 Payroll Expense	debit	7291.60	payroll run
+H0558	2024-08-15	1010 Bank Payroll	credit	7291.60	payroll run
+H0551	2024-08-19	6100 Fuel	debit	99.08	fuel
+H0551	2024-08-19	2100 Card	credit	99.08	fuel
+H0549	2024-08-20	2600 Loan	debit	2141.55	floor plan payment
+H0549	2024-08-20	7000 Interest Exp	debit	231.75	floor plan payment
+H0549	2024-08-20	1000 Bank	credit	2373.30	floor plan payment
+H0554	2024-08-21	6400 Office	debit	455.97	summer season supplies, paid direct
+H0554	2024-08-21	1000 Bank	credit	455.97	summer season supplies, paid direct
+H0534	2024-08-23	1000 Bank	debit	11396.43	cash vehicle sale
+H0534	2024-08-23	4000 Vehicle Sales	credit	11396.43	cash vehicle sale
+H0535	2024-08-23	5000 COGS Vehicles	debit	7743.40	cost of vehicle sold
+H0535	2024-08-23	1300 Inventory	credit	7743.40	cost of vehicle sold
+H0545	2024-08-24	1000 Bank	debit	277.23	parts sale
+H0545	2024-08-24	4100 Parts Income	credit	277.23	parts sale
+H0546	2024-08-24	5100 Parts COGS	debit	152.48	parts cost
+H0546	2024-08-24	2100 Card	credit	152.48	parts cost
+H0553	2024-08-24	6200 Advertising	debit	594.52	advertising
+H0553	2024-08-24	1000 Bank	credit	594.52	advertising
+H0555	2024-08-26	2100 Card	debit	799.49	credit card payment
+H0555	2024-08-26	1000 Bank	credit	799.49	credit card payment
+H0556	2024-08-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0556	2024-08-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0577	2024-09-01	6000 Rent	debit	2600.00	monthly rent
+H0577	2024-09-01	1000 Bank	credit	2600.00	monthly rent
+H0582	2024-09-03	6100 Fuel	debit	122.55	fuel
+H0582	2024-09-03	2100 Card	credit	122.55	fuel
+H0572	2024-09-07	1300 Inventory	debit	19816.06	vehicle acquired on floor plan
+H0572	2024-09-07	2600 Loan	credit	19816.06	vehicle acquired on floor plan
+H0583	2024-09-07	6100 Fuel	debit	150.63	fuel
+H0583	2024-09-07	2100 Card	credit	150.63	fuel
+H0584	2024-09-10	6400 Office	debit	26.44	office supplies
+H0584	2024-09-10	2100 Card	credit	26.44	office supplies
+H0563	2024-09-12	1000 Bank	debit	12943.79	cash vehicle sale
+H0563	2024-09-12	4000 Vehicle Sales	credit	12943.79	cash vehicle sale
+H0564	2024-09-12	5000 COGS Vehicles	debit	8134.60	cost of vehicle sold
+H0564	2024-09-12	1300 Inventory	credit	8134.60	cost of vehicle sold
+H0578	2024-09-12	6300 Utilities	debit	380.28	utilities
+H0578	2024-09-12	1000 Bank	credit	380.28	utilities
+H0580	2024-09-12	6100 Fuel	debit	170.84	fuel
+H0580	2024-09-12	2100 Card	credit	170.84	fuel
+H0585	2024-09-13	6400 Office	debit	100.76	office supplies
+H0585	2024-09-13	2100 Card	credit	100.76	office supplies
+H0567	2024-09-14	1100 AR	debit	14299.41	vehicle sale on account
+H0567	2024-09-14	4000 Vehicle Sales	credit	14299.41	vehicle sale on account
+H0569	2024-09-14	5000 COGS Vehicles	debit	10786.34	cost of vehicle sold
+H0569	2024-09-14	1300 Inventory	credit	10786.34	cost of vehicle sold
+H0571	2024-09-14	1300 Inventory	debit	10469.73	vehicle acquired on floor plan
+H0571	2024-09-14	2600 Loan	credit	10469.73	vehicle acquired on floor plan
+H0590	2024-09-14	1010 Bank Payroll	debit	2506.19	fund payroll account
+H0590	2024-09-14	1000 Bank	credit	2506.19	fund payroll account
+H0559	2024-09-15	1000 Bank	debit	8895.92	cash vehicle sale
+H0559	2024-09-15	4000 Vehicle Sales	credit	8895.92	cash vehicle sale
+H0560	2024-09-15	5000 COGS Vehicles	debit	6210.47	cost of vehicle sold
+H0560	2024-09-15	1300 Inventory	credit	6210.47	cost of vehicle sold
+H0591	2024-09-15	6600 Payroll Expense	debit	7160.54	payroll run
+H0591	2024-09-15	1010 Bank Payroll	credit	7160.54	payroll run
+H0575	2024-09-17	1000 Bank	debit	672.50	parts sale
+H0575	2024-09-17	4100 Parts Income	credit	672.50	parts sale
+H0576	2024-09-17	5100 Parts COGS	debit	369.88	parts cost
+H0576	2024-09-17	2100 Card	credit	369.88	parts cost
+H0565	2024-09-18	1000 Bank	debit	9152.95	cash vehicle sale
+H0565	2024-09-18	4000 Vehicle Sales	credit	9152.95	cash vehicle sale
+H0566	2024-09-18	5000 COGS Vehicles	debit	6823.04	cost of vehicle sold
+H0566	2024-09-18	1300 Inventory	credit	6823.04	cost of vehicle sold
+H0570	2024-09-20	1300 Inventory	debit	10803.56	vehicle acquired on floor plan
+H0570	2024-09-20	2600 Loan	credit	10803.56	vehicle acquired on floor plan
+H0579	2024-09-20	2600 Loan	debit	1986.09	floor plan payment
+H0579	2024-09-20	7000 Interest Exp	debit	249.16	floor plan payment
+H0579	2024-09-20	1000 Bank	credit	2235.25	floor plan payment
+H0561	2024-09-22	1000 Bank	debit	12521.19	cash vehicle sale
+H0561	2024-09-22	4000 Vehicle Sales	credit	12521.19	cash vehicle sale
+H0562	2024-09-22	5000 COGS Vehicles	debit	8155.53	cost of vehicle sold
+H0562	2024-09-22	1300 Inventory	credit	8155.53	cost of vehicle sold
+H0568	2024-09-23	1000 Bank	debit	14299.41	customer settles invoice
+H0568	2024-09-23	1100 AR	credit	14299.41	customer settles invoice
+H0581	2024-09-23	6100 Fuel	debit	100.20	fuel
+H0581	2024-09-23	2100 Card	credit	100.20	fuel
+H0573	2024-09-24	1000 Bank	debit	411.55	parts sale
+H0573	2024-09-24	4100 Parts Income	credit	411.55	parts sale
+H0574	2024-09-24	5100 Parts COGS	debit	226.35	parts cost
+H0574	2024-09-24	2100 Card	credit	226.35	parts cost
+H0586	2024-09-25	6200 Advertising	debit	288.15	advertising
+H0586	2024-09-25	1000 Bank	credit	288.15	advertising
+H0588	2024-09-26	2100 Card	debit	1527.92	credit card payment
+H0588	2024-09-26	1000 Bank	credit	1527.92	credit card payment
+H0587	2024-09-28	6300 Utilities	debit	325.31	quarter-end split across bank and card
+H0587	2024-09-28	6200 Advertising	debit	369.09	quarter-end split across bank and card
+H0587	2024-09-28	1000 Bank	credit	359.99	quarter-end split across bank and card
+H0587	2024-09-28	2100 Card	credit	334.41	quarter-end split across bank and card
+H0589	2024-09-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0589	2024-09-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0608	2024-10-01	6000 Rent	debit	2600.00	monthly rent
+H0608	2024-10-01	1000 Bank	credit	2600.00	monthly rent
+H0594	2024-10-04	1000 Bank	debit	12379.30	cash vehicle sale
+H0594	2024-10-04	4000 Vehicle Sales	credit	12379.30	cash vehicle sale
+H0595	2024-10-04	5000 COGS Vehicles	debit	8884.83	cost of vehicle sold
+H0595	2024-10-04	1300 Inventory	credit	8884.83	cost of vehicle sold
+H0612	2024-10-07	6100 Fuel	debit	131.92	fuel
+H0612	2024-10-07	2100 Card	credit	131.92	fuel
+H0609	2024-10-12	6300 Utilities	debit	390.34	utilities
+H0609	2024-10-12	1000 Bank	credit	390.34	utilities
+H0616	2024-10-13	6400 Office	debit	36.85	office supplies
+H0616	2024-10-13	2100 Card	credit	36.85	office supplies
+H0604	2024-10-14	1000 Bank	debit	349.42	parts sale
+H0604	2024-10-14	4100 Parts Income	credit	349.42	parts sale
+H0605	2024-10-14	5100 Parts COGS	debit	192.18	parts cost
+H0605	2024-10-14	2100 Card	credit	192.18	parts cost
+H0611	2024-10-14	6100 Fuel	debit	46.50	fuel
+H0611	2024-10-14	2100 Card	credit	46.50	fuel
+H0619	2024-10-14	1010 Bank Payroll	debit	5910.48	fund payroll account
+H0619	2024-10-14	1000 Bank	credit	5910.48	fund payroll account
+H0598	2024-10-15	1100 AR	debit	11462.80	vehicle sale on account
+H0598	2024-10-15	4000 Vehicle Sales	credit	11462.80	vehicle sale on account
+H0600	2024-10-15	5000 COGS Vehicles	debit	7396.46	cost of vehicle sold
+H0600	2024-10-15	1300 Inventory	credit	7396.46	cost of vehicle sold
+H0620	2024-10-15	6600 Payroll Expense	debit	5910.48	payroll run
+H0620	2024-10-15	1010 Bank Payroll	credit	5910.48	payroll run
+H0601	2024-10-16	1300 Inventory	debit	12024.37	vehicle acquired on floor plan
+H0601	2024-10-16	2600 Loan	credit	12024.37	vehicle acquired on floor plan
+H0603	2024-10-17	1300 Inventory	debit	15397.73	vehicle acquired on floor plan
+H0603	2024-10-17	2600 Loan	credit	15397.73	vehicle acquired on floor plan
+H0606	2024-10-19	1000 Bank	debit	778.19	parts sale
+H0606	2024-10-19	4100 Parts Income	credit	778.19	parts sale
+H0607	2024-10-19	5100 Parts COGS	debit	428.00	parts cost
+H0607	2024-10-19	2100 Card	credit	428.00	parts cost
+H0614	2024-10-19	6100 Fuel	debit	156.86	fuel
+H0614	2024-10-19	2100 Card	credit	156.86	fuel
+H0592	2024-10-20	1000 Bank	debit	9941.11	cash vehicle sale
+H0592	2024-10-20	4000 Vehicle Sales	credit	9941.11	cash vehicle sale
+H0593	2024-10-20	5000 COGS Vehicles	debit	6323.94	cost of vehicle sold
+H0593	2024-10-20	1300 Inventory	credit	6323.94	cost of vehicle sold
+H0610	2024-10-20	2600 Loan	debit	1798.87	floor plan payment
+H0610	2024-10-20	7000 Interest Exp	debit	180.39	floor plan payment
+H0610	2024-10-20	1000 Bank	credit	1979.26	floor plan payment
+H0596	2024-10-21	1000 Bank	debit	16265.20	cash vehicle sale
+H0596	2024-10-21	4000 Vehicle Sales	credit	16265.20	cash vehicle sale
+H0597	2024-10-21	5000 COGS Vehicles	debit	11175.69	cost of vehicle sold
+H0597	2024-10-21	1300 Inventory	credit	11175.69	cost of vehicle sold
+H0613	2024-10-22	6100 Fuel	debit	98.39	fuel
+H0613	2024-10-22	2100 Card	credit	98.39	fuel
+H0615	2024-10-22	6400 Office	debit	127.04	office supplies
+H0615	2024-10-22	2100 Card	credit	127.04	office supplies
+H0599	2024-10-24	1000 Bank	debit	11462.80	customer settles invoice
+H0599	2024-10-24	1100 AR	credit	11462.80	customer settles invoice
+H0602	2024-10-25	1300 Inventory	debit	17497.43	vehicle acquired on floor plan
+H0602	2024-10-25	2600 Loan	credit	17497.43	vehicle acquired on floor plan
+H0617	2024-10-26	2100 Card	debit	1312.68	credit card payment
+H0617	2024-10-26	1000 Bank	credit	1312.68	credit card payment
+H0618	2024-10-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0618	2024-10-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0634	2024-11-01	6000 Rent	debit	2600.00	monthly rent
+H0634	2024-11-01	1000 Bank	credit	2600.00	monthly rent
+H0631	2024-11-02	1300 Inventory	debit	16095.04	vehicle acquired on floor plan
+H0631	2024-11-02	2600 Loan	credit	16095.04	vehicle acquired on floor plan
+H0627	2024-11-05	1100 AR	debit	13457.17	vehicle sale on account
+H0627	2024-11-05	4000 Vehicle Sales	credit	13457.17	vehicle sale on account
+H0629	2024-11-05	5000 COGS Vehicles	debit	10303.00	cost of vehicle sold
+H0629	2024-11-05	1300 Inventory	credit	10303.00	cost of vehicle sold
+H0647	2024-11-05	1000 Bank	debit	4010.97	owner contribution
+H0647	2024-11-05	3000 Equity	credit	4010.97	owner contribution
+H0640	2024-11-07	6400 Office	debit	104.12	office supplies
+H0640	2024-11-07	2100 Card	credit	104.12	office supplies
+H0623	2024-11-11	1000 Bank	debit	12664.24	cash vehicle sale
+H0623	2024-11-11	4000 Vehicle Sales	credit	12664.24	cash vehicle sale
+H0624	2024-11-11	5000 COGS Vehicles	debit	9403.27	cost of vehicle sold
+H0624	2024-11-11	1300 Inventory	credit	9403.27	cost of vehicle sold
+H0625	2024-11-11	1000 Bank	debit	12681.57	cash vehicle sale
+H0625	2024-11-11	4000 Vehicle Sales	credit	12681.57	cash vehicle sale
+H0626	2024-11-11	5000 COGS Vehicles	debit	9792.40	cost of vehicle sold
+H0626	2024-11-11	1300 Inventory	credit	9792.40	cost of vehicle sold
+H0635	2024-11-12	6300 Utilities	debit	386.66	utilities
+H0635	2024-11-12	1000 Bank	credit	386.66	utilities
+H0641	2024-11-12	6400 Office	debit	89.11	office supplies
+H0641	2024-11-12	2100 Card	credit	89.11	office supplies
+H0628	2024-11-14	1000 Bank	debit	13457.17	customer settles invoice
+H0628	2024-11-14	1100 AR	credit	13457.17	customer settles invoice
+H0645	2024-11-14	1010 Bank Payroll	debit	6003.91	fund payroll account
+H0645	2024-11-14	1000 Bank	credit	6003.91	fund payroll account
+H0646	2024-11-15	6600 Payroll Expense	debit	6003.91	payroll run
+H0646	2024-11-15	1010 Bank Payroll	credit	6003.91	payroll run
+H0639	2024-11-18	6100 Fuel	debit	140.95	fuel
+H0639	2024-11-18	2100 Card	credit	140.95	fuel
+H0636	2024-11-20	2600 Loan	debit	2194.35	floor plan payment
+H0636	2024-11-20	7000 Interest Exp	debit	239.95	floor plan payment
+H0636	2024-11-20	1000 Bank	credit	2434.30	floor plan payment
+H0632	2024-11-21	1000 Bank	debit	127.03	parts sale
+H0632	2024-11-21	4100 Parts Income	credit	127.03	parts sale
+H0633	2024-11-21	5100 Parts COGS	debit	69.87	parts cost
+H0633	2024-11-21	2100 Card	credit	69.87	parts cost
+H0630	2024-11-23	1300 Inventory	debit	8684.55	vehicle acquired on floor plan
+H0630	2024-11-23	2600 Loan	credit	8684.55	vehicle acquired on floor plan
+H0642	2024-11-23	6200 Advertising	debit	678.48	advertising
+H0642	2024-11-23	1000 Bank	credit	678.48	advertising
+H0638	2024-11-25	6100 Fuel	debit	91.02	fuel
+H0638	2024-11-25	2100 Card	credit	91.02	fuel
+H0637	2024-11-26	6100 Fuel	debit	140.63	fuel
+H0637	2024-11-26	2100 Card	credit	140.63	fuel
+H0643	2024-11-26	2100 Card	debit	723.65	credit card payment
+H0643	2024-11-26	1000 Bank	credit	723.65	credit card payment
+H0621	2024-11-27	1000 Bank	debit	9489.75	cash vehicle sale
+H0621	2024-11-27	4000 Vehicle Sales	credit	9489.75	cash vehicle sale
+H0622	2024-11-27	5000 COGS Vehicles	debit	6864.13	cost of vehicle sold
+H0622	2024-11-27	1300 Inventory	credit	6864.13	cost of vehicle sold
+H0644	2024-11-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0644	2024-11-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0668	2024-12-01	6000 Rent	debit	2600.00	monthly rent
+H0668	2024-12-01	1000 Bank	credit	2600.00	monthly rent
+H0672	2024-12-03	6100 Fuel	debit	67.47	fuel
+H0672	2024-12-03	2100 Card	credit	67.47	fuel
+H0677	2024-12-04	6100 Fuel	debit	604.94	bulk heating/plow fuel delivery, paid direct
+H0677	2024-12-04	1000 Bank	credit	604.94	bulk heating/plow fuel delivery, paid direct
+H0656	2024-12-06	1100 AR	debit	8219.34	vehicle sale on account
+H0656	2024-12-06	4000 Vehicle Sales	credit	8219.34	vehicle sale on account
+H0658	2024-12-06	5000 COGS Vehicles	debit	6086.82	cost of vehicle sold
+H0658	2024-12-06	1300 Inventory	credit	6086.82	cost of vehicle sold
+H0650	2024-12-08	1000 Bank	debit	7794.80	cash vehicle sale
+H0650	2024-12-08	4000 Vehicle Sales	credit	7794.80	cash vehicle sale
+H0651	2024-12-08	5000 COGS Vehicles	debit	5021.30	cost of vehicle sold
+H0651	2024-12-08	1300 Inventory	credit	5021.30	cost of vehicle sold
+H0674	2024-12-08	6400 Office	debit	98.90	office supplies
+H0674	2024-12-08	2100 Card	credit	98.90	office supplies
+H0661	2024-12-10	1300 Inventory	debit	9690.45	vehicle acquired on floor plan
+H0661	2024-12-10	2600 Loan	credit	9690.45	vehicle acquired on floor plan
+H0675	2024-12-11	6400 Office	debit	44.83	office supplies
+H0675	2024-12-11	2100 Card	credit	44.83	office supplies
+H0669	2024-12-12	6300 Utilities	debit	481.83	utilities
+H0669	2024-12-12	1000 Bank	credit	481.83	utilities
+H0676	2024-12-12	6200 Advertising	debit	260.18	advertising
+H0676	2024-12-12	1000 Bank	credit	260.18	advertising
+H0666	2024-12-13	1000 Bank	debit	797.26	parts sale
+H0666	2024-12-13	4100 Parts Income	credit	797.26	parts sale
+H0667	2024-12-13	5100 Parts COGS	debit	438.49	parts cost
+H0667	2024-12-13	2100 Card	credit	438.49	parts cost
+H0648	2024-12-14	1000 Bank	debit	11907.50	cash vehicle sale
+H0648	2024-12-14	4000 Vehicle Sales	credit	11907.50	cash vehicle sale
+H0649	2024-12-14	5000 COGS Vehicles	debit	7990.18	cost of vehicle sold
+H0649	2024-12-14	1300 Inventory	credit	7990.18	cost of vehicle sold
+H0681	2024-12-14	1010 Bank Payroll	debit	6029.90	fund payroll account
+H0681	2024-12-14	1000 Bank	credit	6029.90	fund payroll account
+H0657	2024-12-15	1000 Bank	debit	8219.34	customer settles invoice
+H0657	2024-12-15	1100 AR	credit	8219.34	customer settles invoice
+H0682	2024-12-15	6600 Payroll Expense	debit	6029.90	payroll run
+H0682	2024-12-15	1010 Bank Payroll	credit	6029.90	payroll run
+H0660	2024-12-17	1300 Inventory	debit	13806.85	vehicle acquired on floor plan
+H0660	2024-12-17	2600 Loan	credit	13806.85	vehicle acquired on floor plan
+H0664	2024-12-18	1000 Bank	debit	794.35	parts sale
+H0664	2024-12-18	4100 Parts Income	credit	794.35	parts sale
+H0665	2024-12-18	5100 Parts COGS	debit	436.89	parts cost
+H0665	2024-12-18	2100 Card	credit	436.89	parts cost
+H0673	2024-12-18	6100 Fuel	debit	104.89	fuel
+H0673	2024-12-18	2100 Card	credit	104.89	fuel
+H0662	2024-12-19	1000 Bank	debit	823.63	parts sale
+H0662	2024-12-19	4100 Parts Income	credit	823.63	parts sale
+H0663	2024-12-19	5100 Parts COGS	debit	453.00	parts cost
+H0663	2024-12-19	2100 Card	credit	453.00	parts cost
+H0652	2024-12-20	1000 Bank	debit	12522.73	cash vehicle sale
+H0652	2024-12-20	4000 Vehicle Sales	credit	12522.73	cash vehicle sale
+H0653	2024-12-20	5000 COGS Vehicles	debit	9057.78	cost of vehicle sold
+H0653	2024-12-20	1300 Inventory	credit	9057.78	cost of vehicle sold
+H0670	2024-12-20	2600 Loan	debit	2078.61	floor plan payment
+H0670	2024-12-20	7000 Interest Exp	debit	245.27	floor plan payment
+H0670	2024-12-20	1000 Bank	credit	2323.88	floor plan payment
+H0659	2024-12-22	1300 Inventory	debit	17797.47	vehicle acquired on floor plan
+H0659	2024-12-22	2600 Loan	credit	17797.47	vehicle acquired on floor plan
+H0671	2024-12-22	6100 Fuel	debit	48.25	fuel
+H0671	2024-12-22	2100 Card	credit	48.25	fuel
+H0654	2024-12-24	1000 Bank	debit	10046.83	cash vehicle sale
+H0654	2024-12-24	4000 Vehicle Sales	credit	10046.83	cash vehicle sale
+H0655	2024-12-24	5000 COGS Vehicles	debit	7372.90	cost of vehicle sold
+H0655	2024-12-24	1300 Inventory	credit	7372.90	cost of vehicle sold
+H0679	2024-12-26	2100 Card	debit	1912.98	credit card payment
+H0679	2024-12-26	1000 Bank	credit	1912.98	credit card payment
+H0678	2024-12-28	6300 Utilities	debit	380.97	quarter-end split across bank and card
+H0678	2024-12-28	6200 Advertising	debit	361.10	quarter-end split across bank and card
+H0678	2024-12-28	1000 Bank	credit	425.61	quarter-end split across bank and card
+H0678	2024-12-28	2100 Card	credit	316.46	quarter-end split across bank and card
+H0680	2024-12-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0680	2024-12-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation
+H0700	2025-01-01	6000 Rent	debit	2600.00	monthly rent
+H0700	2025-01-01	1000 Bank	credit	2600.00	monthly rent
+H0691	2025-01-04	1100 AR	debit	8529.32	vehicle sale on account
+H0691	2025-01-04	4000 Vehicle Sales	credit	8529.32	vehicle sale on account
+H0693	2025-01-04	5000 COGS Vehicles	debit	5959.23	cost of vehicle sold
+H0693	2025-01-04	1300 Inventory	credit	5959.23	cost of vehicle sold
+H0687	2025-01-07	1000 Bank	debit	11946.14	cash vehicle sale
+H0687	2025-01-07	4000 Vehicle Sales	credit	11946.14	cash vehicle sale
+H0688	2025-01-07	5000 COGS Vehicles	debit	8315.40	cost of vehicle sold
+H0688	2025-01-07	1300 Inventory	credit	8315.40	cost of vehicle sold
+H0694	2025-01-09	1300 Inventory	debit	19916.23	vehicle acquired on floor plan
+H0694	2025-01-09	2600 Loan	credit	19916.23	vehicle acquired on floor plan
+H0706	2025-01-10	6400 Office	debit	92.78	office supplies
+H0706	2025-01-10	2100 Card	credit	92.78	office supplies
+H0708	2025-01-10	6100 Fuel	debit	1076.71	bulk heating/plow fuel delivery, paid direct
+H0708	2025-01-10	1000 Bank	credit	1076.71	bulk heating/plow fuel delivery, paid direct
+H0703	2025-01-11	6100 Fuel	debit	183.26	fuel
+H0703	2025-01-11	2100 Card	credit	183.26	fuel
+H0701	2025-01-12	6300 Utilities	debit	609.70	utilities
+H0701	2025-01-12	1000 Bank	credit	609.70	utilities
+H0707	2025-01-12	6200 Advertising	debit	497.02	advertising
+H0707	2025-01-12	1000 Bank	credit	497.02	advertising
+H0692	2025-01-13	1000 Bank	debit	8529.32	customer settles invoice
+H0692	2025-01-13	1100 AR	credit	8529.32	customer settles invoice
+H0712	2025-01-14	1010 Bank Payroll	debit	6210.75	fund payroll account
+H0712	2025-01-14	1000 Bank	credit	6210.75	fund payroll account
+H0714	2025-01-14	1000 Bank	debit	2726.27	owner contribution
+H0714	2025-01-14	3000 Equity	credit	2726.27	owner contribution
+H0713	2025-01-15	6600 Payroll Expense	debit	6210.75	payroll run
+H0713	2025-01-15	1010 Bank Payroll	credit	6210.75	payroll run
+H0685	2025-01-16	1000 Bank	debit	10346.36	cash vehicle sale
+H0685	2025-01-16	4000 Vehicle Sales	credit	10346.36	cash vehicle sale
+H0686	2025-01-16	5000 COGS Vehicles	debit	7935.64	cost of vehicle sold
+H0686	2025-01-16	1300 Inventory	credit	7935.64	cost of vehicle sold
+H0695	2025-01-18	1300 Inventory	debit	10606.21	vehicle acquired on floor plan
+H0695	2025-01-18	2600 Loan	credit	10606.21	vehicle acquired on floor plan
+H0709	2025-01-18	6100 Fuel	debit	1149.68	bulk heating/plow fuel delivery, paid direct
+H0709	2025-01-18	1000 Bank	credit	1149.68	bulk heating/plow fuel delivery, paid direct
+H0696	2025-01-20	1000 Bank	debit	707.66	parts sale
+H0696	2025-01-20	4100 Parts Income	credit	707.66	parts sale
+H0697	2025-01-20	5100 Parts COGS	debit	389.21	parts cost
+H0697	2025-01-20	2100 Card	credit	389.21	parts cost
+H0702	2025-01-20	2600 Loan	debit	2142.60	floor plan payment
+H0702	2025-01-20	7000 Interest Exp	debit	274.19	floor plan payment
+H0702	2025-01-20	1000 Bank	credit	2416.79	floor plan payment
+H0683	2025-01-21	1000 Bank	debit	13375.25	cash vehicle sale
+H0683	2025-01-21	4000 Vehicle Sales	credit	13375.25	cash vehicle sale
+H0684	2025-01-21	5000 COGS Vehicles	debit	9921.09	cost of vehicle sold
+H0684	2025-01-21	1300 Inventory	credit	9921.09	cost of vehicle sold
+H0704	2025-01-21	6100 Fuel	debit	186.25	fuel
+H0704	2025-01-21	2100 Card	credit	186.25	fuel
+H0689	2025-01-23	1000 Bank	debit	11625.33	cash vehicle sale
+H0689	2025-01-23	4000 Vehicle Sales	credit	11625.33	cash vehicle sale
+H0690	2025-01-23	5000 COGS Vehicles	debit	7318.58	cost of vehicle sold
+H0690	2025-01-23	1300 Inventory	credit	7318.58	cost of vehicle sold
+H0698	2025-01-23	1000 Bank	debit	860.13	parts sale
+H0698	2025-01-23	4100 Parts Income	credit	860.13	parts sale
+H0699	2025-01-23	5100 Parts COGS	debit	473.07	parts cost
+H0699	2025-01-23	2100 Card	credit	473.07	parts cost
+H0705	2025-01-25	6100 Fuel	debit	83.86	fuel
+H0705	2025-01-25	2100 Card	credit	83.86	fuel
+H0710	2025-01-26	2100 Card	debit	1304.11	credit card payment
+H0710	2025-01-26	1000 Bank	credit	1304.11	credit card payment
+H0711	2025-01-28	6500 Depreciation	debit	666.67	monthly straight-line depreciation
+H0711	2025-01-28	1510 Accum Depreciation	credit	666.67	monthly straight-line depreciation

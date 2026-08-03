@@ -422,6 +422,50 @@ def write_period_rows(path: Path, stats, forward=None) -> None:
     _write_tsv(path, fields, rows)
 
 
+def write_balance_rows(path: Path, findings, contra=None) -> None:
+    """Unnatural-balance findings, with inferred contra accounts appended.
+
+    The contras are written alongside the findings because they are the reason
+    certain accounts are *absent* from the list — a reviewer needs to see what
+    the inference excused, not just what it flagged.
+    """
+    rows = [
+        {
+            "kind": "unnatural_balance",
+            "account_id": f.account_id,
+            "account_type": f.account_type,
+            "period": f.period,
+            "expected_side": f.expected_side,
+            "actual_side": f.actual_side,
+            "balance": f"{f.balance:.2f}",
+            "periods_off": f.periods_off,
+            "consecutive_off": f.consecutive_off,
+            "contra_inferred": "1" if f.contra_inferred else "0",
+            "severity": f.severity,
+            "note": f.note,
+        }
+        for f in findings
+    ]
+    for verdict in (contra or {}).values():
+        if not verdict.is_contra:
+            continue
+        rows.append(
+            {
+                "kind": "inferred_contra",
+                "account_id": verdict.account_id,
+                "contra_inferred": "1",
+                "severity": "info",
+                "note": f"score {verdict.score}: " + "; ".join(verdict.reasons),
+            }
+        )
+    fields: list[str] = []
+    for row in rows:
+        for key in row:
+            if key not in fields:
+                fields.append(key)
+    _write_tsv(path, fields, rows)
+
+
 def write_eval_summary(path: Path, rows: list[dict]) -> None:
     """Write heterogeneous metric rows.
 

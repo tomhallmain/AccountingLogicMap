@@ -1,7 +1,9 @@
 debit_account_id	credit_account_id
 1000 Bank	1100 AR
+1000 Bank	3000 Equity
 1000 Bank	4000 Vehicle Sales
 1000 Bank	4100 Parts Income
+1010 Bank Payroll	1000 Bank
 1100 AR	4000 Vehicle Sales
 1300 Inventory	2600 Loan
 2100 Card	1000 Bank
@@ -11,6 +13,9 @@ debit_account_id	credit_account_id
 6000 Rent	1000 Bank
 6100 Fuel	1000 Bank
 6100 Fuel	2100 Card
+6200 Advertising	1000 Bank
 6300 Utilities	1000 Bank
 6400 Office	2100 Card
+6500 Depreciation	1510 Accum Depreciation
+6600 Payroll Expense	1010 Bank Payroll
 7000 Interest Exp	1000 Bank
