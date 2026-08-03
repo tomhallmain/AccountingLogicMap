@@ -56,14 +56,14 @@ python -m alm build --accounts data/history/accounts.tsv \
   --from 2025-01-01 --out out/hist/open --label open
 ```
 
-The baseline keeps 1172 of 1217 lines and reports `24 month period(s) 2023-01 .. 2024-12`.
+The baseline keeps 1202 of 1251 lines and reports `24 month period(s) 2023-01 .. 2024-12`.
 Because `2025-01` is genuinely outside the map, `data/history/holdout.tsv` is a
 real prediction holdout:
 
 ```bash
 python -m alm eval --map out/hist/baseline --holdout data/history/holdout.tsv --out out/hist/eval
-# predict_hit@5_from_debit  [all] hit_rate=1.000  random=0.263
-# predict_hit@5_from_credit [all] hit_rate=0.923  random=0.263
+# predict_hit@5_from_debit  [all] hit_rate=1.000  random=0.263  (n=15)
+# predict_hit@5_from_credit [all] hit_rate=0.867  random=0.263  (n=15)
 ```
 
 **2. Per-period activity and forward expectation.** The projection from concept §7,
@@ -75,9 +75,30 @@ python -m alm periods --accounts data/history/accounts.tsv \
   --transactions data/history/transactions.tsv \
   --granularity month --baseline-periods 12 --out out/hist/periods
 # forward expectation for 2025-01 from trailing 12 closed period(s) 2024-01 .. 2024-12:
-#   weight   expected=141058.44  actual=111956.49  variance=-29101.95 (-20.6%)
-#   txns     expected=23.3       actual=22
+#   weight   expected=121858.06  actual=130718.46  variance=+8860.40 (+7.3%)
+#   txns     expected=23.2       actual=24
 ```
+
+**3. Seasonal prediction.** Averaging a counterpart distribution over the whole
+window buries anything that only happens part of the year. `--season` conditions on
+the same month in prior years instead:
+
+```bash
+python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 8
+#  4. 6200 Advertising   p=0.060   6. 6100 Fuel   p=0.049   8. 6400 Office   p=0.016
+
+python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 8 --season 2025-01
+# conditioning on season 2025-01 → periods 2023-01, 2024-01
+#  3. 6100 Fuel   p=0.148        6400 Office absent
+
+python -m alm predict --map out/hist/baseline --account "1000 Bank" --side credit --top 8 --season 2025-07
+# conditioning on season 2025-07 → periods 2023-07, 2024-07
+#  4. 6400 Office   p=0.073      6100 Fuel absent
+```
+
+The garage buys bulk heating fuel direct from the bank in winter and season supplies
+in summer. Unconditioned, both sit near the bottom of the ranking; conditioned, the
+in-season one rises and the out-of-season one drops out entirely.
 
 `--granularity` also accepts `quarter` and `year`.
 

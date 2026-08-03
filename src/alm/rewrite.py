@@ -40,11 +40,21 @@ def has_ambiguous_pairing(txn: Transaction) -> bool:
 
 def rewrite_transactions(
     txns: list[Transaction],
-) -> list[tuple[str, EdgeKey, float, bool]]:
-    """Rewrite all transactions; returns (txn_id, key, weight, ambiguous) tuples."""
-    out: list[tuple[str, EdgeKey, float, bool]] = []
+    *,
+    granularity: str = "month",
+) -> list[tuple[str, EdgeKey, float, bool, str]]:
+    """Rewrite all transactions.
+
+    Returns (txn_id, key, weight, ambiguous, period) tuples. The period travels
+    with each pair so aggregation can retain per-period edge mass, which is what
+    seasonal conditioning reads.
+    """
+    from .periods import period_key
+
+    out: list[tuple[str, EdgeKey, float, bool, str]] = []
     for txn in txns:
         ambiguous = has_ambiguous_pairing(txn)
+        period = period_key(txn.date, granularity)
         for key, weight in rewrite_transaction(txn):
-            out.append((txn.txn_id, key, weight, ambiguous))
+            out.append((txn.txn_id, key, weight, ambiguous, period))
     return out

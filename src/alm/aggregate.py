@@ -7,7 +7,7 @@ from .rewrite import rewrite_transactions
 
 
 def aggregate_rewritten(
-    rewritten: list[tuple[str, EdgeKey, float, bool]],
+    rewritten: list[tuple[str, EdgeKey, float, bool, str]],
 ) -> dict[EdgeKey, EdgeStat]:
     """Collapse identical edges.
 
@@ -19,11 +19,15 @@ def aggregate_rewritten(
     ambiguous: dict[EdgeKey, float] = defaultdict(float)
     instances: dict[EdgeKey, int] = defaultdict(int)
     txn_sets: dict[EdgeKey, set[str]] = defaultdict(set)
+    period_weights: dict[EdgeKey, dict[str, float]] = defaultdict(lambda: defaultdict(float))
+    period_txns: dict[EdgeKey, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
 
-    for txn_id, key, weight, is_ambiguous in rewritten:
+    for txn_id, key, weight, is_ambiguous, period in rewritten:
         weights[key] += weight
         instances[key] += 1
         txn_sets[key].add(txn_id)
+        period_weights[key][period] += weight
+        period_txns[key][period].add(txn_id)
         if is_ambiguous:
             ambiguous[key] += weight
 
@@ -35,6 +39,8 @@ def aggregate_rewritten(
             depth=len(txn_sets[key]),
             pair_instances=instances[key],
             ambiguous_weight=ambiguous[key],
+            period_weights=dict(period_weights[key]),
+            period_depths={p: len(t) for p, t in period_txns[key].items()},
         )
     return edges
 
@@ -65,8 +71,9 @@ def build_logic_map(
     txns: list[Transaction],
     *,
     window_label: str = "baseline",
+    granularity: str = "month",
 ) -> LogicMap:
-    rewritten = rewrite_transactions(txns)
+    rewritten = rewrite_transactions(txns, granularity=granularity)
     edges = aggregate_rewritten(rewritten)
     total_weight, total_depth, total_mean_weight = map_globals(edges)
     line_count = sum(len(t.lines) for t in txns)
@@ -80,6 +87,8 @@ def build_logic_map(
         window_label=window_label,
         txn_count=len(txns),
         line_count=line_count,
+        granularity=granularity,
+        periods=sorted({p for e in edges.values() for p in e.period_weights}),
     )
     return logic_map
 

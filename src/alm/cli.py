@@ -26,7 +26,13 @@ from .io_tsv import (
     write_verify_results,
 )
 from .models import DEFAULT_BASELINE_PERIODS, Account, EdgeKey, Transaction, group_lines
-from .periods import GRANULARITIES, filter_lines, forward_expectation, period_activity
+from .periods import (
+    GRANULARITIES,
+    filter_lines,
+    forward_expectation,
+    period_activity,
+    seasonal_periods,
+)
 from .predict import predict_counterparts
 from .score import score_map
 from .validate import build_transactions
@@ -205,12 +211,29 @@ def cmd_verify(args: argparse.Namespace) -> int:
 def cmd_predict(args: argparse.Namespace) -> int:
     logic_map = load_map_dir(Path(args.map))
     amount = float(args.amount) if args.amount is not None else None
+
+    season: list[str] | None = None
+    if args.season:
+        season = seasonal_periods(args.season, logic_map.periods)
+        if not season:
+            LOG.warning(
+                "no prior-year periods matching %s in this map (has %s); "
+                "falling back to the whole window",
+                args.season,
+                f"{logic_map.periods[0]}..{logic_map.periods[-1]}"
+                if logic_map.periods
+                else "no period data",
+            )
+        else:
+            LOG.info("conditioning on season %s → periods %s", args.season, ", ".join(season))
+
     rows = predict_counterparts(
         logic_map,
         args.account,
         args.side,
         top_k=args.top,
         amount=amount,
+        periods=season or None,
     )
     if not rows:
         LOG.warning("no counterparts found for %s side=%s", args.account, args.side)
@@ -504,6 +527,8 @@ def build_parser() -> argparse.ArgumentParser:
     pr.add_argument("--side", required=True, choices=["debit", "credit"])
     pr.add_argument("--top", type=int, default=10)
     pr.add_argument("--amount", type=float, default=None)
+    pr.add_argument("--season", default=None, metavar="PERIOD",
+                    help="condition on the same slot in prior years, e.g. 2025-01")
     pr.add_argument("--out", default=None)
     pr.set_defaults(func=cmd_predict)
 

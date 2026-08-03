@@ -47,6 +47,41 @@ def filter_lines(
     return out
 
 
+def seasonal_periods(
+    target: str, available: Iterable[str], *, include_target: bool = False
+) -> list[str]:
+    """Periods comparable to `target` by season — the same slot in prior years.
+
+    `2025-01` selects `2024-01`, `2023-01`, …; `2025-Q1` selects `2024-Q1`, …
+    Year granularity has no seasonal analogue and yields nothing.
+
+    The target period is excluded by default: conditioning a prediction *for* a
+    period on that period's own activity would be circular.
+    """
+    if "-" not in target:
+        return []  # year granularity: no within-year slot to match on
+    year_str, slot = target.split("-", 1)
+    try:
+        target_year = int(year_str)
+    except ValueError:
+        return []
+
+    out = []
+    for period in available:
+        if "-" not in period:
+            continue
+        other_year, other_slot = period.split("-", 1)
+        if other_slot != slot:
+            continue
+        try:
+            year = int(other_year)
+        except ValueError:
+            continue
+        if year < target_year or (include_target and year == target_year):
+            out.append(period)
+    return sorted(out)
+
+
 @dataclass
 class PeriodStat:
     period: str

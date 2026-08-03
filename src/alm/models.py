@@ -89,6 +89,19 @@ class EdgeStat:
     depth: int = 0  # number of transactions that produced this edge
     pair_instances: int = 0  # DR×CR pairs emitted for this edge
     ambiguous_weight: float = 0.0  # weight from journals with >1 line on both sides
+    period_weights: dict[str, float] = field(default_factory=dict)
+    period_depths: dict[str, int] = field(default_factory=dict)
+
+    def weight_in(self, periods: Iterable[str] | None) -> float:
+        """Edge weight restricted to a set of periods; full weight when None."""
+        if periods is None:
+            return self.weight_sum
+        return sum(self.period_weights.get(p, 0.0) for p in periods)
+
+    def depth_in(self, periods: Iterable[str] | None) -> int:
+        if periods is None:
+            return self.depth
+        return sum(self.period_depths.get(p, 0) for p in periods)
 
     @property
     def mean_weight(self) -> float:

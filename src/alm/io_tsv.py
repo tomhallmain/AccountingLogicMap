@@ -186,6 +186,26 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
     _write_tsv(out_dir / "edges.tsv", fields, edge_rows)
     _write_tsv(out_dir / "spectrum.tsv", fields, edge_rows)
 
+    # Per-period edge mass, so seasonal conditioning survives a round-trip.
+    _write_tsv(
+        out_dir / "edge_periods.tsv",
+        ["debit_account_id", "credit_account_id", "period", "weight", "depth"],
+        [
+            {
+                "debit_account_id": key.debit_account_id,
+                "credit_account_id": key.credit_account_id,
+                "period": period,
+                "weight": f"{weight:.6f}",
+                "depth": stat.period_depths.get(period, 0),
+            }
+            for key, stat in sorted(
+                logic_map.edges.items(),
+                key=lambda kv: (kv[0].debit_account_id, kv[0].credit_account_id),
+            )
+            for period, weight in sorted(stat.period_weights.items())
+        ],
+    )
+
     activity = node_activity(logic_map)
     _write_tsv(
         out_dir / "node_activity.tsv",
@@ -253,6 +273,16 @@ def load_map_dir(path: Path) -> LogicMap:
             )
         )
 
+    period_path = path / "edge_periods.tsv"
+    if period_path.exists():
+        for row in _read_tsv(period_path):
+            key = EdgeKey(row["debit_account_id"], row["credit_account_id"])
+            stat = edges.get(key)
+            if stat is None:
+                continue
+            stat.period_weights[row["period"]] = float(row["weight"])
+            stat.period_depths[row["period"]] = int(float(row["depth"] or 0))
+
     meta_rows = _read_tsv(path / "meta.tsv")
     meta = meta_rows[0] if meta_rows else {}
     derived_w, derived_c, derived_m = map_globals(edges)
@@ -269,7 +299,8 @@ def load_map_dir(path: Path) -> LogicMap:
         total_mean_weight=total_mean_weight,
         window_label=meta.get("window_label", path.name),
         granularity=meta.get("granularity") or "month",
-        periods=(
+        periods=sorted({p for e in edges.values() for p in e.period_weights})
+        or (
             [meta["period_first"], meta["period_last"]]
             if meta.get("period_first") and meta.get("period_last")
             else []

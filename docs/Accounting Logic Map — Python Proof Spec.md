@@ -147,7 +147,8 @@ Transaction(txn_id, date, lines[])          # validated balanced
 EdgeKey(debit_account_id, credit_account_id)
 EdgeStat(key, weight_sum, depth,            # depth = # contributing txns (≥1 pair emitted)
          pair_instances,                    # DR×CR emissions; > depth means multi-line sources
-         ambiguous_weight)                  # weight from journals with >1 line on BOTH sides
+         ambiguous_weight,                  # weight from journals with >1 line on BOTH sides
+         period_weights, period_depths)     # per-period mass; sums back to weight_sum/depth
 EdgeKey.is_self_loop                        # debit_account_id == credit_account_id
 LogicMap(
   accounts,
@@ -264,6 +265,16 @@ Input: `account_id`, `side` (`debit`|`credit`), optional `amount`, optional `top
 - If `side=credit`: rank debit counterparts symmetrically.
 - Probabilities = counterpart weight / sum(weights on that node-side).
 - If `amount` given, annotate typical mean (`weight_sum/depth`) distance (log only; no hard filter required in v1).
+- Optional `periods`: restrict the mass to a set of period keys. Counterparts with no
+  activity in those periods drop out rather than ranking at zero. `periods=None`
+  reproduces the whole-window behaviour exactly.
+
+**Seasonal conditioning.** `periods.seasonal_periods(target, available)` returns the
+same slot in prior years — `2025-01` → `2023-01, 2024-01`; `2025-Q1` → `2023-Q1,
+2024-Q1`. Year granularity has no within-year slot and yields nothing. The target is
+excluded by default (conditioning a prediction for a period on itself is circular).
+CLI: `predict --season 2025-01`. If no prior-year period matches, log a warning and
+fall back to the whole window rather than returning nothing.
 
 ### 7.7 Anomalies (baseline vs open)
 
@@ -408,6 +419,9 @@ Command outputs:
 | `eval` | `eval_summary.tsv`, `eval_detail.tsv` |
 | `periods` | `periods.tsv` — one row per period plus a final `forward_expectation` row |
 
+`build` also writes `edge_periods.tsv` (debit_id, credit_id, period, weight, depth) so
+per-period mass survives a round-trip and `predict --season` works against a saved map.
+
 `eval_summary.tsv` holds heterogeneous metric rows (verify, predict, anomaly),
 each family carrying different keys. Its header must be the **union** of keys
 across all rows; deriving it from the first row alone blanks every column that
@@ -512,7 +526,7 @@ Tests live under `tests/` and are part of the proof (not optional).
 | `test_anomalies` | Injected new/missing edges appear in anomaly output |
 | `test_reference_parity` | Globals, normed blend, and predict probabilities match the spreadsheet prototype on `data/reference/` |
 | `test_eval_outputs` | `eval_summary.tsv` keeps every metric family's columns; predict cohorts computed |
-| `test_periods` | Period keys sort and bound correctly; windows never split a journal; period weights sum to the map total; forward expectation is the trailing mean; prediction beats random on transactions outside the map |
+| `test_periods` | Period keys sort and bound correctly; windows never split a journal; period weights sum to the map total; forward expectation is the trailing mean; prediction beats random on transactions outside the map; seasonal conditioning reranks in-season counterparts and drops out-of-season ones |
 
 Run: `python -m unittest discover -s tests -v`
 
@@ -574,7 +588,6 @@ and seeing terminal summaries plus TSVs that match §9–§11.
 
 - Minimal transaction splitter before rewrite.  
 - Type-pair prior matrix from concept tables.  
-- Period-aware maps and seasonality in predict.  
 - Contact-conditioned edges.  
 Done, previously listed here:
 
@@ -584,5 +597,6 @@ Done, previously listed here:
 - A genuinely held-out prediction fixture — now `data/history/holdout.tsv`, drawn
   from a month the baseline build excludes.
 
-Still open: seasonality *within* predict (conditioning the counterpart
-distribution on same-month-last-year rather than the whole window).
+- Seasonality within predict — now `predict --season`, backed by per-period edge mass.
+
+Still open: contact-conditioned edges, and a minimal-transaction splitter.

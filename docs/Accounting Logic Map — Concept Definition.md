@@ -156,11 +156,19 @@ Verification answers: “Is this posting consistent with how *this* business has
 1. Condition on the known node (account and/or side).
 2. Read the row/column of \(W\) and \(C\) (or the normed matrix): counterpart accounts ranked by probability mass.
 3. Optionally refine with:
-   - account type \(B\) ( Ban k feed out → Expense / AP / Card / Loan payoff priors),
-   - period seasonality (same month last year),
+   - account type \(B\) (bank feed out → Expense / AP / Card / Loan payoff priors),
+   - **period seasonality** — condition the counterpart distribution on the same slot in prior years rather than on the whole window,
    - feed-side priors (which side of the edge is usually “pre-fed” from bank/card imports).
 
-**Demo shape:** input `account=<operating bank>, side=credit, amount≈X` → ranked debit accounts with historical share of that node’s activity and typical amount bands.
+**Seasonality.** Averaging a counterpart distribution over the whole window buries any
+edge that only occurs in part of the year. Conditioning on the same month (or quarter)
+in prior years reads the mass from comparable periods only, so seasonal counterparts
+surface and out-of-season ones drop out entirely. This needs per-period edge mass
+retained during aggregation, not just an edge total. The target period is excluded from
+its own conditioning set — predicting *for* a period using that period's activity would
+be circular.
+
+**Demo shape:** input `account=<operating bank>, side=credit, amount≈X` → ranked debit accounts with historical share of that node’s activity and typical amount bands; add a season to rank against comparable periods instead.
 
 Prediction answers: “What is the *characteristic* other side of this movement?”
 

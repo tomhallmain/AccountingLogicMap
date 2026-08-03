@@ -19,7 +19,9 @@ from alm.periods import (
     forward_expectation,
     period_activity,
     period_key,
+    seasonal_periods,
 )
+from alm.predict import predict_counterparts
 from alm.score import score_map
 from alm.validate import build_transactions
 
@@ -148,7 +150,7 @@ class HeldOutPredictionTests(unittest.TestCase):
         txns, _ = build_transactions(self.open_lines, accounts)
         actual = {
             (k.debit_account_id, k.credit_account_id)
-            for _, k, _, _ in rewrite_transactions(txns)
+            for _, k, *_ in rewrite_transactions(txns)
         }
         self.assertEqual(set(self.holdout), actual)
 
@@ -169,6 +171,83 @@ class HeldOutPredictionTests(unittest.TestCase):
         """
         in_map = [e for e in self.holdout if EdgeKey(*e) in self.map.edges]
         self.assertEqual(len(in_map), len(self.holdout))
+
+
+class SeasonalPeriodTests(unittest.TestCase):
+    def test_selects_the_same_slot_in_prior_years(self):
+        available = ["2023-01", "2023-07", "2024-01", "2024-07", "2025-01"]
+        self.assertEqual(seasonal_periods("2025-01", available), ["2023-01", "2024-01"])
+        self.assertEqual(seasonal_periods("2025-07", available), ["2023-07", "2024-07"])
+
+    def test_target_period_is_excluded_by_default(self):
+        """Conditioning a prediction *for* a period on itself would be circular."""
+        available = ["2023-01", "2024-01", "2025-01"]
+        self.assertNotIn("2025-01", seasonal_periods("2025-01", available))
+        self.assertIn("2025-01", seasonal_periods("2025-01", available, include_target=True))
+
+    def test_quarters_work_and_years_have_no_seasonal_slot(self):
+        self.assertEqual(
+            seasonal_periods("2025-Q1", ["2023-Q1", "2024-Q1", "2024-Q3"]),
+            ["2023-Q1", "2024-Q1"],
+        )
+        self.assertEqual(seasonal_periods("2025", ["2023", "2024"]), [])
+
+
+class SeasonalPredictionTests(unittest.TestCase):
+    """The history fixture has edges that occur in only one season."""
+
+    WINTER_ONLY = "6100 Fuel"
+    SUMMER_ONLY = "6400 Office"
+
+    @classmethod
+    def setUpClass(cls):
+        accounts = load_accounts(HISTORY / "accounts.tsv")
+        lines = filter_lines(load_lines(HISTORY / "transactions.tsv"), end=date(2024, 12, 31))
+        txns, errors = build_transactions(lines, accounts)
+        assert not errors, errors
+        cls.map = score_map(build_logic_map(accounts, txns, window_label="closed"))
+
+    def _counterparts(self, season=None):
+        periods = seasonal_periods(season, self.map.periods) if season else None
+        rows = predict_counterparts(
+            self.map, "1000 Bank", "credit", top_k=20, periods=periods
+        )
+        return {r.account_id: r for r in rows}
+
+    def test_period_weights_reconstruct_the_edge_total(self):
+        for stat in self.map.edges.values():
+            self.assertAlmostEqual(
+                sum(stat.period_weights.values()), stat.weight_sum, places=6
+            )
+
+    def test_out_of_season_counterparts_drop_out(self):
+        january = self._counterparts("2025-01")
+        july = self._counterparts("2025-07")
+        self.assertIn(self.WINTER_ONLY, january)
+        self.assertNotIn(self.SUMMER_ONLY, january)
+        self.assertIn(self.SUMMER_ONLY, july)
+        self.assertNotIn(self.WINTER_ONLY, july)
+
+    def test_seasonal_conditioning_reranks_against_the_full_window(self):
+        overall = self._counterparts()
+        january = self._counterparts("2025-01")
+        self.assertIn(self.WINTER_ONLY, overall, "edge must exist in the full window too")
+        self.assertGreater(
+            january[self.WINTER_ONLY].probability,
+            overall[self.WINTER_ONLY].probability,
+            "a winter-only edge must carry more mass when conditioned on winter",
+        )
+
+    def test_unconditioned_prediction_is_unchanged(self):
+        """`periods=None` must reproduce the whole-window behaviour exactly."""
+        rows = predict_counterparts(self.map, "1000 Bank", "credit", top_k=20)
+        self.assertAlmostEqual(sum(r.probability for r in rows), 1.0, places=6)
+        for r in rows:
+            stat = self.map.edges[EdgeKey(r.account_id, "1000 Bank")]
+            self.assertAlmostEqual(r.weight_sum, stat.weight_sum, places=6)
+
+    def test_unknown_season_yields_no_periods(self):
+        self.assertEqual(seasonal_periods("1999-01", self.map.periods), [])
 
 
 if __name__ == "__main__":
