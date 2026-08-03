@@ -12,6 +12,15 @@ ANOMALY_DEFAULT_TOP_K = 25
 EVAL_HIT_K = (3, 5)
 PREDICT_FREQUENT_DEPTH = 3  # spec §11.2 pass bar applies to edges at/above this depth
 
+# Anomaly qualifiers. Rank cutoffs are fractions of the map, not absolute counts,
+# so they stay meaningful on maps of any size; each is paired with a materiality
+# floor so rank churn on tiny edges cannot masquerade as a structural signal.
+BASELINE_TOP_FRAC = 0.25
+MISSING_EDGE_MIN_SHARE = 0.01
+RANK_SHIFT_MIN_PCTILE = 0.15
+RANK_SHIFT_MIN_DELTA_SHARE = 0.02
+NEAR_ZERO_SHARE = 1e-6
+
 
 @dataclass(frozen=True)
 class Account:
@@ -57,16 +66,40 @@ class EdgeKey:
     def label(self) -> str:
         return f"{self.debit_account_id} | {self.credit_account_id}"
 
+    @property
+    def is_self_loop(self) -> bool:
+        """Same account on both sides.
+
+        The DR×CR product emits these whenever one account is debited and
+        credited in the same journal. They are rewrite artifacts, not value
+        movements: no account funded another. They are retained (dropping them
+        would break weight conservation) but must never be read as postings.
+        """
+        return self.debit_account_id == self.credit_account_id
+
 
 @dataclass
 class EdgeStat:
     key: EdgeKey
     weight_sum: float = 0.0
     depth: int = 0  # number of transactions that produced this edge
+    pair_instances: int = 0  # DR×CR pairs emitted for this edge
+    ambiguous_weight: float = 0.0  # weight from journals with >1 line on both sides
 
     @property
     def mean_weight(self) -> float:
         return self.weight_sum / self.depth if self.depth else 0.0
+
+    @property
+    def ambiguous_share(self) -> float:
+        """Fraction of this edge's weight the rewrite had to guess at.
+
+        The paper's "proportion of reduced hyperedges". A journal with one line
+        on either side pins its pairings exactly; only when both sides carry
+        several lines can the Cartesian product invent a pair that never
+        happened. A high share means treat the edge as weak evidence.
+        """
+        return self.ambiguous_weight / self.weight_sum if self.weight_sum else 0.0
 
 
 @dataclass
@@ -80,6 +113,8 @@ class ScoredEdge:
     share_m: float
     norm: float
     rank: int
+    ambiguous_share: float = 0.0
+    is_self_loop: bool = False
 
 
 @dataclass
@@ -147,7 +182,7 @@ class PredictRow:
 
 @dataclass
 class AnomalyRow:
-    signal: str
+    signals: list[str]  # one row per edge; an edge can trip several qualifiers
     debit_account_id: str
     credit_account_id: str
     baseline_share_w: float

@@ -139,7 +139,10 @@ Account(account_id, name, account_type)
 Line(txn_id, date, account_id, side, amount)
 Transaction(txn_id, date, lines[])          # validated balanced
 EdgeKey(debit_account_id, credit_account_id)
-EdgeStat(key, weight_sum, depth, ...)       # depth = # contributing txns (≥1 pair emitted)
+EdgeStat(key, weight_sum, depth,            # depth = # contributing txns (≥1 pair emitted)
+         pair_instances,                    # DR×CR emissions; > depth means multi-line sources
+         ambiguous_weight)                  # weight from journals with >1 line on BOTH sides
+EdgeKey.is_self_loop                        # debit_account_id == credit_account_id
 LogicMap(
   accounts,
   edges: dict[EdgeKey, EdgeStat],
@@ -170,7 +173,18 @@ w(dr_j, cr_k) = \frac{w(dr_j)\,w(cr_k)}{W}
 
 Emit one weighted pair per DR×CR combination. Proof: \(\sum_{j,k} w(dr_j,cr_k) = W\).
 
-Unit tests must cover: 2-line, 2×2, unbalanced rejection, weight conservation.
+Two properties of the product need explicit handling downstream:
+
+- **Self-loops.** If one account is on both sides, an `(a, a)` edge is emitted. Keep
+  it — conservation depends on the full product — and flag it via
+  `EdgeKey.is_self_loop`. See concept §3.3.1 for why it is never a posting.
+- **Pairing ambiguity.** `has_ambiguous_pairing(txn)` is true only when both sides
+  have more than one line. A `(n,1)` journal apportions exactly
+  (`w(dr_j, cr_1) = w(dr_j)`), so it is not a guess. Only the many-to-many case can
+  invent a pair, and its weight is accumulated into `EdgeStat.ambiguous_weight`.
+
+Unit tests must cover: 2-line, 2×2, unbalanced rejection, weight conservation,
+self-loop emission, and the `(n,1)`-is-not-ambiguous boundary.
 
 ### 7.3 Aggregate
 
@@ -178,6 +192,12 @@ Collapse by `EdgeKey`:
 
 - `weight_sum +=` rewritten weight  
 - `depth += 1` per **transaction** that produced that edge (not per pair instance inside one txn—document this choice in code comments; matches “transaction depth” in the workbook spirit)
+- `pair_instances += 1` per emitted pair
+- `ambiguous_weight +=` rewritten weight when the source journal had >1 line on both sides
+
+`ambiguous_share = ambiguous_weight / weight_sum` is the per-edge confidence
+signal: 0 means every contributing pairing was forced by the journals, 1 means the
+edge exists only because the rewrite paired lines that may never have been related.
 
 Globals (`aggregate.map_globals`):
 
@@ -211,8 +231,13 @@ Optional account-level score: sum of incident edge norms (or max); used for “h
 
 Input: `LogicMap` + candidate transaction(s).
 
-1. Validate balance; unbalanced → `fail` reason `unbalanced`.
-2. Rewrite to edges.
+1. Reject non-positive line weights → `fail`. Do this *before* the balance check:
+   a negative line can balance, and would otherwise reach the rewrite and produce a
+   negative edge weight (concept §3.2 calls that invalid). Do not rewrite.
+2. Validate balance; unbalanced → `fail` reason `unbalanced`.
+3. Rewrite to edges. Self-loop edges are decided first and never fall through to the
+   type table (concept §3.3.1): a 2-line self-transfer is `fail`; a self-loop inside a
+   larger journal is noted as an artifact and casts no vote.
 3. For each edge, compute:
    - `seen`: key in map
    - `weight_percentile` / rank among edges (or share of node activity)
@@ -243,9 +268,21 @@ Emit ranked structural deltas:
 | Signal | Definition |
 |--------|------------|
 | `new_edge` | in open, not in baseline |
-| `missing_edge` | in baseline top-N, absent or near-zero in open |
-| `rank_shift` | large change in norm rank / share |
+| `missing_edge` | in the baseline top `BASELINE_TOP_FRAC` (25%) **and** carrying ≥ `MISSING_EDGE_MIN_SHARE` (1%) of baseline weight, absent or below `NEAR_ZERO_SHARE` in open |
+| `rank_shift` | percentile-rank move ≥ `RANK_SHIFT_MIN_PCTILE` (15%) **and** \|Δshare\| ≥ `RANK_SHIFT_MIN_DELTA_SHARE` (2%) |
 | `clearing_surge` | edges involving accounts whose name/type looks Uncategorized/Clearing/Discrepancy (simple substring / type rules) |
+
+Two rules keep these honest:
+
+- **Qualify by fraction, not by count.** A fixed "top 30" silently means *every edge*
+  on a 20-edge map, which turns `missing_edge` into noise. Pair the rank cutoff with a
+  materiality floor so a depth-1 crumb vanishing is not a structural signal.
+- **Compare percentile ranks, not raw ranks.** Baseline and open maps rarely have the
+  same edge count; an edge can move 14th-of-20 → 9th-of-13 without changing at all.
+  Requiring a material Δshare alongside the rank move filters that artifact out.
+
+Emit **one row per edge**, listing every qualifier it tripped in a `signals` column.
+An edge that is both `new_edge` and `clearing_surge` must not consume two top-K slots.
 
 Sort by absolute Δ share of total weight (or Δ norm). Log top K; write full table to TSV.
 
@@ -302,7 +339,7 @@ Each `--out <dir>` from `build` contains:
 |------|----------|
 | `meta.tsv` | window label, txn count, line count, edge count, totals, generated_at |
 | `accounts.tsv` | copy/normalized accounts used |
-| `edges.tsv` | debit_id, credit_id, weight_sum, depth, mean_weight, share_w, share_c, norm, rank |
+| `edges.tsv` | debit_id, credit_id, weight_sum, depth, mean_weight, share_w, share_c, share_m, norm, rank, ambiguous_share, is_self_loop |
 | `spectrum.tsv` | same as edges sorted by norm (or top slice); convenience |
 | `node_activity.tsv` | account_id, as_debit_weight, as_credit_weight, incident_norm |
 
@@ -312,7 +349,7 @@ Command outputs:
 |---------|------------|
 | `verify` | `verify_results.tsv` — txn_id, verdict, reasons, edge details (one row per candidate edge or JSON-ish reasons column) |
 | `predict` | stdout table; optional `--out predict.tsv` |
-| `anomalies` | `anomaly_edges.tsv` |
+| `anomalies` | `anomaly_edges.tsv` — one row per edge; `signals` is a comma-joined list |
 | `eval` | `eval_summary.tsv`, `eval_detail.tsv` |
 
 `eval_summary.tsv` holds heterogeneous metric rows (verify, predict, anomaly),
@@ -329,7 +366,10 @@ Console: short banner, counts, top 10 spectrum edges, and command-specific highl
 Ship a **small synthetic entity** (≈15–30 accounts, ≈40–80 txns) that includes:
 
 - Common edges: Bank↔Sales, Expense←Bank, Expense←Card, A/R↔Revenue, A/P↔Expense, loan payment.
-- At least one 3+ line journal to exercise averaging.
+- At least one journal with **more than one line on both sides** — a `(n,1)` journal
+  does not exercise averaging at all, since its apportionment is exact.
+- At least one journal touching the same account on both sides, so the self-loop path
+  and `ambiguous_share = 1.0` edges are covered by real fixture data.
 - `candidates.tsv`: mix of normal, rare-but-valid type, and deliberately absurd pairs.
 - `transactions_open.tsv`: baseline pattern **plus** injected anomalies (new loan edge, clearing surge, missing core sales edge).
 - Optional `holdout.tsv`: true counterparts for prediction eval.

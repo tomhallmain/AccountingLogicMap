@@ -98,3 +98,11 @@ T047	2025-03-25	6400 Office	debit	55.00	office
 T047	2025-03-25	2100 Card	credit	55.00	office card
 T048	2025-03-28	6300 Utilities	debit	410.00	utilities
 T048	2025-03-28	1000 Bank	credit	410.00	utilities
+T049	2025-03-28	6300 Utilities	debit	200.00	month-end split: utilities + advertising across bank and card
+T049	2025-03-28	6200 Advertising	debit	300.00	month-end split: utilities + advertising across bank and card
+T049	2025-03-28	1000 Bank	credit	350.00	month-end split: utilities + advertising across bank and card
+T049	2025-03-28	2100 Card	credit	150.00	month-end split: utilities + advertising across bank and card
+T050	2025-03-30	1100 AR	debit	1200.00	cleanup JE: reapply misposted receipts + card fee
+T050	2025-03-30	6400 Office	debit	45.00	cleanup JE: reapply misposted receipts + card fee
+T050	2025-03-30	1100 AR	credit	1200.00	cleanup JE: reapply misposted receipts + card fee
+T050	2025-03-30	2100 Card	credit	45.00	cleanup JE: reapply misposted receipts + card fee

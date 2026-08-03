@@ -64,6 +64,22 @@ Two-line transactions collapse to one edge with weight \(W\). Multi-line journal
 
 **Minimal rewrite (optional upgrade).** When a journal clearly packs unrelated events (common in cleanup JEs), prefer splitting into balanced subsets before averaging—e.g. matching unique amounts across sides, or exact covers of line subsets. Until that exists, averaging is sufficient and matches the spreadsheet prototype.
 
+**Pairing confidence.** The product only has to *guess* when both sides carry several lines. A journal with one line on either side pins its pairings exactly—an \((n,1)\) journal apportions \(w(dr_j, cr_1) = w(dr_j)\), which is not an average at all. So every edge carries an **ambiguous share**: the fraction of its weight sourced from many-to-many journals. This is the paper's "proportion of reduced hyperedges," and it is the honest answer to the false-edge problem: a 100%-ambiguous edge is a pairing the rewrite invented, and should be read as weak evidence rather than silently ranked beside observed flows.
+
+### 3.3.1 Self-loop edges
+
+When one account is debited *and* credited in the same journal, \(DR \times CR\) emits an \((a, a)\) edge. No account funded another, so it is not a value movement—it is an artifact of the rewrite.
+
+They are not rare. On the reference entity they carry **18% of total weight** and occupy three of the top five spectrum slots.
+
+Policy:
+
+- **Retain them.** Dropping them would break \(\sum_{j,k} w(dr_j, cr_k) = W\), and the prototype includes them, so removal would also break parity.
+- **Label them.** Every edge exposes `is_self_loop`; `build` reports their weight share.
+- **Never read them as postings.** In particular, they must be decided *before* any account-type reasoning: a self-loop's type pair is by definition identical on both sides, which the type table would misread—`(Bank, Bank)` means a transfer between two *different* bank accounts, and same-type-both-sides otherwise reads as reclassification.
+
+A posting whose *whole* content is one account against itself is a different thing: it moves no value and is almost certainly an error, whatever the account type. Verification fails it outright (§5.1).
+
 ### 3.4 Aggregation → characteristic map
 
 After rewriting all \(T\) in a window of periods:
@@ -71,8 +87,11 @@ After rewriting all \(T\) in a window of periods:
 1. **Collapse identical edges** \((a_{dr}, a_{cr})\) across transactions.
 2. Store per edge at least:
    - **Edge sum** — total rewritten weight
-   - **Depth** — how many source transactions (or line-pair instances) contributed
-   - Optional: mean amount, recurrence over periods, contact if available
+   - **Depth** — how many source transactions contributed
+   - **Pair instances** — how many DR×CR emissions; above depth means multi-line journals fed it
+   - **Ambiguous share** — fraction of weight from many-to-many journals (§3.3)
+   - **Self-loop flag** — whether both endpoints are the same account (§3.3.1)
+   - Optional: mean amount, recurrence over periods, standard deviation, contact if available
 3. Materialize square (or sparse) matrices over accounts:
    - \(W[a_{dr}, a_{cr}]\) — weight
    - \(C[a_{dr}, a_{cr}]\) — count / depth
@@ -120,6 +139,9 @@ That spectrum *is* the Accounting Logic Map for the chosen window: a low-dimensi
    - **Known weak / rare edge** — exists but low rank → allow with lower confidence or review flag.
    - **Unseen edge** — never (or almost never) observed → anomaly unless account types still form a valid characteristic pair (e.g. first rent payment to a new landlord GL still Expense←Bank).
    - **Type-illegal or reclass-suspicious** — same non-cash type on both sides often signals reclassification; cash↔cash is transfer-like; red combinations from the type matrix can hard-fail or hard-warn.
+   - **Self-loop** — decided before type logic (§3.3.1). If the whole posting is one account against itself, **fail**: it moves no value. If the loop is only an artifact of rewriting a larger journal, it is noted and gets no vote either way.
+
+   Line weights must be positive before any of this runs. A negative line can still balance, so the balance check alone will pass it through to the rewrite and produce a negative edge weight — which §3.2 declares invalid.
 
 **Output useful in a demo:** per-transaction pass/warn/fail with the concrete edges and their historical percentiles—not a single opaque number.
 

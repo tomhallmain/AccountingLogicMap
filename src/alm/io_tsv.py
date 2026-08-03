@@ -149,6 +149,8 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
         "share_m",
         "norm",
         "rank",
+        "ambiguous_share",
+        "is_self_loop",
     ]
     _write_tsv(out_dir / "edges.tsv", fields, edge_rows)
     _write_tsv(out_dir / "spectrum.tsv", fields, edge_rows)
@@ -182,6 +184,8 @@ def _scored_to_row(se: ScoredEdge) -> dict:
         "share_m": f"{se.share_m:.6f}",
         "norm": f"{se.norm:.6f}",
         "rank": se.rank,
+        "ambiguous_share": f"{se.ambiguous_share:.6f}",
+        "is_self_loop": "1" if se.is_self_loop else "0",
     }
 
 
@@ -195,7 +199,13 @@ def load_map_dir(path: Path) -> LogicMap:
         key = EdgeKey(row["debit_account_id"], row["credit_account_id"])
         weight = float(row["weight_sum"])
         depth = int(float(row["depth"]))
-        edges[key] = EdgeStat(key=key, weight_sum=weight, depth=depth)
+        edges[key] = EdgeStat(
+            key=key,
+            weight_sum=weight,
+            depth=depth,
+            pair_instances=depth,
+            ambiguous_weight=weight * float(row.get("ambiguous_share", 0) or 0),
+        )
         scored.append(
             ScoredEdge(
                 key=key,
@@ -207,6 +217,8 @@ def load_map_dir(path: Path) -> LogicMap:
                 share_m=float(row.get("share_m", 0) or 0),
                 norm=float(row["norm"]),
                 rank=int(float(row["rank"])),
+                ambiguous_share=float(row.get("ambiguous_share", 0) or 0),
+                is_self_loop=key.is_self_loop,
             )
         )
 
@@ -276,7 +288,7 @@ def write_anomaly_rows(path: Path, rows) -> None:
     _write_tsv(
         path,
         [
-            "signal",
+            "signals",
             "debit_account_id",
             "credit_account_id",
             "baseline_share_w",
@@ -288,7 +300,7 @@ def write_anomaly_rows(path: Path, rows) -> None:
         ],
         [
             {
-                "signal": r.signal,
+                "signals": ",".join(r.signals),
                 "debit_account_id": r.debit_account_id,
                 "credit_account_id": r.credit_account_id,
                 "baseline_share_w": f"{r.baseline_share_w:.6f}",

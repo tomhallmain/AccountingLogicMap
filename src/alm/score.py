@@ -57,6 +57,8 @@ def score_map(logic_map: LogicMap) -> LogicMap:
                 share_m=share_m,
                 norm=norm,
                 rank=0,
+                ambiguous_share=stat.ambiguous_share,
+                is_self_loop=stat.key.is_self_loop,
             )
         )
 
@@ -98,7 +100,9 @@ def node_activity(logic_map: LogicMap) -> list[dict[str, float | str]]:
 
         se = rank_index.get(key)
         if se:
-            for aid in (key.debit_account_id, key.credit_account_id):
+            # A self-loop touches one account once, not twice.
+            incident = {key.debit_account_id, key.credit_account_id}
+            for aid in incident:
                 rows[aid]["incident_norm"] = float(rows[aid]["incident_norm"]) + se.norm
 
     out = list(rows.values())

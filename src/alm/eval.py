@@ -104,7 +104,9 @@ def evaluate_anomalies(
 ) -> dict:
     """expected_signals: list of (signal, debit_id, credit_id)."""
     found = {
-        (r.signal, r.debit_account_id, r.credit_account_id) for r in anomaly_rows
+        (signal, r.debit_account_id, r.credit_account_id)
+        for r in anomaly_rows
+        for signal in r.signals
     }
     # Also allow matching by edge ignoring signal family overlap
     found_edges = {(r.debit_account_id, r.credit_account_id) for r in anomaly_rows}

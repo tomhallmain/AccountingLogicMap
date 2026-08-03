@@ -47,15 +47,40 @@ def _log_spectrum(logic_map, top: int = 10) -> None:
         logic_map.total_weight,
         logic_map.total_depth,
     )
+    total = logic_map.total_weight or 1.0
+    self_loop_w = sum(s.weight_sum for s in logic_map.edges.values() if s.key.is_self_loop)
+    ambiguous_w = sum(s.ambiguous_weight for s in logic_map.edges.values())
+    if self_loop_w:
+        LOG.warning(
+            "build: %d self-loop edge(s) carry %.1f%% of weight — rewrite artifacts, not value flows",
+            sum(1 for s in logic_map.edges.values() if s.key.is_self_loop),
+            100 * self_loop_w / total,
+        )
+    if ambiguous_w:
+        LOG.info(
+            "build: %.1f%% of weight came from journals with several lines on both sides "
+            "(pairing inferred, see ambiguous_share)",
+            100 * ambiguous_w / total,
+        )
+
     LOG.info("spectrum top:")
     for se in logic_map.scored[:top]:
+        flags = "".join(
+            f" [{f}]"
+            for f in (
+                "self-loop" if se.is_self_loop else "",
+                f"ambig {se.ambiguous_share:.0%}" if se.ambiguous_share > 0 else "",
+            )
+            if f
+        )
         LOG.info(
-            "  %2d. %s   weight=%.2f depth=%d norm=%.4f",
+            "  %2d. %s   weight=%.2f depth=%d norm=%.4f%s",
             se.rank,
             se.key.label(),
             se.weight_sum,
             se.depth,
             se.norm,
+            flags,
         )
 
 
@@ -186,7 +211,7 @@ def cmd_anomalies(args: argparse.Namespace) -> int:
     for r in rows[: min(15, len(rows))]:
         LOG.info(
             "  [%s] %s | %s  Δshare=%+.4f  (%s)",
-            r.signal,
+            ",".join(r.signals),
             r.debit_account_id,
             r.credit_account_id,
             r.delta_share_w,

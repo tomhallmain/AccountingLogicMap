@@ -4,7 +4,7 @@ import unittest
 from datetime import date
 
 from alm.models import Line, Transaction
-from alm.rewrite import rewrite_transaction
+from alm.rewrite import has_ambiguous_pairing, rewrite_transaction
 from alm.validate import build_transactions
 from alm.models import Account
 
@@ -46,6 +46,56 @@ class RewriteTests(unittest.TestCase):
         self.assertAlmostEqual(weights[("A1", "B2")], 60 * 75 / 100)
         self.assertAlmostEqual(weights[("A2", "B1")], 40 * 25 / 100)
         self.assertAlmostEqual(weights[("A2", "B2")], 40 * 75 / 100)
+
+    def test_self_loop_edge_is_emitted_and_conserves_weight(self):
+        """An account on both sides produces an (a, a) edge.
+
+        It carries no value movement, but dropping it would break conservation,
+        so the rewrite keeps it and downstream code labels it instead.
+        """
+        txn = _txn(
+            "S",
+            [
+                ("AR", "debit", 1200.0),
+                ("Office", "debit", 45.0),
+                ("AR", "credit", 1200.0),
+                ("Card", "credit", 45.0),
+            ],
+        )
+        edges = rewrite_transaction(txn)
+        self.assertAlmostEqual(sum(w for _, w in edges), 1245.0)
+        self_loops = [(k, w) for k, w in edges if k.is_self_loop]
+        self.assertEqual(len(self_loops), 1)
+        self.assertEqual(self_loops[0][0].debit_account_id, "AR")
+        self.assertAlmostEqual(self_loops[0][1], 1200 * 1200 / 1245)
+
+    def test_pairing_is_ambiguous_only_when_both_sides_are_multi_line(self):
+        one_to_one = _txn("A", [("Bank", "debit", 100.0), ("Sales", "credit", 100.0)])
+        many_to_one = _txn(
+            "B",
+            [
+                ("Util", "debit", 60.0),
+                ("Advert", "debit", 40.0),
+                ("Bank", "credit", 100.0),
+            ],
+        )
+        many_to_many = _txn(
+            "C",
+            [
+                ("Util", "debit", 60.0),
+                ("Advert", "debit", 40.0),
+                ("Bank", "credit", 70.0),
+                ("Card", "credit", 30.0),
+            ],
+        )
+        self.assertFalse(has_ambiguous_pairing(one_to_one))
+        # (n,1) apportions exactly: each debit pairs with the only credit.
+        self.assertFalse(has_ambiguous_pairing(many_to_one))
+        weights = {k.label(): w for k, w in rewrite_transaction(many_to_one)}
+        self.assertAlmostEqual(weights["Util | Bank"], 60.0)
+        self.assertAlmostEqual(weights["Advert | Bank"], 40.0)
+        # Only here can the product invent a pair that never happened.
+        self.assertTrue(has_ambiguous_pairing(many_to_many))
 
     def test_reject_unbalanced_in_validate(self):
         accounts = {

@@ -7,19 +7,25 @@ from .rewrite import rewrite_transactions
 
 
 def aggregate_rewritten(
-    rewritten: list[tuple[str, EdgeKey, float]],
+    rewritten: list[tuple[str, EdgeKey, float, bool]],
 ) -> dict[EdgeKey, EdgeStat]:
     """Collapse identical edges.
 
     depth counts distinct transactions that produced the edge (not pair
-    instances inside a single multi-line journal).
+    instances inside a single multi-line journal); pair_instances counts the
+    emissions, so pair_instances > depth marks edges fed by multi-line journals.
     """
     weights: dict[EdgeKey, float] = defaultdict(float)
+    ambiguous: dict[EdgeKey, float] = defaultdict(float)
+    instances: dict[EdgeKey, int] = defaultdict(int)
     txn_sets: dict[EdgeKey, set[str]] = defaultdict(set)
 
-    for txn_id, key, weight in rewritten:
+    for txn_id, key, weight, is_ambiguous in rewritten:
         weights[key] += weight
+        instances[key] += 1
         txn_sets[key].add(txn_id)
+        if is_ambiguous:
+            ambiguous[key] += weight
 
     edges: dict[EdgeKey, EdgeStat] = {}
     for key, weight_sum in weights.items():
@@ -27,6 +33,8 @@ def aggregate_rewritten(
             key=key,
             weight_sum=weight_sum,
             depth=len(txn_sets[key]),
+            pair_instances=instances[key],
+            ambiguous_weight=ambiguous[key],
         )
     return edges
 

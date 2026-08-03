@@ -27,10 +27,24 @@ def rewrite_transaction(txn: Transaction) -> list[tuple[EdgeKey, float]]:
     return edges
 
 
-def rewrite_transactions(txns: list[Transaction]) -> list[tuple[str, EdgeKey, float]]:
-    """Rewrite all transactions; returns (txn_id, key, weight) triples."""
-    out: list[tuple[str, EdgeKey, float]] = []
+def has_ambiguous_pairing(txn: Transaction) -> bool:
+    """True when the rewrite has to guess which credit funded which debit.
+
+    With one line on either side every emitted pair is forced by the journal
+    itself: a (n,1) journal apportions w(dr_j, cr_1) = dr_j, which is exact. Only
+    when both sides carry several lines can DR×CR produce a pair that never
+    corresponded to a real movement — the paper's "false edge" case.
+    """
+    return len(txn.debit_lines()) > 1 and len(txn.credit_lines()) > 1
+
+
+def rewrite_transactions(
+    txns: list[Transaction],
+) -> list[tuple[str, EdgeKey, float, bool]]:
+    """Rewrite all transactions; returns (txn_id, key, weight, ambiguous) tuples."""
+    out: list[tuple[str, EdgeKey, float, bool]] = []
     for txn in txns:
+        ambiguous = has_ambiguous_pairing(txn)
         for key, weight in rewrite_transaction(txn):
-            out.append((txn.txn_id, key, weight))
+            out.append((txn.txn_id, key, weight, ambiguous))
     return out

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from .models import (
+    BALANCE_TOLERANCE,
     RARE_EDGE_RANK_FRAC,
     EdgeFinding,
     LogicMap,
@@ -78,7 +79,22 @@ def verify_transaction(logic_map: LogicMap, txn: Transaction) -> VerifyResult:
     reasons: list[str] = []
     findings: list[EdgeFinding] = []
 
-    if abs(txn.debit_total() - txn.credit_total()) > 1e-6:
+    # Axiom: line weights are stored positive; direction lives in `side`, never
+    # in the sign. A negative line can still balance, and would otherwise reach
+    # the rewrite and produce a negative edge weight.
+    nonpositive = [ln for ln in txn.lines if ln.amount <= 0]
+    if nonpositive:
+        return VerifyResult(
+            txn_id=txn.txn_id,
+            verdict="fail",
+            reasons=[
+                "non-positive line weight: "
+                + ", ".join(f"{ln.account_id} {ln.side} {ln.amount}" for ln in nonpositive)
+            ],
+            findings=[],
+        )
+
+    if abs(txn.debit_total() - txn.credit_total()) > BALANCE_TOLERANCE:
         return VerifyResult(
             txn_id=txn.txn_id,
             verdict="fail",
@@ -106,12 +122,46 @@ def verify_transaction(logic_map: LogicMap, txn: Transaction) -> VerifyResult:
     warns = 0
     fails = 0
 
+    single_pair = len(txn.debit_lines()) == 1 and len(txn.credit_lines()) == 1
+
     for key, weight in pairs:
         scored = rank_index.get(key)
         debit_type = logic_map.account_type(key.debit_account_id)
         credit_type = logic_map.account_type(key.credit_account_id)
         seen = scored is not None
         note = ""
+
+        if key.is_self_loop:
+            # Decided before the type-pair table, which cannot reason about this:
+            # ("Bank","Bank") is listed as a common pair meaning a transfer
+            # between two *different* bank accounts.
+            if single_pair:
+                # The whole posting is one account against itself — it moves
+                # nothing, whatever the account type.
+                note = "self-transfer: same account on both sides"
+                fails += 1
+                reasons.append(
+                    f"posting moves no value: {key.debit_account_id} debited and "
+                    f"credited against itself"
+                )
+            else:
+                # An artifact of rewriting a journal that touches this account on
+                # both sides. Not a posting the recorder made, so it gets no vote.
+                note = "self-loop rewrite artifact (not a posting)"
+            findings.append(
+                EdgeFinding(
+                    key=key,
+                    weight=weight,
+                    seen=seen,
+                    rank=scored.rank if scored else None,
+                    norm=scored.norm if scored else None,
+                    share_w=scored.share_w if scored else None,
+                    debit_type=debit_type,
+                    credit_type=credit_type,
+                    note=note,
+                )
+            )
+            continue
 
         if seen and scored is not None:
             if scored.rank <= max(1, n_edges // 4):
@@ -162,8 +212,6 @@ def verify_transaction(logic_map: LogicMap, txn: Transaction) -> VerifyResult:
 
     if fails:
         verdict = "fail"
-    elif warns and not supports:
-        verdict = "warn"
     elif warns:
         verdict = "warn"
     else:
