@@ -1,0 +1,83 @@
+account_id	name	account_type
+4001 Income 1	4001 Income 1	Income
+1001 Bank 1	1001 Bank 1	Bank
+1101 A/R 1	1101 A/R 1	Accounts receivable (A/R)
+2201 Other Current Liability 1	2201 Other Current Liability 1	Other Current Liabilities
+1201 Other Current Asset 1	1201 Other Current Asset 1	Other Current Assets
+5001 COGS 1	5001 COGS 1	Cost of Goods Sold
+2202 Other Current Liability 2	2202 Other Current Liability 2	Other Current Liabilities
+6801 Other Expense 1	6801 Other Expense 1	Other Expense
+1002 Bank 2	1002 Bank 2	Bank
+1102 A/R 2	1102 A/R 2	Accounts receivable (A/R)
+3001 Equity 1	3001 Equity 1	Equity
+4002 Income 2	4002 Income 2	Income
+2101 Credit Card 1	2101 Credit Card 1	Credit Card
+2203 Other Current Liability 3	2203 Other Current Liability 3	Other Current Liabilities
+5002 COGS 2	5002 COGS 2	Cost of Goods Sold
+4003 Income 3	4003 Income 3	Income
+1801 Other Asset 1	1801 Other Asset 1	Other Assets
+2601 Long Term Liability 1	2601 Long Term Liability 1	Long Term Liabilities
+5003 COGS 3	5003 COGS 3	Cost of Goods Sold
+2602 Long Term Liability 2	2602 Long Term Liability 2	Long Term Liabilities
+6001 Expense 1	6001 Expense 1	Expenses
+6002 Expense 2	6002 Expense 2	Expenses
+1202 Other Current Asset 2	1202 Other Current Asset 2	Other Current Assets
+6003 Expense 3	6003 Expense 3	Expenses
+5004 COGS 4	5004 COGS 4	Cost of Goods Sold
+6004 Expense 4	6004 Expense 4	Expenses
+2204 Other Current Liability 4	2204 Other Current Liability 4	Other Current Liabilities
+5005 COGS 5	5005 COGS 5	Cost of Goods Sold
+6005 Expense 5	6005 Expense 5	Expenses
+2102 Credit Card 2	2102 Credit Card 2	Credit Card
+4004 Income 4	4004 Income 4	Income
+4005 Income 5	4005 Income 5	Income
+4006 Income 6	4006 Income 6	Income
+6006 Expense 6	6006 Expense 6	Expenses
+6007 Expense 7	6007 Expense 7	Expenses
+5006 COGS 6	5006 COGS 6	Cost of Goods Sold
+6008 Expense 8	6008 Expense 8	Expenses
+5007 COGS 7	5007 COGS 7	Cost of Goods Sold
+6009 Expense 9	6009 Expense 9	Expenses
+6010 Expense 10	6010 Expense 10	Expenses
+2205 Other Current Liability 5	2205 Other Current Liability 5	Other Current Liabilities
+5008 COGS 8	5008 COGS 8	Cost of Goods Sold
+4007 Income 7	4007 Income 7	Income
+6011 Expense 11	6011 Expense 11	Expenses
+2103 Credit Card 3	2103 Credit Card 3	Credit Card
+2104 Credit Card 4	2104 Credit Card 4	Credit Card
+6012 Expense 12	6012 Expense 12	Expenses
+6013 Expense 13	6013 Expense 13	Expenses
+6014 Expense 14	6014 Expense 14	Expenses
+6015 Expense 15	6015 Expense 15	Expenses
+5009 COGS 9	5009 COGS 9	Cost of Goods Sold
+4008 Income 8	4008 Income 8	Income
+1003 Bank 3	1003 Bank 3	Bank
+5010 COGS 10	5010 COGS 10	Cost of Goods Sold
+6016 Expense 16	6016 Expense 16	Expenses
+2105 Credit Card 5	2105 Credit Card 5	Credit Card
+6017 Expense 17	6017 Expense 17	Expenses
+2106 Credit Card 6	2106 Credit Card 6	Credit Card
+2107 Credit Card 7	2107 Credit Card 7	Credit Card
+6018 Expense 18	6018 Expense 18	Expenses
+6019 Expense 19	6019 Expense 19	Expenses
+6020 Expense 20	6020 Expense 20	Expenses
+5011 COGS 11	5011 COGS 11	Cost of Goods Sold
+5012 COGS 12	5012 COGS 12	Cost of Goods Sold
+6021 Expense 21	6021 Expense 21	Expenses
+6022 Expense 22	6022 Expense 22	Expenses
+6023 Expense 23	6023 Expense 23	Expenses
+1004 Bank 4	1004 Bank 4	Bank
+6024 Expense 24	6024 Expense 24	Expenses
+5013 COGS 13	5013 COGS 13	Cost of Goods Sold
+6025 Expense 25	6025 Expense 25	Expenses
+6026 Expense 26	6026 Expense 26	Expenses
+6027 Expense 27	6027 Expense 27	Expenses
+6028 Expense 28	6028 Expense 28	Expenses
+6029 Expense 29	6029 Expense 29	Expenses
+6030 Expense 30	6030 Expense 30	Expenses
+6031 Expense 31	6031 Expense 31	Expenses
+6032 Expense 32	6032 Expense 32	Expenses
+5014 COGS 14	5014 COGS 14	Cost of Goods Sold
+6033 Expense 33	6033 Expense 33	Expenses
+1203 Other Current Asset 3	1203 Other Current Asset 3	Other Current Assets
+6034 Expense 34	6034 Expense 34	Expenses

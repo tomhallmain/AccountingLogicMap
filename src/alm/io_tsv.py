@@ -5,6 +5,7 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Iterable
 
+from .aggregate import map_globals
 from .models import Account, EdgeKey, EdgeStat, Line, LogicMap, ScoredEdge
 from .score import node_activity, score_map
 
@@ -106,7 +107,7 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
             "edge_count",
             "total_weight",
             "total_depth",
-            "mean_weight_per_instance",
+            "total_mean_weight",
             "generated_at",
         ],
         [
@@ -117,7 +118,7 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
                 "edge_count": len(logic_map.edges),
                 "total_weight": f"{logic_map.total_weight:.6f}",
                 "total_depth": logic_map.total_depth,
-                "mean_weight_per_instance": f"{logic_map.mean_weight_per_instance:.6f}",
+                "total_mean_weight": f"{logic_map.total_mean_weight:.6f}",
                 "generated_at": datetime.now().isoformat(timespec="seconds"),
             }
         ],
@@ -211,12 +212,10 @@ def load_map_dir(path: Path) -> LogicMap:
 
     meta_rows = _read_tsv(path / "meta.tsv")
     meta = meta_rows[0] if meta_rows else {}
-    total_weight = float(meta.get("total_weight") or sum(e.weight_sum for e in edges.values()))
-    total_depth = int(float(meta.get("total_depth") or sum(e.depth for e in edges.values())))
-    mean_w = float(
-        meta.get("mean_weight_per_instance")
-        or (total_weight / total_depth if total_depth else 0.0)
-    )
+    derived_w, derived_c, derived_m = map_globals(edges)
+    total_weight = float(meta.get("total_weight") or derived_w)
+    total_depth = int(float(meta.get("total_depth") or derived_c))
+    total_mean_weight = float(meta.get("total_mean_weight") or derived_m)
 
     scored.sort(key=lambda s: s.rank)
     return LogicMap(
@@ -224,7 +223,7 @@ def load_map_dir(path: Path) -> LogicMap:
         edges=edges,
         total_weight=total_weight,
         total_depth=total_depth,
-        mean_weight_per_instance=mean_w,
+        total_mean_weight=total_mean_weight,
         window_label=meta.get("window_label", path.name),
         txn_count=int(float(meta.get("txn_count") or 0)),
         line_count=int(float(meta.get("line_count") or 0)),
@@ -305,7 +304,17 @@ def write_anomaly_rows(path: Path, rows) -> None:
 
 
 def write_eval_summary(path: Path, rows: list[dict]) -> None:
+    """Write heterogeneous metric rows.
+
+    Metric families carry different keys (verify vs predict vs anomaly), so the
+    header is the union across all rows in first-seen order. Taking the header
+    from rows[0] alone silently blanks every column the first row lacks.
+    """
     if not rows:
         return
-    fields = list(rows[0].keys())
+    fields: list[str] = []
+    for row in rows:
+        for key in row:
+            if key not in fields:
+                fields.append(key)
     _write_tsv(path, fields, rows)

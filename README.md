@@ -38,10 +38,18 @@ python -m alm eval --map out/baseline --out out/eval ^
 
 On PowerShell, use backticks for line continuation instead of `^`.
 
-## Excel reference (optional)
+## Reference entity
+
+`data/reference/` ships a synthetic reference entity — an aggregated edge list at
+larger scale than `data/sample/` (190 edges, 82 accounts), together with the
+expected norm and probability values for every edge.
+`tests/test_reference_parity.py` asserts the pipeline reproduces them, which is
+what pins the scoring chain.
+
+An Excel edge list can also be loaded directly, if you have one:
 
 ```bash
-python -m alm build-from-excel --xlsx "docs/Accounting Logic Map test.xlsx" --out out/excel_ref
+python -m alm build-from-excel --xlsx <workbook> --out out/excel_ref   # needs openpyxl
 ```
 
 ## Tests

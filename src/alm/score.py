@@ -8,14 +8,20 @@ def score_edge(
     *,
     total_weight: float,
     total_depth: int,
-    mean_weight_per_instance: float,
+    total_mean_weight: float,
 ) -> tuple[float, float, float, float]:
-    """Return (share_w, share_c, share_m, norm)."""
+    """Return (share_w, share_c, share_m, norm).
+
+    Mirrors the workbook `n` sheet:
+        average(w/st!B1, c/st!B2, (w/c)/st!B3)
+    Each term is a share of its own global total, so all three are on the same
+    scale and the average is a genuine blend. See aggregate.map_globals.
+    """
     terms: list[float] = []
     share_w = (stat.weight_sum / total_weight) if total_weight else 0.0
     share_c = (stat.depth / total_depth) if total_depth else 0.0
-    if mean_weight_per_instance > 0 and stat.depth > 0:
-        share_m = (stat.weight_sum / stat.depth) / mean_weight_per_instance
+    if total_mean_weight > 0 and stat.depth > 0:
+        share_m = (stat.weight_sum / stat.depth) / total_mean_weight
     else:
         share_m = 0.0
 
@@ -23,7 +29,7 @@ def score_edge(
         terms.append(share_w)
     if total_depth:
         terms.append(share_c)
-    if mean_weight_per_instance > 0 and stat.depth > 0:
+    if total_mean_weight > 0 and stat.depth > 0:
         terms.append(share_m)
 
     norm = sum(terms) / len(terms) if terms else 0.0
@@ -38,7 +44,7 @@ def score_map(logic_map: LogicMap) -> LogicMap:
             stat,
             total_weight=logic_map.total_weight,
             total_depth=logic_map.total_depth,
-            mean_weight_per_instance=logic_map.mean_weight_per_instance,
+            total_mean_weight=logic_map.total_mean_weight,
         )
         scored.append(
             ScoredEdge(

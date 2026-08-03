@@ -76,12 +76,21 @@ After rewriting all \(T\) in a window of periods:
 3. Materialize square (or sparse) matrices over accounts:
    - \(W[a_{dr}, a_{cr}]\) — weight
    - \(C[a_{dr}, a_{cr}]\) — count / depth
-4. **Normalize** so large and small businesses are comparable. One workable score (as in the test workbook) blends:
-   - share of total edge weight,
-   - share of total edge depth,
-   - mean weight on that edge vs global mean weight-per-instance  
+4. **Normalize** so large and small businesses are comparable. One workable score (as in the spreadsheet prototype) blends three quantities, *each expressed as a share of its own global total* so that all three sit on the same scale and each sums to 1 across edges:
+
+   | Term | Edge value | Global denominator |
+   |------|------------|--------------------|
+   | weight share | edge weight \(w\) | \(\sum_e w_e\) |
+   | depth share | edge depth \(c\) | \(\sum_e c_e\) |
+   | mean-size share | mean weight per instance \(w/c\) | \(\sum_e (w_e/c_e)\) |
+
+   \[
+   \mathrm{norm}(e) = \tfrac{1}{3}\left(\frac{w_e}{\sum w} + \frac{c_e}{\sum c} + \frac{w_e/c_e}{\sum (w/c)}\right)
+   \]
 
    Rank accounts / edges by that score to get the **characteristic spectrum**.
+
+   The third denominator is the **sum of per-edge means**, not the global mean \(\sum w / \sum c\). They differ by orders of magnitude (≈542× on the reference entity), and substituting the latter turns that term from a share into an unbounded ratio that dominates the average — the blend degenerates into "mean transaction size" and one-off large journals outrank recurring core activity.
 
 That spectrum *is* the Accounting Logic Map for the chosen window: a low-dimensional projection of high-dimensional journal activity that preserves “who moves value with whom.”
 
@@ -129,7 +138,7 @@ Verification answers: “Is this posting consistent with how *this* business has
    - period seasonality (same month last year),
    - feed-side priors (which side of the edge is usually “pre-fed” from bank/card imports).
 
-**Demo shape:** input `account=10000 BOA, side=credit, amount≈X` → ranked debit accounts with historical share of that node’s activity and typical amount bands.
+**Demo shape:** input `account=<operating bank>, side=credit, amount≈X` → ranked debit accounts with historical share of that node’s activity and typical amount bands.
 
 Prediction answers: “What is the *characteristic* other side of this movement?”
 

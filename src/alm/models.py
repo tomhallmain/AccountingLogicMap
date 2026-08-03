@@ -10,6 +10,7 @@ RARE_EDGE_RANK_FRAC = 0.9
 PREDICT_DEFAULT_TOP_K = 10
 ANOMALY_DEFAULT_TOP_K = 25
 EVAL_HIT_K = (3, 5)
+PREDICT_FREQUENT_DEPTH = 3  # spec §11.2 pass bar applies to edges at/above this depth
 
 
 @dataclass(frozen=True)
@@ -87,7 +88,7 @@ class LogicMap:
     edges: dict[EdgeKey, EdgeStat]
     total_weight: float
     total_depth: int
-    mean_weight_per_instance: float
+    total_mean_weight: float  # Σ over edges of (weight_sum / depth); workbook st!B3
     window_label: str
     txn_count: int = 0
     line_count: int = 0

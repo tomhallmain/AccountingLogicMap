@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import Counter
 
-from .models import EVAL_HIT_K, LogicMap, Transaction
+from .models import EVAL_HIT_K, PREDICT_FREQUENT_DEPTH, EdgeKey, LogicMap, Transaction
 from .predict import predict_counterparts
 from .verify import verify_transactions
 
@@ -45,55 +45,55 @@ def evaluate_prediction(
     holdout: list[tuple[str, str]],
     *,
     ks: tuple[int, ...] = EVAL_HIT_K,
+    frequent_depth: int = PREDICT_FREQUENT_DEPTH,
 ) -> list[dict]:
-    """Hit-rate@K for conditioning on each side; compare to uniform random baseline."""
+    """Hit-rate@K for conditioning on each side; compare to uniform random baseline.
+
+    Reported for two cohorts, because the spec's pass bar is stated only for the
+    second:
+      cohort=all        every holdout edge
+      cohort=frequent   holdout edges whose map depth >= frequent_depth
+    """
     n_accounts = max(len(logic_map.accounts), 1)
     summaries: list[dict] = []
 
-    for k in ks:
-        hits_debit = 0
-        hits_credit = 0
-        eligible = 0
-        for dr, cr in holdout:
-            # Prefer edges that exist with some depth in the map
-            key_depth = 0
-            for ek, st in logic_map.edges.items():
-                if ek.debit_account_id == dr and ek.credit_account_id == cr:
-                    key_depth = st.depth
-                    break
-            if key_depth < 1:
-                # still evaluate; may miss
-                pass
-            eligible += 1
-
-            pred_cr = predict_counterparts(logic_map, dr, "debit", top_k=k)
-            if any(p.account_id == cr for p in pred_cr):
-                hits_debit += 1
-
-            pred_dr = predict_counterparts(logic_map, cr, "credit", top_k=k)
-            if any(p.account_id == dr for p in pred_dr):
-                hits_credit += 1
-
-        random_rate = min(1.0, k / n_accounts)
-        n = eligible or 1
-        summaries.append(
-            {
-                "metric": f"predict_hit@{k}_from_debit",
-                "n": eligible,
-                "hit_rate": hits_debit / n,
-                "random_baseline": random_rate,
-                "above_random": (hits_debit / n) > random_rate,
-            }
+    # Depth of each holdout edge in the map (0 if the map never saw it).
+    depths = {
+        (dr, cr): (
+            logic_map.edges[EdgeKey(dr, cr)].depth
+            if EdgeKey(dr, cr) in logic_map.edges
+            else 0
         )
-        summaries.append(
-            {
-                "metric": f"predict_hit@{k}_from_credit",
-                "n": eligible,
-                "hit_rate": hits_credit / n,
-                "random_baseline": random_rate,
-                "above_random": (hits_credit / n) > random_rate,
-            }
-        )
+        for dr, cr in holdout
+    }
+    cohorts = {
+        "all": list(holdout),
+        "frequent": [e for e in holdout if depths[e] >= frequent_depth],
+    }
+
+    for cohort, edges in cohorts.items():
+        for k in ks:
+            hits_debit = 0
+            hits_credit = 0
+            for dr, cr in edges:
+                if any(p.account_id == cr for p in predict_counterparts(logic_map, dr, "debit", top_k=k)):
+                    hits_debit += 1
+                if any(p.account_id == dr for p in predict_counterparts(logic_map, cr, "credit", top_k=k)):
+                    hits_credit += 1
+
+            random_rate = min(1.0, k / n_accounts)
+            n = len(edges) or 1
+            for side, hits in (("debit", hits_debit), ("credit", hits_credit)):
+                summaries.append(
+                    {
+                        "metric": f"predict_hit@{k}_from_{side}",
+                        "cohort": cohort,
+                        "n": len(edges),
+                        "hit_rate": hits / n,
+                        "random_baseline": random_rate,
+                        "above_random": bool(edges) and (hits / n) > random_rate,
+                    }
+                )
     return summaries
 
 

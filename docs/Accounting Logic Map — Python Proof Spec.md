@@ -34,7 +34,7 @@ UI is out of scope: terminal logs + TSV artifacts only.
 | Choice | Decision |
 |--------|----------|
 | Language | Python 3.10+ |
-| Dependencies | stdlib for core; `openpyxl` optional for `docs/Accounting Logic Map test.xlsx` |
+| Dependencies | stdlib for core; `openpyxl` optional, for the Excel edge-list path |
 | Packaging | `src/alm/` package + `python -m alm` entry |
 | Tests | `unittest` or `pytest` (either fine; keep tests fast and deterministic) |
 | Config | CLI flags; no YAML required for v1 |
@@ -49,13 +49,17 @@ AccountingLogicMap/
   docs/
     Accounting Logic Map — Concept Definition.md
     Accounting Logic Map — Python Proof Spec.md   # this file
-    Accounting Logic Map test.xlsx                # reference only
   data/
     sample/
       accounts.tsv          # account_id, name, account_type
       transactions.tsv      # journal lines (baseline)
       transactions_open.tsv # optional open-window lines
       candidates.tsv        # transactions for verify
+      holdout.tsv           # edges for prediction eval
+      expected_anomalies.tsv
+    reference/              # larger reference entity + expected results
+      reference_accounts.tsv
+      reference_edges.tsv
   src/alm/
     __init__.py
     __main__.py             # python -m alm
@@ -76,6 +80,8 @@ AccountingLogicMap/
     test_aggregate.py
     test_verify_predict.py
     test_anomalies.py
+    test_reference_parity.py
+    test_eval_outputs.py
   requirements.txt          # openpyxl optional extra, or note in README
   README.md                 # how to run the proof
 ```
@@ -122,7 +128,7 @@ For parity with the workbook without raw journals:
 | `edge_sum` | Edge Sum |
 | `depth` | Edge Transaction Depth |
 
-Loader may also read `docs/Accounting Logic Map test.xlsx` sheet `rw` (+ `ca` for types) when `openpyxl` is installed.
+`build-from-excel` reads the same shape from an Excel workbook's aggregated-edge sheet (+ an account-type sheet) when `openpyxl` is installed. `data/reference/` is the TSV equivalent.
 
 ---
 
@@ -139,7 +145,7 @@ LogicMap(
   edges: dict[EdgeKey, EdgeStat],
   total_weight,
   total_depth,
-  mean_weight_per_instance,                 # total_weight / total_depth
+  total_mean_weight,                        # Σ (weight_sum / depth); see §7.4
   window_label
 )
 ```
@@ -173,24 +179,31 @@ Collapse by `EdgeKey`:
 - `weight_sum +=` rewritten weight  
 - `depth += 1` per **transaction** that produced that edge (not per pair instance inside one txn—document this choice in code comments; matches “transaction depth” in the workbook spirit)
 
-Globals:
+Globals (`aggregate.map_globals`):
 
 - `total_weight = sum(weight_sum)`
 - `total_depth = sum(depth)`
-- `mean_w = total_weight / total_depth` (if `total_depth > 0`)
+- `total_mean_weight = sum(weight_sum / depth for edges with depth > 0)`
 
 ### 7.4 Normed edge score
 
-Per edge (mirror workbook blend):
+Per edge (mirror the prototype blend). Each term is a **share of its own global
+total**, so all three are on the same scale and each sums to 1 across edges:
 
 ```text
 s_w = weight_sum / total_weight
 s_c = depth / total_depth
-s_m = (weight_sum / depth) / mean_w     # mean edge instance vs global
+s_m = (weight_sum / depth) / total_mean_weight
 norm = average(s_w, s_c, s_m)           # skip terms safely if denominators 0
 ```
 
 Rank edges by `norm` descending → characteristic spectrum.
+
+> **Do not** use `total_weight / total_depth` as the `s_m` denominator. It is the
+> global mean weight per instance, not a normalizing total; on the reference
+> entity it is ≈542× smaller than `total_mean_weight`, which makes `s_m` an
+> unbounded ratio that swamps the other two terms. Symptom: `norm > 1`.
+> Covered by `tests/test_reference_parity.py`.
 
 Optional account-level score: sum of incident edge norms (or max); used for “hot accounts” log lines.
 
@@ -251,7 +264,7 @@ python -m alm build \
   --out out/open
 
 python -m alm build-from-excel \
-  --xlsx "docs/Accounting Logic Map test.xlsx" \
+  --xlsx <workbook> \
   --out out/excel_ref
 
 python -m alm verify \
@@ -261,7 +274,7 @@ python -m alm verify \
 
 python -m alm predict \
   --map out/baseline \
-  --account "10000 BOA 0816" \
+  --account "1000 Bank" \
   --side credit \
   --top 10
 
@@ -302,6 +315,11 @@ Command outputs:
 | `anomalies` | `anomaly_edges.tsv` |
 | `eval` | `eval_summary.tsv`, `eval_detail.tsv` |
 
+`eval_summary.tsv` holds heterogeneous metric rows (verify, predict, anomaly),
+each family carrying different keys. Its header must be the **union** of keys
+across all rows; deriving it from the first row alone blanks every column that
+row happens to lack.
+
 Console: short banner, counts, top 10 spectrum edges, and command-specific highlights. No full matrix dumps.
 
 ---
@@ -316,7 +334,10 @@ Ship a **small synthetic entity** (≈15–30 accounts, ≈40–80 txns) that in
 - `transactions_open.tsv`: baseline pattern **plus** injected anomalies (new loan edge, clearing surge, missing core sales edge).
 - Optional `holdout.tsv`: true counterparts for prediction eval.
 
-Separately, `build-from-excel` proves scale on the real workbook edge list without needing the original GL.
+Separately, `data/reference/` ships a synthetic reference entity (190 edges, 82
+accounts) with the expected norm and probability values for every edge. It
+proves scale without needing raw journals, and is the parity contract for §7.4 —
+see `data/reference/README.md`.
 
 ---
 
@@ -340,6 +361,22 @@ For each holdout edge `(dr, cr)`:
 - Condition on credit → check debit rank ≤ K.
 - Baselines: uniform random among accounts; optional type-only prior if implemented.
 - **Pass bar (demo):** hit-rate@5 clearly above random on frequent edges (depth ≥ 3 in map).
+
+Because the pass bar is stated only for frequent edges, `eval` must report two
+cohorts and label them in a `cohort` column:
+
+| Cohort | Membership |
+|--------|------------|
+| `all` | every holdout edge |
+| `frequent` | holdout edges whose map depth ≥ `PREDICT_FREQUENT_DEPTH` (3) |
+
+A cohort with no members reports `n=0` and `above_random=False` — never a
+vacuous pass.
+
+**Holdout independence.** Hit-rate only measures generalisation if the holdout
+edges were excluded from the map. When every holdout edge is already present,
+the number measures recall of learned edges; `eval` logs a warning in that case.
+The shipped `data/sample/holdout.tsv` is in exactly that state — see §17.
 
 ### 11.3 Anomalies
 
@@ -377,6 +414,8 @@ Tests live under `tests/` and are part of the proof (not optional).
 | `test_aggregate` | Collapse sums/depths; globals; norm ranking order on tiny fixture |
 | `test_verify_predict` | Known edge → pass; nonsense → fail/warn; predict top contains fixture counterpart |
 | `test_anomalies` | Injected new/missing edges appear in anomaly output |
+| `test_reference_parity` | Globals, normed blend, and predict probabilities match the spreadsheet prototype on `data/reference/` |
+| `test_eval_outputs` | `eval_summary.tsv` keeps every metric family's columns; predict cohorts computed |
 
 Run: `python -m unittest discover -s tests -v`
 
@@ -440,4 +479,10 @@ and seeing terminal summaries plus TSVs that match §9–§11.
 - Type-pair prior matrix from concept tables.  
 - Period-aware maps and seasonality in predict.  
 - Contact-conditioned edges.  
-- Golden numeric compare against Excel `rw` sums.
+- A genuinely held-out prediction fixture. `data/sample/holdout.tsv` currently
+  contains only edges that are also in the baseline, so §11.2's hit-rate reports
+  recall rather than generalisation (asserted in `test_eval_outputs` so the note
+  cannot go stale).
+
+Done, previously listed here: golden numeric compare against the prototype's
+aggregated sums — now `tests/test_reference_parity.py`.

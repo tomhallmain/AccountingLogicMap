@@ -22,7 +22,7 @@ from .io_tsv import (
     write_predict_rows,
     write_verify_results,
 )
-from .models import Transaction, group_lines
+from .models import EdgeKey, Transaction, group_lines
 from .predict import predict_counterparts
 from .score import score_map
 from .validate import build_transactions
@@ -237,12 +237,24 @@ def cmd_eval(args: argparse.Namespace) -> int:
         summaries.extend(pred_summaries)
         for s in pred_summaries:
             LOG.info(
-                "eval %s: hit_rate=%.3f random=%.3f above_random=%s (n=%s)",
+                "eval %s [%s]: hit_rate=%.3f random=%.3f above_random=%s (n=%s)",
                 s["metric"],
+                s["cohort"],
                 s["hit_rate"],
                 s["random_baseline"],
                 s["above_random"],
                 s["n"],
+            )
+        in_map = sum(
+            1
+            for dr, cr in load_holdout_edges(Path(args.holdout))
+            if EdgeKey(dr, cr) in logic_map.edges
+        )
+        if in_map == len(holdout):
+            LOG.warning(
+                "eval predict: all %d holdout edges are present in the map — "
+                "hit-rate measures recall of learned edges, not generalisation",
+                in_map,
             )
 
     if args.baseline and args.open_map:
