@@ -1,0 +1,311 @@
+from __future__ import annotations
+
+import csv
+from datetime import date, datetime
+from pathlib import Path
+from typing import Iterable
+
+from .models import Account, EdgeKey, EdgeStat, Line, LogicMap, ScoredEdge
+from .score import node_activity, score_map
+
+
+def _read_tsv(path: Path) -> list[dict[str, str]]:
+    with path.open(newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f, delimiter="\t")
+        return [{k: (v if v is not None else "") for k, v in row.items()} for row in reader]
+
+
+def _write_tsv(path: Path, fieldnames: list[str], rows: Iterable[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter="\t", lineterminator="\n")
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: row.get(k, "") for k in fieldnames})
+
+
+def load_accounts(path: Path) -> dict[str, Account]:
+    rows = _read_tsv(path)
+    accounts: dict[str, Account] = {}
+    for row in rows:
+        acct = Account(
+            account_id=row["account_id"].strip(),
+            name=row.get("name", row["account_id"]).strip(),
+            account_type=row["account_type"].strip(),
+        )
+        accounts[acct.account_id] = acct
+    return accounts
+
+
+def load_lines(path: Path) -> list[Line]:
+    rows = _read_tsv(path)
+    lines: list[Line] = []
+    for row in rows:
+        side = row["side"].strip().lower()
+        lines.append(
+            Line(
+                txn_id=row["txn_id"].strip(),
+                date=date.fromisoformat(row["date"].strip()),
+                account_id=row["account_id"].strip(),
+                side=side,
+                amount=float(row["amount"]),
+                memo=row.get("memo", "").strip(),
+            )
+        )
+    return lines
+
+
+def load_expected_verdicts(path: Path) -> dict[str, str]:
+    """Optional column expected_verdict on candidates file — read distinct txn expectations."""
+    rows = _read_tsv(path)
+    out: dict[str, str] = {}
+    for row in rows:
+        exp = row.get("expected_verdict", "").strip()
+        if exp:
+            out[row["txn_id"].strip()] = exp.lower()
+    return out
+
+
+def load_holdout_edges(path: Path) -> list[tuple[str, str]]:
+    rows = _read_tsv(path)
+    return [(r["debit_account_id"].strip(), r["credit_account_id"].strip()) for r in rows]
+
+
+def load_expected_anomalies(path: Path) -> list[tuple[str, str, str]]:
+    rows = _read_tsv(path)
+    return [
+        (r["signal"].strip(), r["debit_account_id"].strip(), r["credit_account_id"].strip())
+        for r in rows
+    ]
+
+
+def load_edge_list_tsv(path: Path) -> dict[EdgeKey, EdgeStat]:
+    rows = _read_tsv(path)
+    edges: dict[EdgeKey, EdgeStat] = {}
+    for row in rows:
+        key = EdgeKey(row["debit_account"].strip(), row["credit_account"].strip())
+        edges[key] = EdgeStat(
+            key=key,
+            weight_sum=float(row["edge_sum"]),
+            depth=int(float(row["depth"])),
+        )
+    return edges
+
+
+def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    score_map(logic_map)
+
+    _write_tsv(
+        out_dir / "meta.tsv",
+        [
+            "window_label",
+            "txn_count",
+            "line_count",
+            "edge_count",
+            "total_weight",
+            "total_depth",
+            "mean_weight_per_instance",
+            "generated_at",
+        ],
+        [
+            {
+                "window_label": logic_map.window_label,
+                "txn_count": logic_map.txn_count,
+                "line_count": logic_map.line_count,
+                "edge_count": len(logic_map.edges),
+                "total_weight": f"{logic_map.total_weight:.6f}",
+                "total_depth": logic_map.total_depth,
+                "mean_weight_per_instance": f"{logic_map.mean_weight_per_instance:.6f}",
+                "generated_at": datetime.now().isoformat(timespec="seconds"),
+            }
+        ],
+    )
+
+    _write_tsv(
+        out_dir / "accounts.tsv",
+        ["account_id", "name", "account_type"],
+        [
+            {
+                "account_id": a.account_id,
+                "name": a.name,
+                "account_type": a.account_type,
+            }
+            for a in logic_map.accounts.values()
+        ],
+    )
+
+    edge_rows = [_scored_to_row(se) for se in logic_map.scored]
+    fields = [
+        "debit_account_id",
+        "credit_account_id",
+        "weight_sum",
+        "depth",
+        "mean_weight",
+        "share_w",
+        "share_c",
+        "share_m",
+        "norm",
+        "rank",
+    ]
+    _write_tsv(out_dir / "edges.tsv", fields, edge_rows)
+    _write_tsv(out_dir / "spectrum.tsv", fields, edge_rows)
+
+    activity = node_activity(logic_map)
+    _write_tsv(
+        out_dir / "node_activity.tsv",
+        ["account_id", "account_type", "as_debit_weight", "as_credit_weight", "incident_norm"],
+        [
+            {
+                "account_id": r["account_id"],
+                "account_type": r["account_type"],
+                "as_debit_weight": f"{float(r['as_debit_weight']):.6f}",
+                "as_credit_weight": f"{float(r['as_credit_weight']):.6f}",
+                "incident_norm": f"{float(r['incident_norm']):.6f}",
+            }
+            for r in activity
+        ],
+    )
+
+
+def _scored_to_row(se: ScoredEdge) -> dict:
+    return {
+        "debit_account_id": se.key.debit_account_id,
+        "credit_account_id": se.key.credit_account_id,
+        "weight_sum": f"{se.weight_sum:.6f}",
+        "depth": se.depth,
+        "mean_weight": f"{se.mean_weight:.6f}",
+        "share_w": f"{se.share_w:.6f}",
+        "share_c": f"{se.share_c:.6f}",
+        "share_m": f"{se.share_m:.6f}",
+        "norm": f"{se.norm:.6f}",
+        "rank": se.rank,
+    }
+
+
+def load_map_dir(path: Path) -> LogicMap:
+    path = Path(path)
+    accounts = load_accounts(path / "accounts.tsv")
+    edge_rows = _read_tsv(path / "edges.tsv")
+    edges: dict[EdgeKey, EdgeStat] = {}
+    scored: list[ScoredEdge] = []
+    for row in edge_rows:
+        key = EdgeKey(row["debit_account_id"], row["credit_account_id"])
+        weight = float(row["weight_sum"])
+        depth = int(float(row["depth"]))
+        edges[key] = EdgeStat(key=key, weight_sum=weight, depth=depth)
+        scored.append(
+            ScoredEdge(
+                key=key,
+                weight_sum=weight,
+                depth=depth,
+                mean_weight=float(row["mean_weight"]),
+                share_w=float(row["share_w"]),
+                share_c=float(row["share_c"]),
+                share_m=float(row.get("share_m", 0) or 0),
+                norm=float(row["norm"]),
+                rank=int(float(row["rank"])),
+            )
+        )
+
+    meta_rows = _read_tsv(path / "meta.tsv")
+    meta = meta_rows[0] if meta_rows else {}
+    total_weight = float(meta.get("total_weight") or sum(e.weight_sum for e in edges.values()))
+    total_depth = int(float(meta.get("total_depth") or sum(e.depth for e in edges.values())))
+    mean_w = float(
+        meta.get("mean_weight_per_instance")
+        or (total_weight / total_depth if total_depth else 0.0)
+    )
+
+    scored.sort(key=lambda s: s.rank)
+    return LogicMap(
+        accounts=accounts,
+        edges=edges,
+        total_weight=total_weight,
+        total_depth=total_depth,
+        mean_weight_per_instance=mean_w,
+        window_label=meta.get("window_label", path.name),
+        txn_count=int(float(meta.get("txn_count") or 0)),
+        line_count=int(float(meta.get("line_count") or 0)),
+        scored=scored,
+    )
+
+
+def write_verify_results(path: Path, results) -> None:
+    rows = []
+    for r in results:
+        rows.append(
+            {
+                "txn_id": r.txn_id,
+                "verdict": r.verdict,
+                "expected_verdict": r.expected_verdict or "",
+                "reasons": " | ".join(r.reasons),
+                "edge_count": len(r.findings),
+                "edges": "; ".join(
+                    f"{f.key.label()} seen={f.seen} rank={f.rank} ({f.note})" for f in r.findings
+                ),
+            }
+        )
+    _write_tsv(
+        path,
+        ["txn_id", "verdict", "expected_verdict", "reasons", "edge_count", "edges"],
+        rows,
+    )
+
+
+def write_predict_rows(path: Path, rows) -> None:
+    _write_tsv(
+        path,
+        ["account_id", "account_type", "weight_sum", "depth", "probability", "norm", "mean_weight"],
+        [
+            {
+                "account_id": r.account_id,
+                "account_type": r.account_type,
+                "weight_sum": f"{r.weight_sum:.6f}",
+                "depth": r.depth,
+                "probability": f"{r.probability:.6f}",
+                "norm": f"{r.norm:.6f}" if r.norm is not None else "",
+                "mean_weight": f"{r.mean_weight:.6f}",
+            }
+            for r in rows
+        ],
+    )
+
+
+def write_anomaly_rows(path: Path, rows) -> None:
+    _write_tsv(
+        path,
+        [
+            "signal",
+            "debit_account_id",
+            "credit_account_id",
+            "baseline_share_w",
+            "open_share_w",
+            "delta_share_w",
+            "baseline_rank",
+            "open_rank",
+            "note",
+        ],
+        [
+            {
+                "signal": r.signal,
+                "debit_account_id": r.debit_account_id,
+                "credit_account_id": r.credit_account_id,
+                "baseline_share_w": f"{r.baseline_share_w:.6f}",
+                "open_share_w": f"{r.open_share_w:.6f}",
+                "delta_share_w": f"{r.delta_share_w:.6f}",
+                "baseline_rank": r.baseline_rank if r.baseline_rank is not None else "",
+                "open_rank": r.open_rank if r.open_rank is not None else "",
+                "note": r.note,
+            }
+            for r in rows
+        ],
+    )
+
+
+def write_eval_summary(path: Path, rows: list[dict]) -> None:
+    if not rows:
+        return
+    fields = list(rows[0].keys())
+    _write_tsv(path, fields, rows)

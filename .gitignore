@@ -1,0 +1,14 @@
+out/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.venv/
+venv/
+*.xlsx~$*
+.DS_Store
+docs/extracted/
+docs/original/

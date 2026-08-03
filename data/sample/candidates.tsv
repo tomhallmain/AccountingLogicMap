@@ -1,0 +1,15 @@
+txn_id	date	account_id	side	amount	memo	expected_verdict
+C_PASS_1	2025-04-20	1000 Bank	debit	10000.00	normal cash sale	pass
+C_PASS_1	2025-04-20	4000 Vehicle Sales	credit	10000.00	normal cash sale	pass
+C_PASS_2	2025-04-20	6100 Fuel	debit	99.00	normal fuel card	pass
+C_PASS_2	2025-04-20	2100 Card	credit	99.00	normal fuel card	pass
+C_PASS_3	2025-04-20	6000 Rent	debit	3800.00	normal rent	pass
+C_PASS_3	2025-04-20	1000 Bank	credit	3800.00	normal rent	pass
+C_WARN_1	2025-04-20	6400 Office	debit	25.00	unseen office vs bank but common types	warn
+C_WARN_1	2025-04-20	1000 Bank	credit	25.00	unseen office vs bank but common types	warn
+C_FAIL_1	2025-04-20	6000 Rent	debit	500.00	expense to expense reclass	fail
+C_FAIL_1	2025-04-20	6200 Advertising	credit	500.00	expense to expense reclass	fail
+C_FAIL_2	2025-04-20	4000 Vehicle Sales	debit	1000.00	income debited to equity odd	fail
+C_FAIL_2	2025-04-20	3000 Equity	credit	1000.00	income debited to equity odd	fail
+C_FAIL_3	2025-04-20	3000 Equity	debit	2000.00	unbalanced nonsense	fail
+C_FAIL_3	2025-04-20	1000 Bank	credit	500.00	unbalanced nonsense	fail

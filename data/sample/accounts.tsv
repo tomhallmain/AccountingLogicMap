@@ -1,0 +1,20 @@
+account_id	name	account_type
+1000 Bank	Operating Bank	Bank
+1100 AR	Accounts Receivable	Accounts receivable (A/R)
+1200 Clearing	Clearing Account	Other Current Assets
+1300 Inventory	Vehicle Inventory	Other Current Assets
+2000 AP	Accounts Payable	Accounts payable (A/P)
+2100 Card	Garage Credit Card	Credit Card
+2500 New Floor Plan	New Floor Plan Liability	Other Current Liabilities
+2600 Loan	Long-Term Loan	Long Term Liabilities
+3000 Equity	Member Equity	Equity
+4000 Vehicle Sales	Vehicle Sales	Income
+4100 Parts Income	Parts Income	Income
+5000 COGS Vehicles	Cost of Vehicles Sold	Cost of Goods Sold
+5100 Parts COGS	Parts Cost	Cost of Goods Sold
+6000 Rent	Rent Expense	Expense
+6100 Fuel	Fuel & Oil	Expense
+6200 Advertising	Advertising	Expense
+6300 Utilities	Utilities	Expense
+6400 Office	Office Expense	Expense
+7000 Interest Exp	Interest Expense	Expense

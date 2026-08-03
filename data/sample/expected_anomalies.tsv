@@ -1,0 +1,4 @@
+signal	debit_account_id	credit_account_id
+missing_edge	1000 Bank	4000 Vehicle Sales
+new_edge	1200 Clearing	1000 Bank
+new_edge	1000 Bank	2500 New Floor Plan

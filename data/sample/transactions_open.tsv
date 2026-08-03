@@ -1,0 +1,31 @@
+txn_id	date	account_id	side	amount	memo
+O001	2025-04-01	6000 Rent	debit	3800.00	rent
+O001	2025-04-01	1000 Bank	credit	3800.00	rent
+O002	2025-04-02	6100 Fuel	debit	100.00	fuel
+O002	2025-04-02	2100 Card	credit	100.00	fuel
+O003	2025-04-03	6100 Fuel	debit	90.00	fuel
+O003	2025-04-03	2100 Card	credit	90.00	fuel
+O004	2025-04-04	6200 Advertising	debit	300.00	ads
+O004	2025-04-04	1000 Bank	credit	300.00	ads
+O005	2025-04-05	6300 Utilities	debit	400.00	utilities
+O005	2025-04-05	1000 Bank	credit	400.00	utilities
+O006	2025-04-06	6400 Office	debit	60.00	office
+O006	2025-04-06	2100 Card	credit	60.00	office
+O007	2025-04-07	5100 Parts COGS	debit	200.00	parts
+O007	2025-04-07	2100 Card	credit	200.00	parts
+O008	2025-04-08	1000 Bank	debit	500.00	parts sale
+O008	2025-04-08	4100 Parts Income	credit	500.00	parts sale
+O009	2025-04-09	2100 Card	debit	450.00	pay card
+O009	2025-04-09	1000 Bank	credit	450.00	pay card
+O010	2025-04-10	1200 Clearing	debit	8000.00	INJECT clearing surge
+O010	2025-04-10	1000 Bank	credit	8000.00	INJECT clearing surge
+O011	2025-04-11	1200 Clearing	debit	5500.00	INJECT clearing surge
+O011	2025-04-11	1000 Bank	credit	5500.00	INJECT clearing surge
+O012	2025-04-12	1000 Bank	debit	25000.00	INJECT new floor plan draw
+O012	2025-04-12	2500 New Floor Plan	credit	25000.00	INJECT new floor plan
+O013	2025-04-13	1300 Inventory	debit	12000.00	inventory buy
+O013	2025-04-13	2600 Loan	credit	12000.00	inventory buy
+O014	2025-04-14	5000 COGS Vehicles	debit	4000.00	small cogs only
+O014	2025-04-14	1300 Inventory	credit	4000.00	small cogs only
+O015	2025-04-15	7000 Interest Exp	debit	180.00	interest
+O015	2025-04-15	1000 Bank	credit	180.00	interest

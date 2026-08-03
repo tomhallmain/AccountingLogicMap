@@ -1,0 +1,100 @@
+txn_id	date	account_id	side	amount	memo
+T001	2025-01-05	1000 Bank	debit	12000.00	cash sale
+T001	2025-01-05	4000 Vehicle Sales	credit	12000.00	cash sale
+T002	2025-01-06	1000 Bank	debit	8500.00	cash sale
+T002	2025-01-06	4000 Vehicle Sales	credit	8500.00	cash sale
+T003	2025-01-08	1000 Bank	debit	15000.00	cash sale
+T003	2025-01-08	4000 Vehicle Sales	credit	15000.00	cash sale
+T004	2025-01-10	1000 Bank	debit	9200.00	cash sale
+T004	2025-01-10	4000 Vehicle Sales	credit	9200.00	cash sale
+T005	2025-01-12	1000 Bank	debit	11000.00	cash sale
+T005	2025-01-12	4000 Vehicle Sales	credit	11000.00	cash sale
+T006	2025-01-14	1000 Bank	debit	7800.00	cash sale
+T006	2025-01-14	4000 Vehicle Sales	credit	7800.00	cash sale
+T007	2025-01-16	1100 AR	debit	6400.00	invoice
+T007	2025-01-16	4000 Vehicle Sales	credit	6400.00	invoice
+T008	2025-01-18	1100 AR	debit	5100.00	invoice
+T008	2025-01-18	4000 Vehicle Sales	credit	5100.00	invoice
+T009	2025-01-20	1000 Bank	debit	6400.00	AR collect
+T009	2025-01-20	1100 AR	credit	6400.00	AR collect
+T010	2025-01-22	1000 Bank	debit	5100.00	AR collect
+T010	2025-01-22	1100 AR	credit	5100.00	AR collect
+T011	2025-01-03	5000 COGS Vehicles	debit	9000.00	cogs
+T011	2025-01-03	1300 Inventory	credit	9000.00	cogs
+T012	2025-01-07	5000 COGS Vehicles	debit	6500.00	cogs
+T012	2025-01-07	1300 Inventory	credit	6500.00	cogs
+T013	2025-01-11	5000 COGS Vehicles	debit	11000.00	cogs
+T013	2025-01-11	1300 Inventory	credit	11000.00	cogs
+T014	2025-01-15	5000 COGS Vehicles	debit	7000.00	cogs
+T014	2025-01-15	1300 Inventory	credit	7000.00	cogs
+T015	2025-01-04	1300 Inventory	debit	20000.00	buy inventory floor
+T015	2025-01-04	2600 Loan	credit	20000.00	buy inventory floor
+T016	2025-01-09	1300 Inventory	debit	15000.00	buy inventory floor
+T016	2025-01-09	2600 Loan	credit	15000.00	buy inventory floor
+T017	2025-01-25	2600 Loan	debit	4800.00	loan payment principal
+T017	2025-01-25	7000 Interest Exp	debit	200.00	loan interest
+T017	2025-01-25	1000 Bank	credit	5000.00	loan payment combined
+T018	2025-02-01	6000 Rent	debit	3800.00	rent
+T018	2025-02-01	1000 Bank	credit	3800.00	rent
+T019	2025-02-03	6100 Fuel	debit	120.00	fuel
+T019	2025-02-03	1000 Bank	credit	120.00	fuel
+T020	2025-02-04	6100 Fuel	debit	95.00	fuel
+T020	2025-02-04	2100 Card	credit	95.00	fuel card
+T021	2025-02-05	6100 Fuel	debit	110.00	fuel
+T021	2025-02-05	2100 Card	credit	110.00	fuel card
+T022	2025-02-06	6100 Fuel	debit	88.00	fuel
+T022	2025-02-06	2100 Card	credit	88.00	fuel card
+T023	2025-02-07	6200 Advertising	debit	500.00	ads
+T023	2025-02-07	1000 Bank	credit	500.00	ads
+T024	2025-02-08	6200 Advertising	debit	350.00	ads
+T024	2025-02-08	1000 Bank	credit	350.00	ads
+T025	2025-02-09	6300 Utilities	debit	420.00	utilities
+T025	2025-02-09	1000 Bank	credit	420.00	utilities
+T026	2025-02-10	6400 Office	debit	75.00	office
+T026	2025-02-10	2100 Card	credit	75.00	office card
+T027	2025-02-11	6400 Office	debit	40.00	office
+T027	2025-02-11	2100 Card	credit	40.00	office card
+T028	2025-02-12	5100 Parts COGS	debit	250.00	parts
+T028	2025-02-12	2100 Card	credit	250.00	parts card
+T029	2025-02-13	5100 Parts COGS	debit	180.00	parts
+T029	2025-02-13	2100 Card	credit	180.00	parts card
+T030	2025-02-14	5100 Parts COGS	debit	90.00	parts
+T030	2025-02-14	2000 AP	credit	90.00	parts AP
+T031	2025-02-15	2000 AP	debit	90.00	pay AP
+T031	2025-02-15	1000 Bank	credit	90.00	pay AP
+T032	2025-02-16	2100 Card	debit	858.00	pay card
+T032	2025-02-16	1000 Bank	credit	858.00	pay card
+T033	2025-02-17	1000 Bank	debit	600.00	parts cash sale
+T033	2025-02-17	4100 Parts Income	credit	600.00	parts cash sale
+T034	2025-02-18	1000 Bank	debit	450.00	parts cash sale
+T034	2025-02-18	4100 Parts Income	credit	450.00	parts cash sale
+T035	2025-02-20	3000 Equity	debit	1000.00	owner draw
+T035	2025-02-20	1000 Bank	credit	1000.00	owner draw
+T036	2025-02-22	1000 Bank	debit	2000.00	owner contrib
+T036	2025-02-22	3000 Equity	credit	2000.00	owner contrib
+T037	2025-02-24	6000 Rent	debit	200.00	multi-line JE share
+T037	2025-02-24	6300 Utilities	debit	100.00	multi-line JE share
+T037	2025-02-24	1000 Bank	credit	300.00	multi-line JE share
+T038	2025-03-01	6000 Rent	debit	3800.00	rent
+T038	2025-03-01	1000 Bank	credit	3800.00	rent
+T039	2025-03-05	1000 Bank	debit	13000.00	cash sale
+T039	2025-03-05	4000 Vehicle Sales	credit	13000.00	cash sale
+T040	2025-03-08	1000 Bank	debit	9800.00	cash sale
+T040	2025-03-08	4000 Vehicle Sales	credit	9800.00	cash sale
+T041	2025-03-10	6100 Fuel	debit	105.00	fuel
+T041	2025-03-10	2100 Card	credit	105.00	fuel card
+T042	2025-03-12	6200 Advertising	debit	400.00	ads
+T042	2025-03-12	1000 Bank	credit	400.00	ads
+T043	2025-03-15	5000 COGS Vehicles	debit	8000.00	cogs
+T043	2025-03-15	1300 Inventory	credit	8000.00	cogs
+T044	2025-03-18	1100 AR	debit	7200.00	invoice
+T044	2025-03-18	4000 Vehicle Sales	credit	7200.00	invoice
+T045	2025-03-20	1000 Bank	debit	7200.00	AR collect
+T045	2025-03-20	1100 AR	credit	7200.00	AR collect
+T046	2025-03-22	2600 Loan	debit	3000.00	loan pay
+T046	2025-03-22	7000 Interest Exp	debit	150.00	loan interest
+T046	2025-03-22	1000 Bank	credit	3150.00	loan pay combined
+T047	2025-03-25	6400 Office	debit	55.00	office
+T047	2025-03-25	2100 Card	credit	55.00	office card
+T048	2025-03-28	6300 Utilities	debit	410.00	utilities
+T048	2025-03-28	1000 Bank	credit	410.00	utilities

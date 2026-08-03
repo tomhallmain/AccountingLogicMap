@@ -1,0 +1,9 @@
+debit_account_id	credit_account_id
+1000 Bank	4000 Vehicle Sales
+6100 Fuel	2100 Card
+6000 Rent	1000 Bank
+5000 COGS Vehicles	1300 Inventory
+1100 AR	4000 Vehicle Sales
+1000 Bank	1100 AR
+2100 Card	1000 Bank
+1000 Bank	4100 Parts Income
