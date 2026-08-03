@@ -12,6 +12,10 @@ ANOMALY_DEFAULT_TOP_K = 25
 EVAL_HIT_K = (3, 5)
 PREDICT_FREQUENT_DEPTH = 3  # spec §11.2 pass bar applies to edges at/above this depth
 
+# Trailing closed periods used to project the open period. The paper suggests
+# 12-18 months; fewer makes the average too noisy to read a variance against.
+DEFAULT_BASELINE_PERIODS = 12
+
 # Anomaly qualifiers. Rank cutoffs are fractions of the map, not absolute counts,
 # so they stay meaningful on maps of any size; each is paired with a materiality
 # floor so rank churn on tiny edges cannot masquerade as a structural signal.
@@ -128,6 +132,8 @@ class LogicMap:
     txn_count: int = 0
     line_count: int = 0
     scored: list[ScoredEdge] = field(default_factory=list)
+    granularity: str = "month"
+    periods: list[str] = field(default_factory=list)
 
     def account_type(self, account_id: str) -> str:
         acct = self.accounts.get(account_id)

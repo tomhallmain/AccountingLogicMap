@@ -60,6 +60,10 @@ AccountingLogicMap/
     reference/              # larger reference entity + expected results
       reference_accounts.tsv
       reference_edges.tsv
+    history/                # 25-month synthetic ledger for period work
+      accounts.tsv
+      transactions.tsv
+      holdout.tsv           # edges from the open month, excluded from the baseline
   src/alm/
     __init__.py
     __main__.py             # python -m alm
@@ -74,6 +78,7 @@ AccountingLogicMap/
     anomalies.py
     io_tsv.py
     io_excel.py             # optional
+    periods.py              # period keys, windowing, forward expectation
   out/                      # gitignored generated TSV + logs
   tests/
     test_rewrite.py
@@ -82,6 +87,7 @@ AccountingLogicMap/
     test_anomalies.py
     test_reference_parity.py
     test_eval_outputs.py
+    test_periods.py
   requirements.txt          # openpyxl optional extra, or note in README
   README.md                 # how to run the proof
 ```
@@ -288,6 +294,35 @@ Sort by absolute Δ share of total weight (or Δ norm). Log top K; write full ta
 
 ---
 
+### 7.8 Periods
+
+Every line carries a date, so period handling needs no new input contract.
+
+`periods.period_key(day, granularity)` returns a label that sorts chronologically
+as a string: `2024-03` (month), `2024-Q1` (quarter), `2024` (year).
+
+`periods.filter_lines(lines, start=, end=)` slices a window. Bounds are **inclusive**
+and applied to lines *before* validation, so a window that cuts a journal in half
+yields an unbalanced transaction and is rejected — the correct outcome.
+
+`periods.period_activity(txns, granularity=)` gives per-period `txn_count`,
+`line_count` and `weight`. Weight is the transaction debit total, which is the
+rewrite's conserved quantity, so period weights sum to the map's `total_weight`.
+
+`periods.forward_expectation(stats, baseline_periods=)` implements the concept
+doc's projection:
+
+```text
+expected(P_open) = mean(weight over the trailing n closed periods)
+variance         = actual(P_open) - expected(P_open)
+```
+
+The last period in `stats` is the open one; the window is capped at the periods
+available, never padded. Default `n = DEFAULT_BASELINE_PERIODS = 12` — the paper
+suggests 12–18 months, and fewer makes the mean too noisy to read against.
+
+---
+
 ## 8. CLI surface
 
 ```text
@@ -325,7 +360,27 @@ python -m alm eval \
   --map out/baseline \
   --holdout data/sample/holdout.tsv \
   --out out/eval
+
+# Period windowing: one ledger, sliced into closed baseline and open period
+python -m alm build \
+  --accounts data/history/accounts.tsv \
+  --transactions data/history/transactions.tsv \
+  --to 2024-12-31 --out out/hist/baseline --label closed
+
+python -m alm periods \
+  --accounts data/history/accounts.tsv \
+  --transactions data/history/transactions.tsv \
+  --granularity month --baseline-periods 12 --out out/hist/periods
+
+# Pre-aggregated edge list, no Excel required
+python -m alm build-from-edges \
+  --edges data/reference/reference_edges.tsv \
+  --accounts data/reference/reference_accounts.tsv \
+  --out out/reference
 ```
+
+`build` accepts `--from` / `--to` (inclusive ISO dates) and `--granularity`; the
+selected window is recorded in `meta.tsv`.
 
 `build` writes the map directory; other commands read it.
 
@@ -337,7 +392,7 @@ Each `--out <dir>` from `build` contains:
 
 | File | Contents |
 |------|----------|
-| `meta.tsv` | window label, txn count, line count, edge count, totals, generated_at |
+| `meta.tsv` | window label, txn/line/edge counts, totals, granularity, period count + first/last period, generated_at |
 | `accounts.tsv` | copy/normalized accounts used |
 | `edges.tsv` | debit_id, credit_id, weight_sum, depth, mean_weight, share_w, share_c, share_m, norm, rank, ambiguous_share, is_self_loop |
 | `spectrum.tsv` | same as edges sorted by norm (or top slice); convenience |
@@ -351,6 +406,7 @@ Command outputs:
 | `predict` | stdout table; optional `--out predict.tsv` |
 | `anomalies` | `anomaly_edges.tsv` — one row per edge; `signals` is a comma-joined list |
 | `eval` | `eval_summary.tsv`, `eval_detail.tsv` |
+| `periods` | `periods.tsv` — one row per period plus a final `forward_expectation` row |
 
 `eval_summary.tsv` holds heterogeneous metric rows (verify, predict, anomaly),
 each family carrying different keys. Its header must be the **union** of keys
@@ -456,6 +512,7 @@ Tests live under `tests/` and are part of the proof (not optional).
 | `test_anomalies` | Injected new/missing edges appear in anomaly output |
 | `test_reference_parity` | Globals, normed blend, and predict probabilities match the spreadsheet prototype on `data/reference/` |
 | `test_eval_outputs` | `eval_summary.tsv` keeps every metric family's columns; predict cohorts computed |
+| `test_periods` | Period keys sort and bound correctly; windows never split a journal; period weights sum to the map total; forward expectation is the trailing mean; prediction beats random on transactions outside the map |
 
 Run: `python -m unittest discover -s tests -v`
 
@@ -519,10 +576,13 @@ and seeing terminal summaries plus TSVs that match §9–§11.
 - Type-pair prior matrix from concept tables.  
 - Period-aware maps and seasonality in predict.  
 - Contact-conditioned edges.  
-- A genuinely held-out prediction fixture. `data/sample/holdout.tsv` currently
-  contains only edges that are also in the baseline, so §11.2's hit-rate reports
-  recall rather than generalisation (asserted in `test_eval_outputs` so the note
-  cannot go stale).
+Done, previously listed here:
 
-Done, previously listed here: golden numeric compare against the prototype's
-aggregated sums — now `tests/test_reference_parity.py`.
+- Golden numeric compare against the prototype's aggregated sums — now
+  `tests/test_reference_parity.py`.
+- Period-aware maps — now `§7.8`, `build --from/--to`, and the `periods` command.
+- A genuinely held-out prediction fixture — now `data/history/holdout.tsv`, drawn
+  from a month the baseline build excludes.
+
+Still open: seasonality *within* predict (conditioning the counterpart
+distribution on same-month-last-year rather than the whole window).

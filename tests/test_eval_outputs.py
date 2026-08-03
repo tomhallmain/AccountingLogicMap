@@ -95,12 +95,12 @@ class PredictCohortTests(unittest.TestCase):
             self.assertEqual(r["n"], 0)
             self.assertFalse(r["above_random"])
 
-    def test_holdout_fixture_edges_are_all_in_the_map(self):
-        """Documents the known leakage: the shipped holdout is not held out.
+    def test_sample_holdout_is_in_window_by_design(self):
+        """`data/sample/holdout.tsv` is drawn from the baseline's own window.
 
-        Every fixture edge is already in the baseline, so hit-rate measures
-        recall of learned edges. Kept as an explicit assertion so that swapping
-        in genuinely unseen data trips this test and forces the note to change.
+        It exercises the eval plumbing on the small fixture; it does not measure
+        generalisation. The held-out split lives in `data/history/` and is
+        covered by `test_periods.HeldOutPredictionTests`.
         """
         from alm.io_tsv import load_holdout_edges
 

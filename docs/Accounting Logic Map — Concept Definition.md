@@ -208,10 +208,19 @@ Base groups: Assets, Liabilities, Equity, Income, Expense (with contra and clear
 Prefer recent closed periods for the baseline (often 12–18 months), then compare the open period to that baseline. A simple forward expectation for variance analysis:
 
 \[
-\hat{E}(P_1) \approx E + \frac{E(P_{-n})}{n}
+\hat{E}(P_1) \;=\; \frac{1}{n}\sum_{-n}^{-1} E(P)
 \]
 
-i.e. project average period activity forward and measure open-period deviation in graph space—not only in trial-balance totals.
+i.e. project average period activity forward and measure open-period deviation in graph space—not only in trial-balance totals. (The sum matters: the projection is the mean *over* the trailing closed periods, not a single period divided by \(n\).)
+
+Every line already carries a date, so periods need no extra input contract—`period_key` derives month, quarter, or year labels that sort chronologically as strings.
+
+Two things follow from this, and both are part of the demo:
+
+1. **Windowed builds.** A baseline is a date-bounded slice of one ledger, not a separately curated file. Bounds are inclusive and applied to *lines*, so a window that cuts a journal in half produces an unbalanced transaction and fails validation—which is correct: such a window does not describe a real set of books.
+2. **Honest holdout.** Splitting by period is what makes a prediction holdout meaningful: build from closed periods, evaluate on transactions from a period the map never saw. Note that edge-type overlap between the two is *not* leakage—a stable business repeats its edges every month. What matters is that the transactions were excluded.
+
+Period length matters for the projection: a handful of periods gives a mean too noisy to read a variance against, which is why the default trailing window is 12.
 
 Materiality can weight which deviations matter; the first demo can rank by structural size (weight/depth) and leave dollar materiality as a later knob.
 

@@ -81,14 +81,37 @@ def load_expected_anomalies(path: Path) -> list[tuple[str, str, str]]:
 
 
 def load_edge_list_tsv(path: Path) -> dict[EdgeKey, EdgeStat]:
-    rows = _read_tsv(path)
+    """Load a pre-aggregated edge list (spec §5.3).
+
+    Accepts either the export column names (`debit_account`, `credit_account`,
+    `edge_sum`) or the map-directory ones (`*_account_id`, `weight_sum`), so an
+    `edges.tsv` this tool wrote can be fed straight back in.
+    """
+    aliases = {
+        "debit": ("debit_account", "debit_account_id"),
+        "credit": ("credit_account", "credit_account_id"),
+        "weight": ("edge_sum", "weight_sum"),
+    }
+
+    def pick(row: dict[str, str], field: str) -> str:
+        for name in aliases[field]:
+            if row.get(name):
+                return row[name]
+        raise KeyError(f"{path}: expected one of {aliases[field]}")
+
     edges: dict[EdgeKey, EdgeStat] = {}
-    for row in rows:
-        key = EdgeKey(row["debit_account"].strip(), row["credit_account"].strip())
+    for row in _read_tsv(path):
+        key = EdgeKey(pick(row, "debit").strip(), pick(row, "credit").strip())
+        weight = float(pick(row, "weight"))
+        depth = int(float(row["depth"]))
+        # Repeated keys accumulate rather than overwrite; an export may carry the
+        # same pair on several rows.
+        prior = edges.get(key)
         edges[key] = EdgeStat(
             key=key,
-            weight_sum=float(row["edge_sum"]),
-            depth=int(float(row["depth"])),
+            weight_sum=weight + (prior.weight_sum if prior else 0.0),
+            depth=depth + (prior.depth if prior else 0),
+            pair_instances=depth + (prior.pair_instances if prior else 0),
         )
     return edges
 
@@ -108,6 +131,10 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
             "total_weight",
             "total_depth",
             "total_mean_weight",
+            "granularity",
+            "period_count",
+            "period_first",
+            "period_last",
             "generated_at",
         ],
         [
@@ -119,6 +146,10 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
                 "total_weight": f"{logic_map.total_weight:.6f}",
                 "total_depth": logic_map.total_depth,
                 "total_mean_weight": f"{logic_map.total_mean_weight:.6f}",
+                "granularity": logic_map.granularity,
+                "period_count": len(logic_map.periods),
+                "period_first": logic_map.periods[0] if logic_map.periods else "",
+                "period_last": logic_map.periods[-1] if logic_map.periods else "",
                 "generated_at": datetime.now().isoformat(timespec="seconds"),
             }
         ],
@@ -237,6 +268,12 @@ def load_map_dir(path: Path) -> LogicMap:
         total_depth=total_depth,
         total_mean_weight=total_mean_weight,
         window_label=meta.get("window_label", path.name),
+        granularity=meta.get("granularity") or "month",
+        periods=(
+            [meta["period_first"], meta["period_last"]]
+            if meta.get("period_first") and meta.get("period_last")
+            else []
+        ),
         txn_count=int(float(meta.get("txn_count") or 0)),
         line_count=int(float(meta.get("line_count") or 0)),
         scored=scored,
@@ -313,6 +350,45 @@ def write_anomaly_rows(path: Path, rows) -> None:
             for r in rows
         ],
     )
+
+
+def write_period_rows(path: Path, stats, forward=None) -> None:
+    """Per-period activity, with the forward expectation appended as a final row.
+
+    The projection is written alongside the observations it came from so the
+    artifact is self-contained: `kind` distinguishes them.
+    """
+    rows = [
+        {
+            "kind": "period",
+            "period": s.period,
+            "txn_count": s.txn_count,
+            "line_count": s.line_count,
+            "weight": f"{s.weight:.2f}",
+            "mean_txn_weight": f"{s.mean_txn_weight:.2f}",
+        }
+        for s in stats
+    ]
+    if forward is not None:
+        rows.append(
+            {
+                "kind": "forward_expectation",
+                "period": forward.open_period,
+                "txn_count": forward.actual_txn_count,
+                "weight": f"{forward.actual_weight:.2f}",
+                "baseline_periods": len(forward.baseline_periods),
+                "expected_weight": f"{forward.expected_weight:.2f}",
+                "expected_txn_count": f"{forward.expected_txn_count:.2f}",
+                "weight_variance": f"{forward.weight_variance:+.2f}",
+                "weight_variance_pct": f"{forward.weight_variance_pct:+.4f}",
+            }
+        )
+    fields: list[str] = []
+    for row in rows:
+        for key in row:
+            if key not in fields:
+                fields.append(key)
+    _write_tsv(path, fields, rows)
 
 
 def write_eval_summary(path: Path, rows: list[dict]) -> None:
