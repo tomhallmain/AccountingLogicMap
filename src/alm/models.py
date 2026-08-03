@@ -12,10 +12,21 @@ ANOMALY_DEFAULT_TOP_K = 25
 EVAL_HIT_K = (3, 5)
 PREDICT_FREQUENT_DEPTH = 3  # spec §11.2 pass bar applies to edges at/above this depth
 
-# Minimal rewrite (concept §3.3). Searching for balanced subsets is exponential in
-# line count, so journals wider than this are averaged whole. 16 lines is ~65k
-# subsets, which is milliseconds; real packed journals sit well below it.
-SPLIT_MAX_LINES = 16
+# Minimal rewrite (concept §3.3). Wide journals are catch-up entries, which is
+# exactly the case the splitter exists for, so the width guard is deliberately
+# generous: two-line events are matched by amount in linear time and never touch
+# the combinatorial search, which runs only on what is left over.
+SPLIT_MAX_LINES = 1000
+# Largest event the enumerating search looks for. A balanced group wider than
+# this stays whole, which is the conservative outcome averaging already gives.
+SPLIT_MAX_SUBSET_LINES = 8
+# Per-size enumeration budget. Sizes costing more than this are skipped rather
+# than run, so a pathological journal degrades to pair matching instead of hanging.
+SPLIT_MAX_COMBINATIONS = 250_000
+# Balanced subsets of one size worth materialising. Forced subsets are pairwise
+# disjoint, so at most a handful can exist; a journal admitting thousands at one
+# size is one where they all overlap, and none of them is forced.
+SPLIT_MAX_SUBSETS_PER_SIZE = 4096
 
 # Trailing closed periods used to project the open period. The paper suggests
 # 12-18 months; fewer makes the average too noisy to read a variance against.

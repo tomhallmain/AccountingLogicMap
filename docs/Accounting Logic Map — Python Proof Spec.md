@@ -190,7 +190,7 @@ LogicMap(
 
 Command results reuse a second set of records: `EdgeFinding` and `VerifyResult` (§7.5), `PredictRow` (§7.6), and `AnomalyRow` (§7.7).
 
-Tuning constants live in `models.py` so that evaluation can adjust them without redesign: `BALANCE_TOLERANCE`, `SPLIT_MAX_LINES`, `RARE_EDGE_RANK_FRAC`, `PREDICT_DEFAULT_TOP_K`, `PREDICT_FREQUENT_DEPTH`, `ANOMALY_DEFAULT_TOP_K`, `EVAL_HIT_K`, `DEFAULT_BASELINE_PERIODS`, and the anomaly thresholds in §7.7.
+Tuning constants live in `models.py` so that evaluation can adjust them without redesign: `BALANCE_TOLERANCE`, the four `SPLIT_*` bounds of §7.2.1, `RARE_EDGE_RANK_FRAC`, `PREDICT_DEFAULT_TOP_K`, `PREDICT_FREQUENT_DEPTH`, `ANOMALY_DEFAULT_TOP_K`, `EVAL_HIT_K`, `DEFAULT_BASELINE_PERIODS`, and the anomaly thresholds in §7.7.
 
 Sparse matrices are views over `edges`, not separate dense arrays.
 
@@ -234,39 +234,61 @@ a balanced journal into the finest set of balanced subsets it is *forced* into;
 across the whole journal. `build --split` selects it, and `LogicMap.rewrite_mode`
 records which rewrite produced a map.
 
-Signed totals make the search uniform: debits count positive and credits negative, so
-a subset is an event exactly when its signed total is zero. Line weights are positive,
-so such a subset necessarily holds at least one line of each side and no separate side
-check is needed.
+**Forcing is decided per subset.** A balanced subset is emitted when no competing
+balanced subset of the same size overlaps it. Deciding this per journal instead would
+let one ambiguous cluster inside a wide entry suppress every clean event beside it,
+which is the opposite of what the rewrite is for.
 
 ```text
-for size in 2 .. n-1:                      # proper subsets only
-    subsets = all index sets of that size with |signed total| <= tolerance
-    if none:            continue
-    if any two overlap: return [lines]     # competing pairings — do not choose
-    emit each subset; recurse on the remainder
-return [lines]                             # nothing forced
+loop:
+    subsets = forced subsets at the smallest size that yields any
+    if none: break
+    emit them; remove their lines; repeat      # frees lines that were contested
+emit whatever is left as one group
 ```
 
-Three rules carry the concept's guarantee into the implementation:
+`_uncontested` does the deciding: count how many subsets each line index appears in,
+and keep the subsets all of whose lines appear exactly once. Those are pairwise
+disjoint by construction, so the whole set is emitted together.
 
-- **Overlap means stop.** Competing subsets of the same size are exactly the case
-  where the journal does not record which pairing occurred. Picking one would replace
-  the measured `ambiguous_share` with an unmeasured guess, so the lines stay together
-  and averaging handles them. This is the property most worth testing.
-- **Smallest size first.** Ascending size yields the finest partition, and finds the
-  common two-line settlement before any larger cover.
-- **Deterministic order.** Subsets are enumerated over line indexes in input order, so
-  the same journal always produces the same partition.
+**Two-line events are matched, not enumerated.** A two-line balanced subset is a debit
+and a credit of equal amount, so `_forced_pairs` groups line indexes by amount and
+side and keeps the amounts carrying exactly one line on each side. That is linear in
+journal width, and it is what makes wide journals tractable: a catch-up entry is
+mostly clean amount matches, so it decomposes without the combinatorial search running
+at all.
+
+**Larger events match debit sums against credit sums.** A balanced subset of `k` lines
+is some `d` debits and `k - d` credits whose totals agree, so the two sides are
+enumerated separately and joined on the shared total. That costs
+`C(debits, d) + C(credits, k-d)` per split rather than `C(lines, k)` — on a 20-line
+journal at size 8, about two thousand combinations rather than a hundred and
+twenty-six thousand.
+
+Both passes match totals as keys rounded to the balance tolerance's own precision,
+6 places at the `1e-6` default, since floats do not hash within a tolerance.
+
+**Bounds.** Four constants keep a pathological journal from hanging. None of them
+limits ordinary work:
+
+| Constant | Value | Role |
+|----------|-------|------|
+| `SPLIT_MAX_LINES` | 1000 | Sanity bound on journal width. Wider journals are averaged whole |
+| `SPLIT_MAX_SUBSET_LINES` | 8 | Largest event the enumerating search looks for. A wider balanced group stays whole |
+| `SPLIT_MAX_COMBINATIONS` | 250,000 | Per-size enumeration budget. A size costing more is skipped, and so are larger ones |
+| `SPLIT_MAX_SUBSETS_PER_SIZE` | 4096 | Balanced subsets of one size worth materialising. Forced subsets are pairwise disjoint, so a journal admitting thousands at one size is one where they all overlap |
+
+Exceeding any bound leaves lines together, which is the conservative outcome and
+exactly what averaging already gives.
+
+**Cost in practice.** A catch-up entry of 500 clean two-line events — 1000 lines —
+decomposes completely in under a millisecond, and the cost grows linearly with width.
+The enumerating search only runs on what the pair pass leaves behind.
 
 Sub-transactions carry the parent `txn_id`, so `depth` still counts source
 transactions rather than pieces (§7.3). Ambiguity is assessed per subset, which is the
 point: a packed journal that decomposes into two-line events contributes no ambiguous
 weight at all.
-
-The subset search is exponential in line count, so journals wider than
-`SPLIT_MAX_LINES` (16) are averaged whole. That is ~65k subsets at the cap, which is
-milliseconds; real packed journals sit well below it.
 
 **Effect on the shipped fixtures.** One of the 50 sample journals is forced: a
 receivable reclassification of 1200 packed together with a 45 office expense on a
@@ -625,12 +647,12 @@ Errors for invariant breaks include the `txn_id` and the amounts. Use `WARNING` 
 
 ## 13. Testing plan
 
-Tests live under `tests/` and are part of the proof, not optional. The suite is 123 tests and runs in well under a second.
+Tests live under `tests/` and are part of the proof, not optional. The suite is 128 tests and runs in well under a second.
 
 | Test module | Must prove |
 |-------------|------------|
 | `test_rewrite` | Weight conservation; 2-line identity; 2×2 four edges; unbalanced rejection; self-loop emission; `(n,1)` is not ambiguous |
-| `test_split` | Forced splits are taken and competing ones refused; groups balance and no line is lost or duplicated; the search is deterministic and capped; sub-transactions keep the parent id; splitting removes cross edges, drives ambiguity to zero, conserves weight, and leaves depth counting source transactions |
+| `test_split` | Forced splits are taken and competing ones refused; an ambiguous cluster does not block the clean events beside it; a 400-event catch-up entry decomposes completely and width costs linear time; events wider than two lines are still found; groups balance and no line is lost or duplicated; sub-transactions keep the parent id; splitting removes cross edges, drives ambiguity to zero, conserves weight, and leaves depth counting source transactions |
 | `test_aggregate` | Collapse sums and depths; globals; norm ranking order on a tiny fixture; ambiguous-weight split; self-loop flag |
 | `test_verify_predict` | Known edge passes; nonsense fails or warns; predict top contains the fixture counterpart; negative line rejected before rewrite; self-transfer fails; in-journal self-loop casts no vote |
 | `test_anomalies` | Injected new and missing edges appear in the output; qualifiers do not flood a small map; `rank_shift` requires a material move; one row per edge |

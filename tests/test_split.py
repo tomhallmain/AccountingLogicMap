@@ -12,7 +12,7 @@ import unittest
 from datetime import date
 
 from alm.aggregate import build_logic_map
-from alm.models import Account, EdgeKey, Line, Transaction
+from alm.models import SPLIT_MAX_LINES, Account, EdgeKey, Line, Transaction
 from alm.rewrite import rewrite_transactions
 from alm.split import split_lines, split_transaction
 
@@ -153,12 +153,98 @@ class AmbiguityRefusalTests(unittest.TestCase):
         )
         self.assertEqual(len(split_lines(n_to_one.lines)), 1)
 
-    def test_wide_journals_fall_back_to_averaging(self):
+    def test_uniform_amounts_force_nothing_at_any_width(self):
         spec = [(f"6{i:03d} Exp", "debit", 10.0) for i in range(10)]
         spec += [(f"1{i:03d} Bank", "credit", 10.0) for i in range(10)]
         t = txn(*spec)
-        self.assertGreater(len(t.lines), 16)
         self.assertEqual(len(split_lines(t.lines)), 1)
+
+    def test_journals_beyond_the_width_guard_are_left_whole(self):
+        """The guard is a sanity bound on absurd input, not a working limit."""
+        spec = []
+        for i in range(SPLIT_MAX_LINES // 2 + 1):
+            amount = round(10 + i * 7.31, 2)
+            spec.append((f"6{i:04d} Exp", "debit", amount))
+            spec.append((f"2{i:04d} Pay", "credit", amount))
+        over = txn(*spec)
+        self.assertGreater(len(over.lines), SPLIT_MAX_LINES)
+        # Every event here is a clean pair, so only the width guard stops it.
+        self.assertEqual(len(split_lines(over.lines)), 1)
+
+
+class CatchUpEntryTests(unittest.TestCase):
+    """Wide journals are the case the splitter exists for.
+
+    A catch-up entry brings a whole period onto the books in one document, so it
+    is a bundle of unrelated events by construction. Two-line events are matched
+    by amount rather than enumerated, so width costs linear time, not
+    exponential.
+    """
+
+    @staticmethod
+    def catch_up(n_events: int) -> Transaction:
+        spec = []
+        for i in range(n_events):
+            amount = round(10 + i * 7.31, 2)
+            spec.append((f"6{i:04d} Expense", "debit", amount))
+            spec.append((f"2{i:04d} Payable", "credit", amount))
+        return txn(*spec, txn_id="CATCHUP")
+
+    def test_a_wide_catch_up_entry_decomposes_completely(self):
+        for n_events in (25, 100, 400):
+            t = self.catch_up(n_events)
+            groups = split_lines(t.lines)
+            self.assertEqual(len(groups), n_events, f"{n_events} events")
+            self.assertTrue(all(len(g) == 2 for g in groups))
+
+    def test_width_costs_linear_time(self):
+        """400 events must not cost anything like 16x the time of 100."""
+        import time
+
+        def elapsed(n):
+            lines = self.catch_up(n).lines
+            start = time.perf_counter()
+            split_lines(lines)
+            return time.perf_counter() - start
+
+        elapsed(100)  # warm up
+        small, large = elapsed(100), elapsed(400)
+        self.assertLess(large, max(small * 12, 0.5))
+
+    def test_an_ambiguous_cluster_does_not_block_the_clean_events(self):
+        """Refusal is per subset, not per journal."""
+        base = self.catch_up(40)
+        spec = [(ln.account_id, ln.side, ln.amount) for ln in base.lines]
+        spec += [
+            ("6900 A", "debit", 500.0),
+            ("6901 B", "debit", 500.0),
+            ("2900 C", "credit", 500.0),
+            ("2901 D", "credit", 500.0),
+        ]
+        groups = split_lines(txn(*spec).lines)
+        # 40 clean pairs, plus the four contested lines held together.
+        self.assertEqual(len(groups), 41)
+        contested = [g for g in groups if len(g) == 4]
+        self.assertEqual(len(contested), 1)
+        self.assertEqual(
+            {ln.amount for ln in contested[0]}, {500.0}
+        )
+
+    def test_events_larger_than_two_lines_are_still_found(self):
+        """Three-line events have no equal-amount match, so they exercise the
+        subset search rather than the pair pass."""
+        spec = []
+        for i in range(12):
+            a = round(100 * (2**i % 97) + 0.11, 2)
+            b = round(3 * (3**i % 89) + 0.07, 2)
+            spec += [
+                (f"6{i:04d} Expense", "debit", round(a + b, 2)),
+                (f"2{i:04d} Payable", "credit", a),
+                (f"2{i:04d} Tax", "credit", b),
+            ]
+        groups = split_lines(txn(*spec).lines)
+        self.assertEqual(len(groups), 12)
+        self.assertTrue(all(len(g) == 3 for g in groups))
 
 
 class InvariantTests(unittest.TestCase):
