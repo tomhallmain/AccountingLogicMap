@@ -66,33 +66,9 @@ distribution, at which questions about timing and aging become answerable.
 
 ---
 
-## 2. Refining the rewrite
+## 2. Refining the scores
 
-### 2.1 Minimal exact-cover splitter
-
-The default rewrite averages across the full debit–credit product of a journal, so
-every debit pairs with every credit in proportion to weight. Where a journal packs
-several unrelated events together, as cleanup entries often do, splitting it into
-balanced subsets before averaging would pair only lines that belong together — by
-matching unique amounts across sides, or by taking exact covers of line subsets.
-
-**Depends on** nothing outside the current input contract. This is the one item here
-that could be implemented today.
-
-**Changes** the ambiguous share, which is the measure of how much of an edge's weight
-the rewrite had to estimate. Splitting first would drive it toward zero on exactly the
-journals where it is currently highest, and would remove edges that exist only as
-artifacts of packing unrelated events into one document.
-
-Until it exists, averaging is the correct default: it conserves weight, it matches the
-spreadsheet prototype, and the ambiguous share records honestly how much of each edge
-it had to estimate.
-
----
-
-## 3. Refining the scores
-
-### 3.1 Full type-pair prior matrix
+### 2.1 Full type-pair prior matrix
 
 The concept's account-type tables describe characteristic pairs for every transaction
 form — invoice as DR A/R against CR Revenue, bill payment as DR A/P against CR
@@ -107,7 +83,7 @@ currently judged by a short list of common combinations; the full matrix would p
 it against every documented transaction form, and would distinguish a genuinely
 unusual pair from one that is merely new to this entity.
 
-### 3.2 Feed-side priors
+### 2.2 Feed-side priors
 
 Each edge has a side that is typically pre-populated from a bank or card import, and
 the other side supplied by categorization. Knowing which is which sharpens prediction,
@@ -120,7 +96,7 @@ estimated from it. This is a data gap, not a modelling one.
 **Changes** prediction, by removing counterparts that would never be the missing side
 of a query.
 
-### 3.3 Dollar materiality weighting
+### 2.3 Dollar materiality weighting
 
 Structural deltas between windows are currently ranked by structural size — edge
 weight and depth. Materiality would weight them by the amounts at stake instead, so
@@ -135,9 +111,9 @@ different readers, so this is a configurable alternative rather than a replaceme
 
 ---
 
-## 4. Extending the scope
+## 3. Extending the scope
 
-### 4.1 Cross-entity comparison
+### 3.1 Cross-entity comparison
 
 Because the representation is relative — shares, ranks, and probabilities — the
 characteristic spectra of two entities are directly comparable, and the same

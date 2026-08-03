@@ -21,7 +21,6 @@ UI is out of scope: terminal logs and TSV artifacts only.
 
 ## 2. Non-goals
 
-- Minimal exact-cover journal splitter; the averaging rewrite only.
 - Contacts, multi-currency, inventory lots, accrual chain reconstruction.
 - Trained models of any kind; all scores are deterministic graph statistics.
 - Replacing the general ledger, or posting back into the source accounting system.
@@ -78,6 +77,7 @@ AccountingLogicMap/
     models.py               # dataclasses + tuning constants
     validate.py             # balance / axiom checks
     rewrite.py              # DR×CR averaging
+    split.py                # minimal rewrite: forced balanced subsets
     aggregate.py            # edge collapse + globals
     score.py                # normed spectrum
     verify.py
@@ -92,6 +92,7 @@ AccountingLogicMap/
   tests/
     __init__.py
     test_rewrite.py
+    test_split.py
     test_aggregate.py
     test_verify_predict.py
     test_anomalies.py
@@ -181,6 +182,7 @@ LogicMap(
   total_mean_weight,                        # Σ (weight_sum / depth); see §7.4
   window_label,
   granularity, periods,                     # period axis carried with the map
+  rewrite_mode,                             # "averaging" | "minimal"; see §7.2.1
   txn_count, line_count,
   scored: list[ScoredEdge]                  # populated by score.score_map
 )
@@ -188,7 +190,7 @@ LogicMap(
 
 Command results reuse a second set of records: `EdgeFinding` and `VerifyResult` (§7.5), `PredictRow` (§7.6), and `AnomalyRow` (§7.7).
 
-Tuning constants live in `models.py` so that evaluation can adjust them without redesign: `BALANCE_TOLERANCE`, `RARE_EDGE_RANK_FRAC`, `PREDICT_DEFAULT_TOP_K`, `PREDICT_FREQUENT_DEPTH`, `ANOMALY_DEFAULT_TOP_K`, `EVAL_HIT_K`, `DEFAULT_BASELINE_PERIODS`, and the anomaly thresholds in §7.7.
+Tuning constants live in `models.py` so that evaluation can adjust them without redesign: `BALANCE_TOLERANCE`, `SPLIT_MAX_LINES`, `RARE_EDGE_RANK_FRAC`, `PREDICT_DEFAULT_TOP_K`, `PREDICT_FREQUENT_DEPTH`, `ANOMALY_DEFAULT_TOP_K`, `EVAL_HIT_K`, `DEFAULT_BASELINE_PERIODS`, and the anomaly thresholds in §7.7.
 
 Sparse matrices are views over `edges`, not separate dense arrays.
 
@@ -223,6 +225,56 @@ Two properties of the product need explicit handling downstream:
 
 Unit tests cover 2-line, 2×2, unbalanced rejection, weight conservation, self-loop
 emission, and the `(n,1)`-is-not-ambiguous boundary.
+
+### 7.2.1 Minimal rewrite — `split`
+
+Implements the minimal rewrite of concept §3.3. `split.split_lines(lines)` partitions
+a balanced journal into the finest set of balanced subsets it is *forced* into;
+`rewrite_transactions(..., split=True)` then averages within each subset instead of
+across the whole journal. `build --split` selects it, and `LogicMap.rewrite_mode`
+records which rewrite produced a map.
+
+Signed totals make the search uniform: debits count positive and credits negative, so
+a subset is an event exactly when its signed total is zero. Line weights are positive,
+so such a subset necessarily holds at least one line of each side and no separate side
+check is needed.
+
+```text
+for size in 2 .. n-1:                      # proper subsets only
+    subsets = all index sets of that size with |signed total| <= tolerance
+    if none:            continue
+    if any two overlap: return [lines]     # competing pairings — do not choose
+    emit each subset; recurse on the remainder
+return [lines]                             # nothing forced
+```
+
+Three rules carry the concept's guarantee into the implementation:
+
+- **Overlap means stop.** Competing subsets of the same size are exactly the case
+  where the journal does not record which pairing occurred. Picking one would replace
+  the measured `ambiguous_share` with an unmeasured guess, so the lines stay together
+  and averaging handles them. This is the property most worth testing.
+- **Smallest size first.** Ascending size yields the finest partition, and finds the
+  common two-line settlement before any larger cover.
+- **Deterministic order.** Subsets are enumerated over line indexes in input order, so
+  the same journal always produces the same partition.
+
+Sub-transactions carry the parent `txn_id`, so `depth` still counts source
+transactions rather than pieces (§7.3). Ambiguity is assessed per subset, which is the
+point: a packed journal that decomposes into two-line events contributes no ambiguous
+weight at all.
+
+The subset search is exponential in line count, so journals wider than
+`SPLIT_MAX_LINES` (16) are averaged whole. That is ~65k subsets at the cap, which is
+milliseconds; real packed journals sit well below it.
+
+**Effect on the shipped fixtures.** One of the 50 sample journals is forced: a
+receivable reclassification of 1200 packed together with a 45 office expense on a
+card. Splitting isolates the two, removing the two cross edges the product invented,
+taking the map from 25 edges to 23 and its ambiguous weight share from 0.8% to 0.2%.
+The remaining ambiguous journal debits 200 and 300 against credits of 350 and 150, so
+no subset balances and averaging correctly keeps it whole. Total weight is unchanged
+under either rewrite, as conservation requires.
 
 ### 7.3 Aggregate
 
@@ -393,7 +445,7 @@ python -m alm demo [--out out] [--sample data/sample] \
 python -m alm build \
   --accounts data/sample/accounts.tsv \
   --transactions data/sample/transactions.tsv \
-  --out out/baseline [--label LABEL] [--granularity month|quarter|year]
+  --out out/baseline [--label LABEL] [--granularity month|quarter|year] [--split]
 
 python -m alm build \
   --accounts ... --transactions data/sample/transactions_open.tsv \
@@ -454,6 +506,8 @@ python -m alm build-from-excel --xlsx <workbook.xlsx> --out out/excel_ref \
 
 `build`, `periods`, and `balances` accept `--from` and `--to` as inclusive ISO dates, plus `--granularity`. The selected window is recorded in `meta.tsv`.
 
+`build --split` selects the minimal rewrite of §7.2.1 in place of averaging. The choice is recorded in `meta.tsv` as `rewrite_mode`, so a map states which rewrite produced it.
+
 `build`, `build-from-edges`, and `build-from-excel` write a map directory; the other commands read one.
 
 ---
@@ -464,7 +518,7 @@ Each `--out <dir>` from `build` contains:
 
 | File | Contents |
 |------|----------|
-| `meta.tsv` | window label, txn/line/edge counts, totals, granularity, period count and first/last period, generated_at |
+| `meta.tsv` | window label, txn/line/edge counts, totals, granularity, rewrite mode, period count and first/last period, generated_at |
 | `accounts.tsv` | normalized copy of the accounts used |
 | `edges.tsv` | debit_account_id, credit_account_id, weight_sum, depth, pair_instances, mean_weight, share_w, share_c, share_m, norm, rank, ambiguous_share, is_self_loop |
 | `edge_periods.tsv` | debit_account_id, credit_account_id, period, weight, depth — per-period mass, so it survives a round-trip and `predict --season` works against a saved map |
@@ -571,11 +625,12 @@ Errors for invariant breaks include the `txn_id` and the amounts. Use `WARNING` 
 
 ## 13. Testing plan
 
-Tests live under `tests/` and are part of the proof, not optional. The suite is 103 tests and runs in well under a second.
+Tests live under `tests/` and are part of the proof, not optional. The suite is 123 tests and runs in well under a second.
 
 | Test module | Must prove |
 |-------------|------------|
 | `test_rewrite` | Weight conservation; 2-line identity; 2×2 four edges; unbalanced rejection; self-loop emission; `(n,1)` is not ambiguous |
+| `test_split` | Forced splits are taken and competing ones refused; groups balance and no line is lost or duplicated; the search is deterministic and capped; sub-transactions keep the parent id; splitting removes cross edges, drives ambiguity to zero, conserves weight, and leaves depth counting source transactions |
 | `test_aggregate` | Collapse sums and depths; globals; norm ranking order on a tiny fixture; ambiguous-weight split; self-loop flag |
 | `test_verify_predict` | Known edge passes; nonsense fails or warns; predict top contains the fixture counterpart; negative line rejected before rewrite; self-transfer fails; in-journal self-loop casts no vote |
 | `test_anomalies` | Injected new and missing edges appear in the output; qualifiers do not flood a small map; `rank_shift` requires a material move; one row per edge |
@@ -602,6 +657,7 @@ dependency, exercised through `build-from-excel` where it is installed.
 | `models` | Dataclasses and tuning constants | §6 |
 | `validate` | Double-entry axioms; groups lines into transactions | §7.1 |
 | `rewrite` | DR×CR averaging, self-loop and ambiguity flags | §7.2 |
+| `split` | Minimal rewrite: partition a journal into forced balanced subsets | §7.2.1 |
 | `aggregate` | Edge collapse and map globals | §7.3 |
 | `score` | Normed blend and spectrum ranking | §7.4 |
 | `verify` | Candidate scoring and verdicts | §7.5 |
@@ -655,7 +711,6 @@ each would take:
 
 | Extension | Implementation notes |
 |-----------|----------------------|
-| Minimal transaction splitter before rewrite | Reachable within the current input contract; would drive ambiguous share toward zero on multi-event journals |
 | Full type-pair prior matrix | `verify.COMMON_TYPE_PAIRS` consults a heuristic subset; the full matrix is a transcription task |
 | Contact-conditioned edges | Needs a contact identifier on the line-level input contract, which §5.2 does not carry |
 | Dollar materiality weighting for anomaly ranking | An alternative sort order for §7.7, gated on an entity-level threshold |

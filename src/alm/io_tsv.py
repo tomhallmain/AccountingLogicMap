@@ -132,6 +132,7 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
             "total_depth",
             "total_mean_weight",
             "granularity",
+            "rewrite_mode",
             "period_count",
             "period_first",
             "period_last",
@@ -147,6 +148,7 @@ def write_map_dir(logic_map: LogicMap, out_dir: Path) -> None:
                 "total_depth": logic_map.total_depth,
                 "total_mean_weight": f"{logic_map.total_mean_weight:.6f}",
                 "granularity": logic_map.granularity,
+                "rewrite_mode": logic_map.rewrite_mode,
                 "period_count": len(logic_map.periods),
                 "period_first": logic_map.periods[0] if logic_map.periods else "",
                 "period_last": logic_map.periods[-1] if logic_map.periods else "",
@@ -308,6 +310,7 @@ def load_map_dir(path: Path) -> LogicMap:
         total_mean_weight=total_mean_weight,
         window_label=meta.get("window_label", path.name),
         granularity=meta.get("granularity") or "month",
+        rewrite_mode=meta.get("rewrite_mode") or "averaging",
         periods=sorted({p for e in edges.values() for p in e.period_weights})
         or (
             [meta["period_first"], meta["period_last"]]

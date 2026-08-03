@@ -72,8 +72,9 @@ def build_logic_map(
     *,
     window_label: str = "baseline",
     granularity: str = "month",
+    split: bool = False,
 ) -> LogicMap:
-    rewritten = rewrite_transactions(txns, granularity=granularity)
+    rewritten = rewrite_transactions(txns, granularity=granularity, split=split)
     edges = aggregate_rewritten(rewritten)
     total_weight, total_depth, total_mean_weight = map_globals(edges)
     line_count = sum(len(t.lines) for t in txns)
@@ -89,6 +90,7 @@ def build_logic_map(
         line_count=line_count,
         granularity=granularity,
         periods=sorted({p for e in edges.values() for p in e.period_weights}),
+        rewrite_mode="minimal" if split else "averaging",
     )
     return logic_map
 

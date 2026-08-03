@@ -12,6 +12,11 @@ ANOMALY_DEFAULT_TOP_K = 25
 EVAL_HIT_K = (3, 5)
 PREDICT_FREQUENT_DEPTH = 3  # spec §11.2 pass bar applies to edges at/above this depth
 
+# Minimal rewrite (concept §3.3). Searching for balanced subsets is exponential in
+# line count, so journals wider than this are averaged whole. 16 lines is ~65k
+# subsets, which is milliseconds; real packed journals sit well below it.
+SPLIT_MAX_LINES = 16
+
 # Trailing closed periods used to project the open period. The paper suggests
 # 12-18 months; fewer makes the average too noisy to read a variance against.
 DEFAULT_BASELINE_PERIODS = 12
@@ -147,6 +152,7 @@ class LogicMap:
     scored: list[ScoredEdge] = field(default_factory=list)
     granularity: str = "month"
     periods: list[str] = field(default_factory=list)
+    rewrite_mode: str = "averaging"  # "averaging" or "minimal"; see concept §3.3
 
     def account_type(self, account_id: str) -> str:
         acct = self.accounts.get(account_id)

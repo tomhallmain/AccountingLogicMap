@@ -42,19 +42,29 @@ def rewrite_transactions(
     txns: list[Transaction],
     *,
     granularity: str = "month",
+    split: bool = False,
 ) -> list[tuple[str, EdgeKey, float, bool, str]]:
     """Rewrite all transactions.
 
     Returns (txn_id, key, weight, ambiguous, period) tuples. The period travels
     with each pair so aggregation can retain per-period edge mass, which is what
     seasonal conditioning reads.
+
+    With `split`, each journal is first decomposed into the balanced subsets it
+    is forced into (concept §3.3), and averaging runs within each subset. Every
+    piece keeps the parent `txn_id`, so depth still counts source transactions
+    rather than pieces; ambiguity is assessed per subset, which is the point —
+    a packed journal that decomposes into two-line events has no ambiguity left.
     """
     from .periods import period_key
+    from .split import split_transaction
 
     out: list[tuple[str, EdgeKey, float, bool, str]] = []
     for txn in txns:
-        ambiguous = has_ambiguous_pairing(txn)
         period = period_key(txn.date, granularity)
-        for key, weight in rewrite_transaction(txn):
-            out.append((txn.txn_id, key, weight, ambiguous, period))
+        parts = split_transaction(txn) if split else [txn]
+        for part in parts:
+            ambiguous = has_ambiguous_pairing(part)
+            for key, weight in rewrite_transaction(part):
+                out.append((txn.txn_id, key, weight, ambiguous, period))
     return out

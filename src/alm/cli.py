@@ -130,7 +130,15 @@ def cmd_build(args: argparse.Namespace) -> int:
         return 1
 
     LOG.info("build: %d valid transactions", len(txns))
-    logic_map = build_logic_map(accounts, txns, window_label=args.label or Path(args.out).name)
+    logic_map = build_logic_map(
+        accounts,
+        txns,
+        window_label=args.label or Path(args.out).name,
+        granularity=args.granularity,
+        split=args.split,
+    )
+    if args.split:
+        LOG.info("build: minimal rewrite; journals split into forced balanced subsets")
     score_map(logic_map)
 
     stats = period_activity(txns, granularity=args.granularity)
@@ -812,6 +820,9 @@ def build_parser() -> argparse.ArgumentParser:
     b.add_argument("--to", dest="end", default=None, metavar="YYYY-MM-DD",
                    help="window end, inclusive")
     b.add_argument("--granularity", default="month", choices=list(GRANULARITIES))
+    b.add_argument("--split", action="store_true",
+                   help="minimal rewrite: split journals into forced balanced subsets "
+                        "before averaging (concept §3.3)")
     b.set_defaults(func=cmd_build)
 
     bd = sub.add_parser("build-from-edges", help="Build a map from a pre-aggregated edge list TSV")

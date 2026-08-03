@@ -72,6 +72,23 @@ python -m alm eval --map out/baseline --out out/eval \
 against a random baseline, and recovery of the anomalies injected into the open
 window.
 
+### Rewrite mode
+
+By default a multi-line journal is rewritten by averaging across every debit–credit
+pair. `--split` selects the minimal rewrite instead: the journal is first partitioned
+into the balanced subsets it is forced into, and averaging runs within each. A journal
+packing two unrelated events contributes the edges it actually posted rather than the
+cross products between them.
+
+```bash
+python -m alm build --accounts data/sample/accounts.tsv \
+  --transactions data/sample/transactions.tsv --out out/split --split
+```
+
+Where competing partitions exist the journal is left whole, since choosing between
+them would invent certainty the document does not carry. Either way total weight is
+identical; `meta.tsv` records which rewrite produced the map.
+
 ### Periods and balances
 
 A 25-month synthetic ledger exercises the time axis. A baseline is a date-bounded
@@ -132,7 +149,7 @@ Each map directory under `out/` contains:
 
 | File | Contents |
 |------|----------|
-| `meta.tsv` | Window label, counts, global totals, period range |
+| `meta.tsv` | Window label, counts, global totals, rewrite mode, period range |
 | `accounts.tsv` | Accounts used, with types |
 | `edges.tsv` | One row per distinct edge: weight, depth, pair instances, the three shares, normed score, rank, ambiguous share, self-loop flag |
 | `spectrum.tsv` | The same rows ranked by normed score |
@@ -148,6 +165,6 @@ Command results sit beside them: `verify_results.tsv`, `anomaly_edges.tsv`,
 python -m unittest discover -s tests -v
 ```
 
-103 tests, covering weight conservation through the rewrite, scoring parity against
-the reference entity, the three use-case paths, period windowing and seasonal
+123 tests, covering weight conservation through both rewrites, scoring parity
+against the reference entity, the three use-case paths, period windowing and seasonal
 conditioning, natural-balance inference, and map-directory round-trip fidelity.
