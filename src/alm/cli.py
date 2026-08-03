@@ -586,9 +586,9 @@ def _say(text: str = "") -> None:
     sys.stderr.flush()
 
 
-def _act(number: int, title: str, blurb: str) -> None:
+def _step(number: int, title: str, blurb: str) -> None:
     print(f"\n{'═' * DEMO_WIDTH}", file=sys.stderr)
-    print(f" ACT {number}. {title}", file=sys.stderr)
+    print(f" STEP {number}. {title}", file=sys.stderr)
     print("═" * DEMO_WIDTH, file=sys.stderr)
     _say(blurb)
     print(file=sys.stderr)
@@ -634,7 +634,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "the logs, so piping stdout stays clean."
     )
 
-    _act(
+    _step(
         1,
         "Build a map from journal lines",
         "Transactions are rewritten into debit→credit edges, aggregated, and "
@@ -653,7 +653,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "--out", o("open"), "--label", "open",
     ])
 
-    _act(
+    _step(
         2,
         "Verify postings against the map",
         "Each candidate is rewritten and its edges checked against history and "
@@ -667,7 +667,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "--candidates", str(sample / "candidates.tsv"), "--out", o("verify"),
     ])
 
-    _act(
+    _step(
         3,
         "Predict the other side of a movement",
         "Given one node and a side, rank the counterparts by their share of that "
@@ -679,7 +679,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "--side", "debit", "--top", "5",
     ])
 
-    _act(
+    _step(
         4,
         "Spot structural change between windows",
         "Baseline against open period. The fixture injects three changes: the "
@@ -692,7 +692,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "--out", o("anomalies"),
     ])
 
-    _act(
+    _step(
         5,
         "Score the whole thing against the success criteria",
         "Verification verdicts against their labels, prediction hit-rate against "
@@ -706,7 +706,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "--expected-anomalies", str(sample / "expected_anomalies.tsv"),
     ])
 
-    _act(
+    _step(
         6,
         "Periods: slice one ledger instead of curating two files",
         "A 25-month history. The baseline is a date-bounded window, so the open "
@@ -741,7 +741,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "--holdout", str(history / "holdout.tsv"),
     ])
 
-    _act(
+    _step(
         7,
         "Seasonality: condition on comparable periods",
         "Averaging a counterpart distribution over the whole window buries "
@@ -762,7 +762,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         _demo_run(argv)
         print(file=sys.stderr)
 
-    _act(
+    _step(
         8,
         "Natural balance: a quality signal that knows about contra accounts",
         "Does each account's closing balance sit where its type implies? A bank "
@@ -779,7 +779,7 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "--min-consecutive", "2", "--out", o("hist", "balances"),
     ])
 
-    _act(
+    _step(
         9,
         "Scale: build from a pre-aggregated edge list",
         "190 edges over an 82-account chart, with expected results computed "
