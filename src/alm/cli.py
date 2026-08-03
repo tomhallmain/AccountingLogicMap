@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import argparse
 import logging
+import shlex
 import sys
+import textwrap
 from datetime import date
 from pathlib import Path
 
@@ -531,6 +533,24 @@ def cmd_eval(args: argparse.Namespace) -> int:
 
 
 DEMO_WIDTH = 78
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _resolve_demo_path(path: str | Path) -> Path:
+    """Resolve demo data dirs against cwd first, then the repo root.
+
+    `python -m alm demo` is often launched from outside the checkout; relative
+    defaults like data/sample must still find the shipped fixtures.
+    """
+    p = Path(path)
+    if p.is_absolute():
+        return p
+    if p.exists():
+        return p.resolve()
+    candidate = _REPO_ROOT / p
+    if candidate.exists():
+        return candidate.resolve()
+    return p
 
 
 def _say(text: str = "") -> None:
@@ -574,9 +594,16 @@ def _demo_run(argv: list[str]) -> int:
 def cmd_demo(args: argparse.Namespace) -> int:
     """Run every demo in sequence, with commentary."""
     out = Path(args.out)
-    sample = Path(args.sample)
-    history = Path(args.history)
-    reference = Path(args.reference)
+    sample = _resolve_demo_path(args.sample)
+    history = _resolve_demo_path(args.history)
+    reference = _resolve_demo_path(args.reference)
+
+    missing = [str(p) for p in (sample, history, reference) if not p.is_dir()]
+    if missing:
+        raise SystemExit(
+            "demo data directories not found (tried cwd and repo root):\n  "
+            + "\n  ".join(missing)
+        )
 
     def o(*parts: str) -> str:
         return str(out.joinpath(*parts))
@@ -844,6 +871,16 @@ def build_parser() -> argparse.ArgumentParser:
     ev.add_argument("--expected-anomalies", default=None)
     ev.add_argument("--top", type=int, default=25)
     ev.set_defaults(func=cmd_eval)
+
+    dem = sub.add_parser(
+        "demo",
+        help="Run the full end-to-end demo (sample + history + reference)",
+    )
+    dem.add_argument("--out", default="out", help="artifact root (default: out)")
+    dem.add_argument("--sample", default="data/sample", help="sample entity dir")
+    dem.add_argument("--history", default="data/history", help="25-month history dir")
+    dem.add_argument("--reference", default="data/reference", help="reference edge-list dir")
+    dem.set_defaults(func=cmd_demo)
 
     return p
 
