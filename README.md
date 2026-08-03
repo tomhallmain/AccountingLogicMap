@@ -2,8 +2,9 @@
 
 Python proof of concept for the characteristic debit–credit graph described in:
 
-- [`docs/Accounting Logic Map — Concept Definition.md`](docs/Accounting%20Logic%20Map%20—%20Concept%20Definition.md)
-- [`docs/Accounting Logic Map — Python Proof Spec.md`](docs/Accounting%20Logic%20Map%20—%20Python%20Proof%20Spec.md)
+- [`docs/Accounting Logic Map — Concept Definition.md`](docs/Accounting%20Logic%20Map%20—%20Concept%20Definition.md) — the model
+- [`docs/Accounting Logic Map — Python Proof Spec.md`](docs/Accounting%20Logic%20Map%20—%20Python%20Proof%20Spec.md) — how this implementation proves it
+- [`docs/Accounting Logic Map — Future Work.md`](docs/Accounting%20Logic%20Map%20—%20Future%20Work.md) — capabilities the model admits and this implementation does not provide
 
 Double-entry books form a directed graph of value movement. `alm` rewrites posted
 journals into that graph, aggregates it into a ranked signature of the entity, and

@@ -19,12 +19,12 @@ UI is out of scope: terminal logs and TSV artifacts only.
 
 ---
 
-## 2. Non-goals (v1)
+## 2. Non-goals
 
 - Minimal exact-cover journal splitter; the averaging rewrite only.
 - Contacts, multi-currency, inventory lots, accrual chain reconstruction.
 - Trained models of any kind; all scores are deterministic graph statistics.
-- Replacing the general ledger or posting into QBO or Xero.
+- Replacing the general ledger, or posting back into the source accounting system.
 - Dense square Excel-style matrices on disk; sparse long-form TSV instead.
 
 ---
@@ -37,7 +37,7 @@ UI is out of scope: terminal logs and TSV artifacts only.
 | Dependencies | stdlib for core; `openpyxl` optional, for the Excel edge-list path |
 | Packaging | `src/alm/` package with a `python -m alm` entry point |
 | Tests | `unittest`, run via `python -m unittest discover -s tests`; fast and deterministic |
-| Config | CLI flags; no configuration file in v1 |
+| Config | CLI flags only; no configuration file |
 | Logging | `logging` to stderr, carrying progress and summaries; never full matrix dumps to the console |
 
 ---
@@ -52,6 +52,7 @@ AccountingLogicMap/
   docs/
     Accounting Logic Map — Concept Definition.md
     Accounting Logic Map — Python Proof Spec.md   # this file
+    Accounting Logic Map — Future Work.md         # capabilities the model admits
   data/
     sample/
       README.md
@@ -108,7 +109,7 @@ AccountingLogicMap/
 
 All TSV: UTF-8, tab-separated, header row, `.` decimal separator, ISO dates `YYYY-MM-DD`.
 
-### 5.1 `accounts.tsv`
+### 5.1 Accounts — `accounts.tsv`
 
 | Column | Type | Notes |
 |--------|------|--------|
@@ -116,7 +117,7 @@ All TSV: UTF-8, tab-separated, header row, `.` decimal separator, ISO dates `YYY
 | `name` | str | Display name |
 | `account_type` | str | Bank, Expense, Income, and so on |
 
-### 5.2 `transactions.tsv` (journal lines)
+### 5.2 Journal lines — `transactions.tsv`
 
 | Column | Type | Notes |
 |--------|------|--------|
@@ -125,15 +126,15 @@ All TSV: UTF-8, tab-separated, header row, `.` decimal separator, ISO dates `YYY
 | `account_id` | str | FK → accounts |
 | `side` | `debit` \| `credit` | |
 | `amount` | float | Strictly `> 0` |
-| `memo` | str | Optional; ignored by v1 math |
+| `memo` | str | Optional; carried through, unused by the graph math |
 
-**Invariants (reject or skip with an error log):**
+**Invariants — reject or skip with an error log:**
 
 - Each `txn_id` has at least one debit and one credit.
-- Per `txn_id`, `sum(debit amounts) == sum(credit amounts)` within tolerance `1e-6` (configurable).
+- Per `txn_id`, `sum(debit amounts) == sum(credit amounts)` within a configurable tolerance, `1e-6` by default.
 - Unknown `account_id` is an error; accounts are never invented.
 
-### 5.3 Pre-aggregated edges (TSV or Excel path)
+### 5.3 Pre-aggregated edges from TSV or Excel
 
 A map can be built from an already-aggregated edge list, which allows a spreadsheet aggregation to be reproduced without access to the raw journals behind it. The minimum shape is four columns:
 
@@ -199,7 +200,7 @@ Sparse matrices are views over `edges`, not separate dense arrays.
 
 For each `txn_id`, enforce the axioms from concept §3.2: line counts, sides, positive amounts, balance. Emit structured errors and fail the build command if any baseline transaction is invalid. Candidates are reported rather than aborting the run; see §7.5.
 
-### 7.2 Rewrite (exact-cover averaging)
+### 7.2 Exact-cover averaging rewrite
 
 For each valid transaction with total weight $W$:
 
@@ -293,7 +294,7 @@ Input: `account_id`, `side` (`debit` or `credit`), optional `amount`, optional `
 - With `side=debit`, rank credit counterparts among edges carrying that debit account by `weight_sum`, reporting `depth`, `norm`, and type.
 - With `side=credit`, rank debit counterparts symmetrically.
 - Probabilities are counterpart weight ÷ sum of weights on that node-side. This matches `expected_p_from_debit` and `expected_p_from_credit` in `data/reference/` on all 190 edges.
-- Where `amount` is given, annotate the distance from the typical mean (`weight_sum/depth`). This is logged only; v1 applies no hard filter.
+- Where `amount` is given, annotate the distance from the typical mean (`weight_sum/depth`). This is logged only; no hard filter is applied.
 - Optional `periods` restricts the mass to a set of period keys. Counterparts with no
   activity in those periods drop out rather than ranking at zero. `periods=None`
   reproduces the whole-window behaviour exactly.
@@ -305,7 +306,7 @@ excluded by default, since conditioning a prediction for a period on itself is
 circular. CLI: `predict --season 2025-01`. Where no prior-year period matches, log a
 warning and fall back to the whole window rather than returning nothing.
 
-### 7.7 Anomalies (baseline vs open)
+### 7.7 Baseline-against-open anomalies
 
 Build two maps, `baseline` and `open`, then emit ranked structural deltas:
 
@@ -357,7 +358,7 @@ The last period in `stats` is the open one. The window is capped at the periods
 available and never padded. Default `n = DEFAULT_BASELINE_PERIODS = 12`; the paper
 suggests 12–18 months, and fewer periods make the mean too noisy to read against.
 
-### 7.9 Natural balance (`balances`)
+### 7.9 Natural balance — the `balances` command
 
 Implements concept §6.1. Lives in `alm.balances`, independent of the edge map, since
 it reads position rather than flow.
@@ -440,13 +441,13 @@ python -m alm balances \
   --transactions data/history/transactions.tsv \
   --min-consecutive 2 --out out/hist/balances
 
-# Pre-aggregated edge list, no Excel required
+# Pre-aggregated edge list, needing no Excel
 python -m alm build-from-edges \
   --edges data/reference/reference_edges.tsv \
   --accounts data/reference/reference_accounts.tsv \
   --out out/reference
 
-# Pre-aggregated edge list from an Excel workbook (requires openpyxl)
+# Pre-aggregated edge list from an Excel workbook; requires openpyxl
 python -m alm build-from-excel --xlsx <workbook.xlsx> --out out/excel_ref \
   [--edge-sheet rw] [--account-sheet ca]
 ```
@@ -508,7 +509,7 @@ Console output: a short banner, counts, the top 10 spectrum edges, and command-s
 
 ---
 
-## 11. Evaluation (`alm eval`) — success criteria
+## 11. Success-criteria evaluation — `alm eval`
 
 Automates the concept doc §10 checks as far as possible.
 
@@ -527,7 +528,7 @@ For each holdout edge `(dr, cr)`:
 - Condition on debit, then check that the credit ranks within K, default K=3 and K=5.
 - Condition on credit, then check that the debit ranks within K.
 - Baselines: uniform random among accounts, plus an optional type-only prior where implemented.
-- **Pass bar (demo):** hit-rate@5 clearly above random on frequent edges, meaning depth ≥ 3 in the map.
+- **Demonstration pass bar:** hit-rate@5 clearly above random on frequent edges, meaning depth ≥ 3 in the map.
 
 Because the pass bar is stated only for frequent edges, `eval` reports two cohorts and labels them in a `cohort` column:
 
@@ -649,9 +650,17 @@ and seeing terminal summaries plus TSVs matching §9–§11.
 
 ## 17. Open extensions
 
-| Extension | Notes |
-|-----------|-------|
-| Minimal transaction splitter before rewrite | Concept §3.3; would reduce ambiguous share on multi-event journals |
-| Full type-pair prior matrix from the concept tables | `verify.COMMON_TYPE_PAIRS` implements a heuristic subset today |
-| Contact-conditioned edges | Requires the contacts set $Q$, which is outside the v1 input contract |
-| Dollar materiality weighting for anomaly ranking | Concept §7; ranking is by structural size today |
+Capabilities the concept defines and this implementation does not provide, with what
+each would take:
+
+| Extension | Implementation notes |
+|-----------|----------------------|
+| Minimal transaction splitter before rewrite | Reachable within the current input contract; would drive ambiguous share toward zero on multi-event journals |
+| Full type-pair prior matrix | `verify.COMMON_TYPE_PAIRS` consults a heuristic subset; the full matrix is a transcription task |
+| Contact-conditioned edges | Needs a contact identifier on the line-level input contract, which §5.2 does not carry |
+| Dollar materiality weighting for anomaly ranking | An alternative sort order for §7.7, gated on an entity-level threshold |
+| Feed-side priors in predict | Blocked on source data, not on modelling; see concept §8 |
+
+What each capability is and what it changes about the map is described in
+[`Accounting Logic Map — Future Work.md`](./Accounting%20Logic%20Map%20%E2%80%94%20Future%20Work.md).
+This table records only what building it here would involve.
