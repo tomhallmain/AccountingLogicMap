@@ -108,3 +108,86 @@ a derivable quantity.
 
 **Changes** the anomaly ranking only. Both orderings are defensible and serve
 different readers, so this is a configurable alternative rather than a replacement.
+
+---
+
+## 3. Extending the time axis
+
+The map places every line in a period and then keeps only the period label. Where
+within `2025-03` a line fell is discarded, although every line already carries a full
+date. That discarded coordinate does not describe how value moved; it describes how
+the record was made, which is a different characteristic of an entity and a distinctly
+useful one.
+
+### 3.1 Intra-period posting cadence
+
+**What it measures.** Restoring within-period position gives each period a shape: the
+distribution of transaction count and weight across the period's span, expressed as a
+position in [0, 1] so that periods of unequal length compare. The shape is a
+characteristic of the bookkeeping rather than of the business.
+
+| Shape | Reading |
+|-------|---------|
+| Spread across the period | Postings made as events occur |
+| Concentrated at the close | Catch-up: a period brought onto the books in one sitting |
+| Concentrated at the open | Prior-period work landing late, or cleanup by a reviewer |
+| Repeating peaks | A cadence — payroll runs, billing cycles, card statement dates |
+
+**Measures.** Three fall out of machinery the implementation already has:
+
+- **Centroid** — the weight-weighted mean position, one number per period. Near 0.5 is
+  balanced; drift toward 1 over successive periods is drift toward catch-up posting.
+- **Concentration** — the share of a period's weight landing in its final days, or the
+  entropy of the day distribution. Either reads as how much of the period was recorded
+  in how little of it.
+- **Stability** — one period's shape against the entity's own average, using the total
+  variation distance of concept §6.2, which needs only two distributions rather than
+  two type spectra. This is the distinction that matters: a consistent month-end spike
+  is a process, while an erratic shape is the absence of one, and a single number for
+  concentration cannot tell them apart.
+
+A first-order signal is already reachable without new measurement. The minimal rewrite
+identifies wide journals, and a wide journal is characteristically a catch-up entry
+(concept §3.3), so a per-period count of journals wide enough to decompose is a proxy
+for cadence that needs no additional data.
+
+**Depends on** nothing outside the current input contract. Reading the result as
+*timeliness* rather than as event timing depends on §3.2.
+
+**Changes** four things:
+
+- It adds a control-quality axis orthogonal to the edge distribution. The map says how
+  value moves; cadence says how faithfully and how promptly it was recorded. Concept
+  §3.1 places processes $J$ and control documents $D$ in the entity image for exactly
+  this class of question, and cadence is the part of it reachable from the journal
+  alone.
+- Anomaly detection gains a signal that does not depend on edges at all. A period whose
+  posting shape breaks from the entity's own norm is worth attention even where every
+  edge in it is ordinary, and the reverse holds too: a structural change posted on the
+  entity's usual cadence is more likely to be a real change in the business than a
+  recording artifact.
+- Cross-entity benchmarking extends to it. An entity's cadence compares against peers
+  the same way its type spectrum does, so whether a set of books is tidier or messier
+  than comparable ones becomes a measured quantity rather than an impression.
+- It is useful where nothing is wrong. Even with every posting legitimate and timely,
+  the distribution says when the work falls. That is a staffing question for the
+  recorder, and for a reviewer inheriting an unfamiliar set of books it answers where
+  the crunch sits and what is due to land when — which is otherwise learned only by
+  living through a close.
+
+### 3.2 Posting lag against the entry record
+
+**What it measures.** The gap between when an event occurred and when it was recorded.
+Position within a period is a proxy for this, and it confounds two different things: a
+genuine month-end event recorded promptly and a mid-month event recorded at the close
+land in the same place.
+
+**Depends on** an entry timestamp distinct from the transaction date. Accounting
+systems generally record creation and modification times per transaction; the
+line-level input contract carries only the posted date, so this is an export question
+rather than a modelling one. Attributing lag to a particular recorder depends further
+on the process element $J$ of §1.2.
+
+**Changes** the readings in §3.1 from inference to measurement, and separates the two
+populations that matter for control: events recorded late, and events that genuinely
+occur at period boundaries. Only the first is a finding about the books.
