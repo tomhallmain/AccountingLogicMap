@@ -1,0 +1,12 @@
+account_id	name	account_type
+101 Checking	Checking	Bank
+120 Receivables	Receivables	Accounts receivable (A/R)
+200 Vendors	Vendors	Accounts payable (A/P)
+210 Business Card	Business Card	Credit Card
+260 Equipment Loan	Equipment Loan	Long Term Liabilities
+300 Retained Capital	Retained Capital	Equity
+400 Service Income	Service Income	Income
+500 Delivery Costs	Delivery Costs	Cost of Goods Sold
+610 Facilities	Facilities	Expense
+620 Systems	Systems	Expense
+630 Fuel and Travel	Fuel and Travel	Expense

@@ -1,0 +1,135 @@
+txn_id	date	account_id	side	amount	memo
+BETA-001	2025-01-02	A-CASH Main Bank	debit	96000.00	
+BETA-001	2025-01-02	E-CAP Members Equity	credit	96000.00	
+BETA-002	2025-01-04	A-RECV Accounts Receivable	debit	10762.84	
+BETA-002	2025-01-04	R-FEES Professional Fees	credit	10762.84	
+BETA-003	2025-01-18	A-CASH Main Bank	debit	10762.84	
+BETA-003	2025-01-18	A-RECV Accounts Receivable	credit	10762.84	
+BETA-004	2025-01-07	A-RECV Accounts Receivable	debit	14454.14	
+BETA-004	2025-01-07	R-FEES Professional Fees	credit	14454.14	
+BETA-005	2025-01-20	A-CASH Main Bank	debit	14454.14	
+BETA-005	2025-01-20	A-RECV Accounts Receivable	credit	14454.14	
+BETA-006	2025-01-10	A-RECV Accounts Receivable	debit	15211.73	
+BETA-006	2025-01-10	R-FEES Professional Fees	credit	15211.73	
+BETA-007	2025-01-22	A-CASH Main Bank	debit	15211.73	
+BETA-007	2025-01-22	A-RECV Accounts Receivable	credit	15211.73	
+BETA-008	2025-01-06	C-SUB Subcontractors	debit	5779.31	
+BETA-008	2025-01-06	L-PAY Accounts Payable	credit	5779.31	
+BETA-009	2025-01-24	L-PAY Accounts Payable	debit	5779.31	
+BETA-009	2025-01-24	A-CASH Main Bank	credit	5779.31	
+BETA-010	2025-01-08	X-OCC Occupancy	debit	2859.62	
+BETA-010	2025-01-08	A-CASH Main Bank	credit	2859.62	
+BETA-011	2025-01-09	X-TECH Technology	debit	3678.25	
+BETA-011	2025-01-09	A-CASH Main Bank	credit	3678.25	
+BETA-012	2025-01-10	X-TRV Travel and Meals	debit	3190.00	
+BETA-012	2025-01-10	A-CASH Main Bank	credit	3190.00	
+BETA-013	2025-02-04	A-RECV Accounts Receivable	debit	13925.99	
+BETA-013	2025-02-04	R-FEES Professional Fees	credit	13925.99	
+BETA-014	2025-02-18	A-CASH Main Bank	debit	13925.99	
+BETA-014	2025-02-18	A-RECV Accounts Receivable	credit	13925.99	
+BETA-015	2025-02-07	A-RECV Accounts Receivable	debit	12004.44	
+BETA-015	2025-02-07	R-FEES Professional Fees	credit	12004.44	
+BETA-016	2025-02-20	A-CASH Main Bank	debit	12004.44	
+BETA-016	2025-02-20	A-RECV Accounts Receivable	credit	12004.44	
+BETA-017	2025-02-10	A-RECV Accounts Receivable	debit	9845.07	
+BETA-017	2025-02-10	R-FEES Professional Fees	credit	9845.07	
+BETA-018	2025-02-22	A-CASH Main Bank	debit	9845.07	
+BETA-018	2025-02-22	A-RECV Accounts Receivable	credit	9845.07	
+BETA-019	2025-02-06	C-SUB Subcontractors	debit	5826.52	
+BETA-019	2025-02-06	L-PAY Accounts Payable	credit	5826.52	
+BETA-020	2025-02-24	L-PAY Accounts Payable	debit	5826.52	
+BETA-020	2025-02-24	A-CASH Main Bank	credit	5826.52	
+BETA-021	2025-02-08	X-OCC Occupancy	debit	2530.82	
+BETA-021	2025-02-08	A-CASH Main Bank	credit	2530.82	
+BETA-022	2025-02-09	X-TECH Technology	debit	1141.92	
+BETA-022	2025-02-09	A-CASH Main Bank	credit	1141.92	
+BETA-023	2025-02-10	X-TRV Travel and Meals	debit	2714.25	
+BETA-023	2025-02-10	A-CASH Main Bank	credit	2714.25	
+BETA-024	2025-03-04	A-RECV Accounts Receivable	debit	11012.18	
+BETA-024	2025-03-04	R-FEES Professional Fees	credit	11012.18	
+BETA-025	2025-03-18	A-CASH Main Bank	debit	11012.18	
+BETA-025	2025-03-18	A-RECV Accounts Receivable	credit	11012.18	
+BETA-026	2025-03-07	A-RECV Accounts Receivable	debit	12952.46	
+BETA-026	2025-03-07	R-FEES Professional Fees	credit	12952.46	
+BETA-027	2025-03-20	A-CASH Main Bank	debit	12952.46	
+BETA-027	2025-03-20	A-RECV Accounts Receivable	credit	12952.46	
+BETA-028	2025-03-10	A-RECV Accounts Receivable	debit	9860.52	
+BETA-028	2025-03-10	R-FEES Professional Fees	credit	9860.52	
+BETA-029	2025-03-22	A-CASH Main Bank	debit	9860.52	
+BETA-029	2025-03-22	A-RECV Accounts Receivable	credit	9860.52	
+BETA-030	2025-03-06	C-SUB Subcontractors	debit	5127.99	
+BETA-030	2025-03-06	L-PAY Accounts Payable	credit	5127.99	
+BETA-031	2025-03-24	L-PAY Accounts Payable	debit	5127.99	
+BETA-031	2025-03-24	A-CASH Main Bank	credit	5127.99	
+BETA-032	2025-03-08	X-OCC Occupancy	debit	1203.67	
+BETA-032	2025-03-08	A-CASH Main Bank	credit	1203.67	
+BETA-033	2025-03-09	X-TECH Technology	debit	1184.34	
+BETA-033	2025-03-09	A-CASH Main Bank	credit	1184.34	
+BETA-034	2025-03-10	X-TRV Travel and Meals	debit	2899.95	
+BETA-034	2025-03-10	A-CASH Main Bank	credit	2899.95	
+BETA-035	2025-04-04	A-RECV Accounts Receivable	debit	9674.05	
+BETA-035	2025-04-04	R-FEES Professional Fees	credit	9674.05	
+BETA-036	2025-04-18	A-CASH Main Bank	debit	9674.05	
+BETA-036	2025-04-18	A-RECV Accounts Receivable	credit	9674.05	
+BETA-037	2025-04-07	A-RECV Accounts Receivable	debit	13697.82	
+BETA-037	2025-04-07	R-FEES Professional Fees	credit	13697.82	
+BETA-038	2025-04-20	A-CASH Main Bank	debit	13697.82	
+BETA-038	2025-04-20	A-RECV Accounts Receivable	credit	13697.82	
+BETA-039	2025-04-10	A-RECV Accounts Receivable	debit	11601.74	
+BETA-039	2025-04-10	R-FEES Professional Fees	credit	11601.74	
+BETA-040	2025-04-22	A-CASH Main Bank	debit	11601.74	
+BETA-040	2025-04-22	A-RECV Accounts Receivable	credit	11601.74	
+BETA-041	2025-04-06	C-SUB Subcontractors	debit	3996.26	
+BETA-041	2025-04-06	L-PAY Accounts Payable	credit	3996.26	
+BETA-042	2025-04-24	L-PAY Accounts Payable	debit	3996.26	
+BETA-042	2025-04-24	A-CASH Main Bank	credit	3996.26	
+BETA-043	2025-04-08	X-OCC Occupancy	debit	2789.05	
+BETA-043	2025-04-08	A-CASH Main Bank	credit	2789.05	
+BETA-044	2025-04-09	X-TECH Technology	debit	2114.89	
+BETA-044	2025-04-09	A-CASH Main Bank	credit	2114.89	
+BETA-045	2025-04-10	X-TRV Travel and Meals	debit	1639.90	
+BETA-045	2025-04-10	A-CASH Main Bank	credit	1639.90	
+BETA-046	2025-05-04	A-RECV Accounts Receivable	debit	13803.52	
+BETA-046	2025-05-04	R-FEES Professional Fees	credit	13803.52	
+BETA-047	2025-05-18	A-CASH Main Bank	debit	13803.52	
+BETA-047	2025-05-18	A-RECV Accounts Receivable	credit	13803.52	
+BETA-048	2025-05-07	A-RECV Accounts Receivable	debit	13903.37	
+BETA-048	2025-05-07	R-FEES Professional Fees	credit	13903.37	
+BETA-049	2025-05-20	A-CASH Main Bank	debit	13903.37	
+BETA-049	2025-05-20	A-RECV Accounts Receivable	credit	13903.37	
+BETA-050	2025-05-10	A-RECV Accounts Receivable	debit	10685.86	
+BETA-050	2025-05-10	R-FEES Professional Fees	credit	10685.86	
+BETA-051	2025-05-22	A-CASH Main Bank	debit	10685.86	
+BETA-051	2025-05-22	A-RECV Accounts Receivable	credit	10685.86	
+BETA-052	2025-05-06	C-SUB Subcontractors	debit	4927.40	
+BETA-052	2025-05-06	L-PAY Accounts Payable	credit	4927.40	
+BETA-053	2025-05-24	L-PAY Accounts Payable	debit	4927.40	
+BETA-053	2025-05-24	A-CASH Main Bank	credit	4927.40	
+BETA-054	2025-05-08	X-OCC Occupancy	debit	2664.88	
+BETA-054	2025-05-08	A-CASH Main Bank	credit	2664.88	
+BETA-055	2025-05-09	X-TECH Technology	debit	1514.81	
+BETA-055	2025-05-09	A-CASH Main Bank	credit	1514.81	
+BETA-056	2025-05-10	X-TRV Travel and Meals	debit	986.66	
+BETA-056	2025-05-10	A-CASH Main Bank	credit	986.66	
+BETA-057	2025-06-04	A-RECV Accounts Receivable	debit	10443.04	
+BETA-057	2025-06-04	R-FEES Professional Fees	credit	10443.04	
+BETA-058	2025-06-18	A-CASH Main Bank	debit	10443.04	
+BETA-058	2025-06-18	A-RECV Accounts Receivable	credit	10443.04	
+BETA-059	2025-06-07	A-RECV Accounts Receivable	debit	14047.29	
+BETA-059	2025-06-07	R-FEES Professional Fees	credit	14047.29	
+BETA-060	2025-06-20	A-CASH Main Bank	debit	14047.29	
+BETA-060	2025-06-20	A-RECV Accounts Receivable	credit	14047.29	
+BETA-061	2025-06-10	A-RECV Accounts Receivable	debit	12181.72	
+BETA-061	2025-06-10	R-FEES Professional Fees	credit	12181.72	
+BETA-062	2025-06-22	A-CASH Main Bank	debit	12181.72	
+BETA-062	2025-06-22	A-RECV Accounts Receivable	credit	12181.72	
+BETA-063	2025-06-06	C-SUB Subcontractors	debit	4100.10	
+BETA-063	2025-06-06	L-PAY Accounts Payable	credit	4100.10	
+BETA-064	2025-06-24	L-PAY Accounts Payable	debit	4100.10	
+BETA-064	2025-06-24	A-CASH Main Bank	credit	4100.10	
+BETA-065	2025-06-08	X-OCC Occupancy	debit	3546.81	
+BETA-065	2025-06-08	A-CASH Main Bank	credit	3546.81	
+BETA-066	2025-06-09	X-TECH Technology	debit	2312.55	
+BETA-066	2025-06-09	A-CASH Main Bank	credit	2312.55	
+BETA-067	2025-06-10	X-TRV Travel and Meals	debit	1808.98	
+BETA-067	2025-06-10	A-CASH Main Bank	credit	1808.98	

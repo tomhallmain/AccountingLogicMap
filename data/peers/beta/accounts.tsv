@@ -1,0 +1,11 @@
+account_id	name	account_type
+A-CASH Main Bank	Main Bank	Bank
+A-RECV Accounts Receivable	Accounts Receivable	Accounts receivable (A/R)
+L-PAY Accounts Payable	Accounts Payable	Accounts payable (A/P)
+L-CARD Purchasing Card	Purchasing Card	Credit Card
+E-CAP Members Equity	Members Equity	Equity
+R-FEES Professional Fees	Professional Fees	Income
+C-SUB Subcontractors	Subcontractors	Cost of Goods Sold
+X-OCC Occupancy	Occupancy	Expenses
+X-TECH Technology	Technology	Expenses
+X-TRV Travel and Meals	Travel and Meals	Expenses

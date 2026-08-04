@@ -493,3 +493,82 @@ def write_eval_summary(path: Path, rows: list[dict]) -> None:
             if key not in fields:
                 fields.append(key)
     _write_tsv(path, fields, rows)
+
+
+def write_type_spectra(path: Path, spectra) -> None:
+    """One row per entity per type pair — the comparable projection (spec §7.10)."""
+    _write_tsv(
+        path,
+        [
+            "entity",
+            "level",
+            "debit_type",
+            "credit_type",
+            "weight_share",
+            "depth_share",
+            "edge_count",
+            "weight",
+            "depth",
+        ],
+        [
+            {
+                "entity": s.label,
+                "level": s.level,
+                "debit_type": c.debit,
+                "credit_type": c.credit,
+                "weight_share": f"{c.weight_share:.6f}",
+                "depth_share": f"{c.depth_share:.6f}",
+                "edge_count": c.edge_count,
+                "weight": f"{c.weight:.6f}",
+                "depth": c.depth,
+            }
+            for s in spectra
+            for c in sorted(s.cells.values(), key=lambda c: -c.weight_share)
+        ],
+    )
+
+
+def write_benchmark_rows(path: Path, rows) -> None:
+    _write_tsv(
+        path,
+        [
+            "signal",
+            "debit_type",
+            "credit_type",
+            "subject_share",
+            "peer_median",
+            "peer_mean",
+            "peer_min",
+            "peer_max",
+            "delta",
+            "peers_present",
+            "peers_total",
+        ],
+        [
+            {
+                "signal": r.signal,
+                "debit_type": r.debit,
+                "credit_type": r.credit,
+                "subject_share": f"{r.subject_share:.6f}",
+                "peer_median": f"{r.peer_median:.6f}",
+                "peer_mean": f"{r.peer_mean:.6f}",
+                "peer_min": f"{r.peer_min:.6f}",
+                "peer_max": f"{r.peer_max:.6f}",
+                "delta": f"{r.delta:+.6f}",
+                "peers_present": r.peers_present,
+                "peers_total": r.peers_total,
+            }
+            for r in rows
+        ],
+    )
+
+
+def write_divergence_matrix(path: Path, rows) -> None:
+    _write_tsv(
+        path,
+        ["entity_a", "entity_b", "divergence"],
+        [
+            {"entity_a": a, "entity_b": b, "divergence": f"{d:.6f}"}
+            for a, b, d in rows
+        ],
+    )

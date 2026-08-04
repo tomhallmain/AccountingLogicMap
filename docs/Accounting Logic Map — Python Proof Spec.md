@@ -70,6 +70,9 @@ AccountingLogicMap/
       accounts.tsv
       transactions.tsv
       holdout.tsv           # edges from the open month, excluded from the baseline
+    peers/                  # three entities for cross-entity comparison
+      README.md
+      alpha/ beta/ gamma/   # accounts.tsv + transactions.tsv each
   src/alm/
     __init__.py
     __main__.py             # python -m alm
@@ -88,6 +91,7 @@ AccountingLogicMap/
     io_excel.py             # optional
     periods.py              # period keys, windowing, forward expectation
     balances.py             # natural balance + contra inference
+    benchmark.py            # type spectra, divergence, peer benchmarking
   out/                      # gitignored generated TSV + logs
   tests/
     __init__.py
@@ -102,6 +106,7 @@ AccountingLogicMap/
     test_balances.py
     test_io_roundtrip.py
     test_io_excel.py
+    test_benchmark.py
 ```
 
 ---
@@ -455,6 +460,65 @@ it reads position rather than flow.
 findings *and* the inferred contras, because the contras explain which accounts are
 absent from the findings list.
 
+### 7.10 Cross-entity comparison — `benchmark`
+
+Implements concept §6.2. Lives in `alm.benchmark`. Reads built maps rather than
+ledgers, so any map directory can be compared with any other regardless of how it
+was built.
+
+`type_spectrum(logic_map, level=)` projects a map's edges onto pairs of account
+types and renormalizes weight and depth over the retained edges, giving a
+distribution that sums to 1. `level="group"` maps each account type onto the base
+groups of concept §6 — Asset, Liability, Equity, Income, Expense — and is the
+default, because it survives products labelling the same type differently.
+`level="type"` keeps raw type labels and is finer where two entities share a
+vocabulary. Types outside `BASE_GROUP` become `Unclassified` rather than being
+dropped, so an unmapped chart shows as a visible block instead of quietly
+changing the denominators; its share is reported.
+
+Self-loop edges are excluded before projection, per concept §3.3.1, and the
+excluded share is reported alongside the spectrum.
+
+| Function | Result |
+|----------|--------|
+| `divergence(a, b)` | Total variation between two spectra: `0.5 · Σ \|a−b\|` over every type pair either uses. In [0, 1], symmetric, zero only for identical mixes |
+| `divergence_matrix(spectra)` | Every pair's distance, closest first |
+| `pooled(peers)` | The peer group as one distribution — the mean share per type pair, so each peer counts equally rather than the largest dominating |
+| `benchmark(subject, peers)` | One row per type pair either side uses, sorted by the size of the gap |
+
+Peer statistics count a peer that never uses a pair as a zero. Averaging only
+over peers that do use it would compare the subject against the subset that
+behaves as it does, which flatters it.
+
+Each row carries `subject_share`, the peer mean, median, min and max, the delta
+against the median, how many peers use the pair, and a `signal`:
+
+| Signal | Meaning |
+|--------|---------|
+| `over` / `under` | The subject uses this pair more or less than the peer median |
+| `unique` | The subject uses it and no peer does |
+| `absent` | Peers use it and the subject does not |
+| `in line` | Equal to the peer median |
+
+```text
+python -m alm benchmark \
+  --subject out/peers/gamma \
+  --peers out/peers/alpha out/peers/beta \
+  --out out/peers/benchmark [--level group|type]
+```
+
+Entity labels come from each map's `window_label`, so build peers with `--label`.
+Duplicate labels are warned about rather than silently merged.
+
+**Fixtures.** `data/peers/` ships three synthetic consulting firms chosen so the
+comparison has to work rather than appear to: no account identifier occurs in two
+of them, `beta` labels its expense accounts `Expenses` where the others say
+`Expense`, and the three differ in size by a factor of four. `alpha` and `beta`
+run the same way and diverge by 0.006; `gamma` settles operating costs on a card
+and services a loan, and diverges by 0.12. Benchmarking `gamma` against the other
+two attributes the gap: `Expense ← Liability` over, `Expense ← Asset` absent,
+`Liability ← Asset` over.
+
 ---
 
 ## 8. CLI surface
@@ -515,6 +579,12 @@ python -m alm balances \
   --transactions data/history/transactions.tsv \
   --min-consecutive 2 --out out/hist/balances
 
+# Cross-entity comparison: build each entity, then benchmark one against the rest
+python -m alm build --accounts data/peers/alpha/accounts.tsv \
+  --transactions data/peers/alpha/transactions.tsv --out out/peers/alpha --label alpha
+python -m alm benchmark --subject out/peers/gamma \
+  --peers out/peers/alpha out/peers/beta --out out/peers/benchmark
+
 # Pre-aggregated edge list, needing no Excel
 python -m alm build-from-edges \
   --edges data/reference/reference_edges.tsv \
@@ -557,6 +627,7 @@ Command outputs:
 | `eval` | `eval_summary.tsv`, `eval_detail.tsv` |
 | `periods` | `periods.tsv` — a `period` row per period plus a final `forward_expectation` row, distinguished by the `kind` column |
 | `balances` | `balances.tsv` — `unnatural_balance` rows plus `inferred_contra` rows, distinguished by the `kind` column |
+| `benchmark` | `type_spectra.tsv` — one row per entity per type pair; `benchmark.tsv` — one row per type pair with the peer comparison; `divergence.tsv` — the pairwise distance matrix |
 
 `eval_summary.tsv` holds heterogeneous metric rows for verify, predict, and anomaly families, each carrying different keys. Its header must be the **union** of keys across all rows; deriving it from the first row alone blanks every column that row happens to lack.
 
@@ -647,7 +718,7 @@ Errors for invariant breaks include the `txn_id` and the amounts. Use `WARNING` 
 
 ## 13. Testing plan
 
-Tests live under `tests/` and are part of the proof, not optional. The suite is 128 tests and runs in well under a second.
+Tests live under `tests/` and are part of the proof, not optional. The suite is 153 tests and runs in well under a second.
 
 | Test module | Must prove |
 |-------------|------------|
@@ -660,6 +731,7 @@ Tests live under `tests/` and are part of the proof, not optional. The suite is 
 | `test_eval_outputs` | `eval_summary.tsv` keeps every metric family's columns; predict cohorts computed; empty cohort never passes vacuously; holdout-leakage assertion; anomaly recovery reported only when expectations are supplied |
 | `test_io_roundtrip` | `write_map_dir` → `load_map_dir` preserves globals, counts, every edge stat including `pair_instances`, scored order, and per-period mass; predictions identical after reload; globals derived when `meta.tsv` omits them; older directories without `pair_instances` still load |
 | `test_io_excel` | Edge-column resolution from descriptive and export-style headers, and the positional fallback when a header names nothing or only some columns; row coercion, skipping, and key accumulation; account-type defaults |
+| `test_benchmark` | Type vocabularies collapse onto shared base groups and unknown types survive as `Unclassified`; spectra are distributions; self-loops excluded before type reasoning; divergence symmetric, bounded, zero for self and one for disjoint entities; peers with no shared account id compare, and scale does not drive the result; benchmark signals and peer statistics count absent peers as zero |
 | `test_balances` | Natural side per type; parent resolution with and without account codes; name alone is not contra; coverage separates a contra from an occasional dip; fixture end-to-end, where the contra is silent and the overdrawn bank is `high` |
 | `test_periods` | Period keys sort and bound correctly; windows never split a journal; period weights sum to the map total; forward expectation is the trailing mean, capped not padded; prediction beats random on transactions outside the map; seasonal conditioning reranks in-season counterparts and drops out-of-season ones |
 
@@ -687,6 +759,7 @@ dependency, exercised through `build-from-excel` where it is installed.
 | `anomalies` | Baseline-vs-open structural deltas | §7.7 |
 | `periods` | Period keys, windowing, forward expectation, seasonal slots | §7.8 |
 | `balances` | Natural balance and contra inference | §7.9 |
+| `benchmark` | Type spectra, divergence, peer benchmarking | §7.10 |
 | `eval` | Success-criteria metrics across the three uses | §11 |
 | `io_tsv` | All TSV readers and writers, including map directories | §5, §9 |
 | `io_excel` | Optional workbook edge-list loader | §5.3 |

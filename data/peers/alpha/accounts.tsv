@@ -1,0 +1,11 @@
+account_id	name	account_type
+1000 Operating Account	Operating Account	Bank
+1200 Client Receivables	Client Receivables	Accounts receivable (A/R)
+2000 Trade Payables	Trade Payables	Accounts payable (A/P)
+2100 Company Card	Company Card	Credit Card
+3000 Owner Capital	Owner Capital	Equity
+4000 Consulting Revenue	Consulting Revenue	Income
+5000 Contractor Costs	Contractor Costs	Cost of Goods Sold
+6100 Rent	Rent	Expense
+6200 Software	Software	Expense
+6300 Travel	Travel	Expense

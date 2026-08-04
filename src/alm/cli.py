@@ -11,6 +11,7 @@ from pathlib import Path
 from .aggregate import build_logic_map, logic_map_from_edge_stats
 from .anomalies import compare_maps
 from .balances import unnatural_balances
+from .benchmark import LEVELS, benchmark, divergence, divergence_matrix, pooled, type_spectrum
 from .eval import evaluate_anomalies, evaluate_prediction, run_verify_eval
 from .io_excel import DEFAULT_ACCOUNT_SHEET, DEFAULT_EDGE_SHEET, load_excel_reference
 from .io_tsv import (
@@ -23,10 +24,13 @@ from .io_tsv import (
     load_map_dir,
     write_anomaly_rows,
     write_balance_rows,
+    write_benchmark_rows,
     write_eval_summary,
     write_map_dir,
+    write_divergence_matrix,
     write_period_rows,
     write_predict_rows,
+    write_type_spectra,
     write_verify_results,
 )
 from .models import DEFAULT_BASELINE_PERIODS, Account, EdgeKey, Transaction, group_lines
@@ -439,6 +443,71 @@ def cmd_build_from_edges(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_benchmark(args: argparse.Namespace) -> int:
+    """Cross-entity comparison and benchmarking (concept §6.2, spec §7.10)."""
+    subject_map = load_map_dir(Path(args.subject))
+    peer_maps = [load_map_dir(Path(p)) for p in args.peers]
+
+    subject = type_spectrum(subject_map, level=args.level)
+    peers = [type_spectrum(m, level=args.level) for m in peer_maps]
+    if len({s.label for s in [subject] + peers}) != len(peers) + 1:
+        LOG.warning(
+            "benchmark: entity labels are not distinct; pass --label on build "
+            "so the outputs can be told apart"
+        )
+
+    LOG.info(
+        "benchmark: %s against %d peer(s) at %s level",
+        subject.label,
+        len(peers),
+        args.level,
+    )
+    for s in [subject] + peers:
+        LOG.info(
+            "  %-16s %3d accounts, %3d edges -> %2d type pairs"
+            "%s%s",
+            s.label,
+            s.account_count,
+            s.edge_count,
+            len(s.cells),
+            f"; {s.self_loop_share:.1%} self-loop weight excluded" if s.self_loop_share else "",
+            f"; {s.unclassified_share:.1%} unclassified" if s.unclassified_share else "",
+        )
+
+    matrix = divergence_matrix([subject] + peers)
+    LOG.info("pairwise divergence (0 = identical mix, 1 = no overlap):")
+    for a, b, d in matrix:
+        LOG.info("  %-16s %-16s %.3f", a, b, d)
+
+    group = pooled(peers)
+    LOG.info(
+        "benchmark: %s diverges %.3f from the peer group",
+        subject.label,
+        divergence(subject, group),
+    )
+
+    rows = benchmark(subject, peers)
+    LOG.info("largest gaps against the peer group:")
+    for r in rows[:8]:
+        LOG.info(
+            "  %-8s %-11s <- %-11s subject=%6.1f%% peers=%6.1f%% delta=%+6.1f%%",
+            r.signal,
+            r.debit,
+            r.credit,
+            100 * r.subject_share,
+            100 * r.peer_median,
+            100 * r.delta,
+        )
+
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    write_type_spectra(out_dir / "type_spectra.tsv", [subject] + peers)
+    write_benchmark_rows(out_dir / "benchmark.tsv", rows)
+    write_divergence_matrix(out_dir / "divergence.tsv", matrix)
+    LOG.info("wrote %s/*.tsv", out_dir)
+    return 0
+
+
 def cmd_eval(args: argparse.Namespace) -> int:
     logic_map = load_map_dir(Path(args.map))
     out_dir = Path(args.out)
@@ -616,8 +685,9 @@ def cmd_demo(args: argparse.Namespace) -> int:
     sample = _resolve_demo_path(args.sample)
     history = _resolve_demo_path(args.history)
     reference = _resolve_demo_path(args.reference)
+    peers = _resolve_demo_path(args.peers)
 
-    missing = [str(p) for p in (sample, history, reference) if not p.is_dir()]
+    missing = [str(p) for p in (sample, history, reference, peers) if not p.is_dir()]
     if missing:
         raise SystemExit(
             "demo data directories not found (tried cwd and repo root):\n  "
@@ -793,6 +863,30 @@ def cmd_demo(args: argparse.Namespace) -> int:
         "--out", o("reference"),
     ])
 
+    _step(
+        10,
+        "Cross-entity comparison: benchmark against peers",
+        "Three consulting firms with no account identifier in common, differing "
+        "type labels, and a four-fold spread in size. Account types are the "
+        "shared axis: project each map onto type pairs and the entities become "
+        "directly comparable. Alpha and beta run the same way and land almost "
+        "on top of each other; gamma sells the same services but settles costs "
+        "on a card and services a loan, and separates cleanly. The benchmark "
+        "says which type pairs account for the gap, not just that there is one.",
+    )
+    for entity in ("alpha", "beta", "gamma"):
+        _demo_run([
+            "build", "--accounts", str(peers / entity / "accounts.tsv"),
+            "--transactions", str(peers / entity / "transactions.tsv"),
+            "--out", o("peers", entity), "--label", entity,
+        ])
+    print(file=sys.stderr)
+    _demo_run([
+        "benchmark", "--subject", o("peers", "gamma"),
+        "--peers", o("peers", "alpha"), o("peers", "beta"),
+        "--out", o("peers", "benchmark"),
+    ])
+
     print(f"\n{'═' * DEMO_WIDTH}", file=sys.stderr)
     _say(
         f"Done. Artifacts are under {out}/ — map directories carry meta.tsv, "
@@ -890,6 +984,17 @@ def build_parser() -> argparse.ArgumentParser:
     an.add_argument("--top", type=int, default=25)
     an.set_defaults(func=cmd_anomalies)
 
+    bm = sub.add_parser(
+        "benchmark",
+        help="Compare entities and position one against a peer group",
+    )
+    bm.add_argument("--subject", required=True, help="map directory to benchmark")
+    bm.add_argument("--peers", required=True, nargs="+", help="peer map directories")
+    bm.add_argument("--out", required=True)
+    bm.add_argument("--level", default="group", choices=list(LEVELS),
+                    help="compare on base groups (default) or raw account types")
+    bm.set_defaults(func=cmd_benchmark)
+
     ev = sub.add_parser("eval", help="Run success-criteria checks")
     ev.add_argument("--map", required=True)
     ev.add_argument("--out", required=True)
@@ -909,6 +1014,7 @@ def build_parser() -> argparse.ArgumentParser:
     dem.add_argument("--sample", default="data/sample", help="sample entity dir")
     dem.add_argument("--history", default="data/history", help="25-month history dir")
     dem.add_argument("--reference", default="data/reference", help="reference edge-list dir")
+    dem.add_argument("--peers", default="data/peers", help="peer entities dir")
     dem.set_defaults(func=cmd_demo)
 
     return p

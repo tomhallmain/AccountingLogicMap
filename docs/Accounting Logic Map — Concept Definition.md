@@ -208,7 +208,7 @@ Prediction answers which counterpart is characteristic for a given movement.
    - concentration changes, where few edges dominate more or less than before,
    - growth in Uncategorized, clearing, or discrepancy accounts,
    - new edges that violate type expectations at rising volume.
-3. Because the representation is relative — shares, ranks, probabilities — the same machinery applies to a 50-transaction sole proprietorship and to a multi-entity group. Scale differences appear as depth and absolute weight, not as a different algorithm.
+3. Because the representation is relative — shares, ranks, probabilities — the same machinery applies to a 50-transaction sole proprietorship and to a multi-entity group. Scale differences appear as depth and absolute weight, not as a different algorithm. The same relativity is what lets the comparison cross entities rather than windows (§6.2).
 
 **Demonstration shape:** a table of top Δ-ranked edges and new edges in $P_{open}$ against baseline $P_{-n}$, with account-type tags.
 
@@ -228,9 +228,24 @@ Use $B$ to:
 
 - color and group matrix output,
 - separate a surprising account pair from a surprising *type* pair,
-- bootstrap priors where historical depth is thin, as with a new entity or a new account.
+- bootstrap priors where historical depth is thin, as with a new entity or a new account,
+- compare one entity against another, since types are the only axis two charts of accounts share (§6.2).
 
 Base groups: Assets, Liabilities, Equity, Income, Expense, with contra and clearing accounts treated explicitly where present.
+
+### 6.2 Cross-entity comparison
+
+Account identifiers are entity-specific. One entity's `1000 Bank` and another's `10100 Operating` are the same thing under different names, and no key matches them, so two entities' edge distributions cannot be compared directly. The type map is the bridge: projecting each entity's edges onto pairs of account types puts every entity on one axis, and because the map is already expressed in shares, the projections compare across entities of any size.
+
+**Granularity is a trade.** Base groups — Asset, Liability, Equity, Income, Expense — compare across any chart of accounts, because every type vocabulary maps onto them. Raw types are finer but only comparable where two entities happen to label types the same way, and products differ on exactly that: `Expense` against `Expenses` is a labelling difference, not an accounting one. Base groups are therefore the robust default and raw types the sharper instrument for entities known to share a vocabulary.
+
+**Self-loops are excluded before projection.** A self-loop's type pair is identical on both sides by construction (§3.3.1), so retaining them would load the diagonal of the type matrix with rewrite artifacts and read as reclassification the entity never posted. The excluded share is reported rather than silently dropped, since it is itself a fact about the books.
+
+**Distance between two entities** is the total variation between their type spectra: half the summed absolute difference in share across every type pair either entity uses. It runs from 0, meaning the two move value across the same type pairs in the same proportions, to 1, meaning they share none. It reads directly as a quantity — a distance of 0.4 says two fifths of one entity's flow would have to move to a different type pair to match the other.
+
+**Benchmarking** positions one entity against a group of peers rather than against a single counterpart. Each peer contributes its share of every type pair equally, so the group describes the peers rather than its largest member, and a peer that never uses a pair counts as a zero rather than being omitted — omitting it would compare the subject only against peers that behave as it does. The result is per type pair, not a single score: which pairs the entity over-weights, which it under-weights, which its peers use and it does not, and which it uses alone.
+
+That distinction is the point. A score says an entity is unusual; a ranked set of type pairs says an entity funds its operating costs on a credit card where its peers use a bank account, which is a statement someone can act on.
 
 ### 6.1 Natural balance as a quality signal
 
@@ -317,7 +332,8 @@ A demonstration of this concept covers:
 4. Verification and prediction against the built map.
 5. Period windowing, per-period edge mass, forward expectation, and seasonal conditioning inside prediction, per §5.2 and §7.
 6. Natural-balance reporting with contra inference, per §6.1.
-7. Measurement of the success criteria in §10.
+7. Cross-entity comparison and benchmarking against a peer group, per §6.2.
+8. Measurement of the success criteria in §10.
 
 Terminal logs and tabular artifacts are sufficient. A user interface proves nothing about the concept.
 

@@ -1,0 +1,135 @@
+txn_id	date	account_id	side	amount	memo
+ALPHA-001	2025-01-02	1000 Operating Account	debit	40000.00	
+ALPHA-001	2025-01-02	3000 Owner Capital	credit	40000.00	
+ALPHA-002	2025-01-04	1200 Client Receivables	debit	4267.29	
+ALPHA-002	2025-01-04	4000 Consulting Revenue	credit	4267.29	
+ALPHA-003	2025-01-18	1000 Operating Account	debit	4267.29	
+ALPHA-003	2025-01-18	1200 Client Receivables	credit	4267.29	
+ALPHA-004	2025-01-07	1200 Client Receivables	debit	6863.61	
+ALPHA-004	2025-01-07	4000 Consulting Revenue	credit	6863.61	
+ALPHA-005	2025-01-20	1000 Operating Account	debit	6863.61	
+ALPHA-005	2025-01-20	1200 Client Receivables	credit	6863.61	
+ALPHA-006	2025-01-10	1200 Client Receivables	debit	4577.10	
+ALPHA-006	2025-01-10	4000 Consulting Revenue	credit	4577.10	
+ALPHA-007	2025-01-22	1000 Operating Account	debit	4577.10	
+ALPHA-007	2025-01-22	1200 Client Receivables	credit	4577.10	
+ALPHA-008	2025-01-06	5000 Contractor Costs	debit	2019.72	
+ALPHA-008	2025-01-06	2000 Trade Payables	credit	2019.72	
+ALPHA-009	2025-01-24	2000 Trade Payables	debit	2019.72	
+ALPHA-009	2025-01-24	1000 Operating Account	credit	2019.72	
+ALPHA-010	2025-01-08	6100 Rent	debit	640.87	
+ALPHA-010	2025-01-08	1000 Operating Account	credit	640.87	
+ALPHA-011	2025-01-09	6200 Software	debit	585.50	
+ALPHA-011	2025-01-09	1000 Operating Account	credit	585.50	
+ALPHA-012	2025-01-10	6300 Travel	debit	1139.57	
+ALPHA-012	2025-01-10	1000 Operating Account	credit	1139.57	
+ALPHA-013	2025-02-04	1200 Client Receivables	debit	5406.59	
+ALPHA-013	2025-02-04	4000 Consulting Revenue	credit	5406.59	
+ALPHA-014	2025-02-18	1000 Operating Account	debit	5406.59	
+ALPHA-014	2025-02-18	1200 Client Receivables	credit	5406.59	
+ALPHA-015	2025-02-07	1200 Client Receivables	debit	4109.77	
+ALPHA-015	2025-02-07	4000 Consulting Revenue	credit	4109.77	
+ALPHA-016	2025-02-20	1000 Operating Account	debit	4109.77	
+ALPHA-016	2025-02-20	1200 Client Receivables	credit	4109.77	
+ALPHA-017	2025-02-10	1200 Client Receivables	debit	6931.99	
+ALPHA-017	2025-02-10	4000 Consulting Revenue	credit	6931.99	
+ALPHA-018	2025-02-22	1000 Operating Account	debit	6931.99	
+ALPHA-018	2025-02-22	1200 Client Receivables	credit	6931.99	
+ALPHA-019	2025-02-06	5000 Contractor Costs	debit	2249.20	
+ALPHA-019	2025-02-06	2000 Trade Payables	credit	2249.20	
+ALPHA-020	2025-02-24	2000 Trade Payables	debit	2249.20	
+ALPHA-020	2025-02-24	1000 Operating Account	credit	2249.20	
+ALPHA-021	2025-02-08	6100 Rent	debit	1403.51	
+ALPHA-021	2025-02-08	1000 Operating Account	credit	1403.51	
+ALPHA-022	2025-02-09	6200 Software	debit	1463.76	
+ALPHA-022	2025-02-09	1000 Operating Account	credit	1463.76	
+ALPHA-023	2025-02-10	6300 Travel	debit	1321.00	
+ALPHA-023	2025-02-10	1000 Operating Account	credit	1321.00	
+ALPHA-024	2025-03-04	1200 Client Receivables	debit	3855.76	
+ALPHA-024	2025-03-04	4000 Consulting Revenue	credit	3855.76	
+ALPHA-025	2025-03-18	1000 Operating Account	debit	3855.76	
+ALPHA-025	2025-03-18	1200 Client Receivables	credit	3855.76	
+ALPHA-026	2025-03-07	1200 Client Receivables	debit	4331.92	
+ALPHA-026	2025-03-07	4000 Consulting Revenue	credit	4331.92	
+ALPHA-027	2025-03-20	1000 Operating Account	debit	4331.92	
+ALPHA-027	2025-03-20	1200 Client Receivables	credit	4331.92	
+ALPHA-028	2025-03-10	1200 Client Receivables	debit	6895.03	
+ALPHA-028	2025-03-10	4000 Consulting Revenue	credit	6895.03	
+ALPHA-029	2025-03-22	1000 Operating Account	debit	6895.03	
+ALPHA-029	2025-03-22	1200 Client Receivables	credit	6895.03	
+ALPHA-030	2025-03-06	5000 Contractor Costs	debit	2712.57	
+ALPHA-030	2025-03-06	2000 Trade Payables	credit	2712.57	
+ALPHA-031	2025-03-24	2000 Trade Payables	debit	2712.57	
+ALPHA-031	2025-03-24	1000 Operating Account	credit	2712.57	
+ALPHA-032	2025-03-08	6100 Rent	debit	1105.69	
+ALPHA-032	2025-03-08	1000 Operating Account	credit	1105.69	
+ALPHA-033	2025-03-09	6200 Software	debit	968.23	
+ALPHA-033	2025-03-09	1000 Operating Account	credit	968.23	
+ALPHA-034	2025-03-10	6300 Travel	debit	742.74	
+ALPHA-034	2025-03-10	1000 Operating Account	credit	742.74	
+ALPHA-035	2025-04-04	1200 Client Receivables	debit	3817.04	
+ALPHA-035	2025-04-04	4000 Consulting Revenue	credit	3817.04	
+ALPHA-036	2025-04-18	1000 Operating Account	debit	3817.04	
+ALPHA-036	2025-04-18	1200 Client Receivables	credit	3817.04	
+ALPHA-037	2025-04-07	1200 Client Receivables	debit	6549.36	
+ALPHA-037	2025-04-07	4000 Consulting Revenue	credit	6549.36	
+ALPHA-038	2025-04-20	1000 Operating Account	debit	6549.36	
+ALPHA-038	2025-04-20	1200 Client Receivables	credit	6549.36	
+ALPHA-039	2025-04-10	1200 Client Receivables	debit	6374.01	
+ALPHA-039	2025-04-10	4000 Consulting Revenue	credit	6374.01	
+ALPHA-040	2025-04-22	1000 Operating Account	debit	6374.01	
+ALPHA-040	2025-04-22	1200 Client Receivables	credit	6374.01	
+ALPHA-041	2025-04-06	5000 Contractor Costs	debit	1654.95	
+ALPHA-041	2025-04-06	2000 Trade Payables	credit	1654.95	
+ALPHA-042	2025-04-24	2000 Trade Payables	debit	1654.95	
+ALPHA-042	2025-04-24	1000 Operating Account	credit	1654.95	
+ALPHA-043	2025-04-08	6100 Rent	debit	1451.41	
+ALPHA-043	2025-04-08	1000 Operating Account	credit	1451.41	
+ALPHA-044	2025-04-09	6200 Software	debit	734.98	
+ALPHA-044	2025-04-09	1000 Operating Account	credit	734.98	
+ALPHA-045	2025-04-10	6300 Travel	debit	1541.81	
+ALPHA-045	2025-04-10	1000 Operating Account	credit	1541.81	
+ALPHA-046	2025-05-04	1200 Client Receivables	debit	4545.51	
+ALPHA-046	2025-05-04	4000 Consulting Revenue	credit	4545.51	
+ALPHA-047	2025-05-18	1000 Operating Account	debit	4545.51	
+ALPHA-047	2025-05-18	1200 Client Receivables	credit	4545.51	
+ALPHA-048	2025-05-07	1200 Client Receivables	debit	4161.01	
+ALPHA-048	2025-05-07	4000 Consulting Revenue	credit	4161.01	
+ALPHA-049	2025-05-20	1000 Operating Account	debit	4161.01	
+ALPHA-049	2025-05-20	1200 Client Receivables	credit	4161.01	
+ALPHA-050	2025-05-10	1200 Client Receivables	debit	7177.43	
+ALPHA-050	2025-05-10	4000 Consulting Revenue	credit	7177.43	
+ALPHA-051	2025-05-22	1000 Operating Account	debit	7177.43	
+ALPHA-051	2025-05-22	1200 Client Receivables	credit	7177.43	
+ALPHA-052	2025-05-06	5000 Contractor Costs	debit	2490.64	
+ALPHA-052	2025-05-06	2000 Trade Payables	credit	2490.64	
+ALPHA-053	2025-05-24	2000 Trade Payables	debit	2490.64	
+ALPHA-053	2025-05-24	1000 Operating Account	credit	2490.64	
+ALPHA-054	2025-05-08	6100 Rent	debit	511.13	
+ALPHA-054	2025-05-08	1000 Operating Account	credit	511.13	
+ALPHA-055	2025-05-09	6200 Software	debit	1189.59	
+ALPHA-055	2025-05-09	1000 Operating Account	credit	1189.59	
+ALPHA-056	2025-05-10	6300 Travel	debit	1570.13	
+ALPHA-056	2025-05-10	1000 Operating Account	credit	1570.13	
+ALPHA-057	2025-06-04	1200 Client Receivables	debit	5117.42	
+ALPHA-057	2025-06-04	4000 Consulting Revenue	credit	5117.42	
+ALPHA-058	2025-06-18	1000 Operating Account	debit	5117.42	
+ALPHA-058	2025-06-18	1200 Client Receivables	credit	5117.42	
+ALPHA-059	2025-06-07	1200 Client Receivables	debit	4309.49	
+ALPHA-059	2025-06-07	4000 Consulting Revenue	credit	4309.49	
+ALPHA-060	2025-06-20	1000 Operating Account	debit	4309.49	
+ALPHA-060	2025-06-20	1200 Client Receivables	credit	4309.49	
+ALPHA-061	2025-06-10	1200 Client Receivables	debit	5202.64	
+ALPHA-061	2025-06-10	4000 Consulting Revenue	credit	5202.64	
+ALPHA-062	2025-06-22	1000 Operating Account	debit	5202.64	
+ALPHA-062	2025-06-22	1200 Client Receivables	credit	5202.64	
+ALPHA-063	2025-06-06	5000 Contractor Costs	debit	2041.94	
+ALPHA-063	2025-06-06	2000 Trade Payables	credit	2041.94	
+ALPHA-064	2025-06-24	2000 Trade Payables	debit	2041.94	
+ALPHA-064	2025-06-24	1000 Operating Account	credit	2041.94	
+ALPHA-065	2025-06-08	6100 Rent	debit	923.77	
+ALPHA-065	2025-06-08	1000 Operating Account	credit	923.77	
+ALPHA-066	2025-06-09	6200 Software	debit	453.63	
+ALPHA-066	2025-06-09	1000 Operating Account	credit	453.63	
+ALPHA-067	2025-06-10	6300 Travel	debit	646.30	
+ALPHA-067	2025-06-10	1000 Operating Account	credit	646.30	

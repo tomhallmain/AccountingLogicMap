@@ -108,23 +108,3 @@ a derivable quantity.
 
 **Changes** the anomaly ranking only. Both orderings are defensible and serve
 different readers, so this is a configurable alternative rather than a replacement.
-
----
-
-## 3. Extending the scope
-
-### 3.1 Cross-entity comparison
-
-Because the representation is relative — shares, ranks, and probabilities — the
-characteristic spectra of two entities are directly comparable, and the same
-machinery that compares two windows of one entity would compare two entities over one
-window. Applications include benchmarking an entity against sector peers, and
-detecting a group of entities whose books have drifted apart.
-
-**Depends on** a mapping between charts of accounts, since the account identifiers
-that key the edges are entity-specific. Account types $B$ supply a coarse mapping
-already, which makes type-level comparison reachable before account-level comparison
-is.
-
-**Changes** what the signature is for: from a description of one business over time to
-a position among comparable businesses.

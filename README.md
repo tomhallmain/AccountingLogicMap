@@ -7,14 +7,15 @@ Python proof of concept for the characteristic debit–credit graph described in
 - [`docs/Accounting Logic Map — Future Work.md`](docs/Accounting%20Logic%20Map%20—%20Future%20Work.md) — capabilities the model admits and this implementation does not provide
 
 Double-entry books form a directed graph of value movement. `alm` rewrites posted
-journals into that graph, aggregates it into a ranked signature of the entity, and
-puts the signature to three uses:
+journals into that graph, and aggregates it into a ranked signature of the entity.
+The signature is then put to work:
 
 | Use | Question it answers | Command |
 |-----|---------------------|---------|
 | Verify | Does this posting fit how the entity has moved value? | `verify` |
 | Predict | What is the likely counterpart to a half-known entry? | `predict` |
 | Detect | Has the structure of activity changed between two windows? | `anomalies` |
+| Benchmark | How does this entity compare with its peers? | `benchmark` |
 
 There is no UI and no service dependency. Every command writes TSV artifacts and logs
 a summary to stderr. The core runs on the standard library alone.
@@ -34,15 +35,15 @@ a third-party package, `openpyxl`, available as the `excel` extra.
 ## Quick start
 
 The demo runs the whole walkthrough end to end — sample verify, predict, anomalies
-and eval; 25 months of history with seasonality; natural-balance checks; and the
-reference edge-list build — with commentary on stderr:
+and eval; 25 months of history with seasonality; natural-balance checks; the
+reference edge-list build; and a three-entity benchmark — with commentary on stderr:
 
 ```bash
 python -m alm demo
 ```
 
 Artifacts land under `out/`. Paths can be overridden with `--out`, `--sample`,
-`--history` and `--reference`.
+`--history`, `--reference` and `--peers`.
 
 ## Commands
 
@@ -143,6 +144,29 @@ python -m alm build-from-excel --xlsx <workbook.xlsx> --out out/excel_ref \
   --edge-sheet rw --account-sheet ca
 ```
 
+### Cross-entity comparison
+
+Account identifiers are entity-specific, so two entities cannot be compared by key.
+Account types are the shared axis: project each map onto type pairs and the entities
+become directly comparable, at any size. `data/peers/` ships three consulting firms
+with no account identifier in common, differing type labels, and a four-fold spread
+in size.
+
+```bash
+for e in alpha beta gamma; do
+  python -m alm build --accounts data/peers/$e/accounts.tsv \
+    --transactions data/peers/$e/transactions.tsv --out out/peers/$e --label $e
+done
+
+python -m alm benchmark --subject out/peers/gamma \
+  --peers out/peers/alpha out/peers/beta --out out/peers/benchmark
+```
+
+`alpha` and `beta` run the same way and diverge by 0.006; `gamma` settles operating
+costs on a credit card and diverges by 0.12. The benchmark says which type pairs
+account for the gap rather than only that one exists. `--level type` compares raw
+account types instead of base groups, for entities known to share a vocabulary.
+
 ## Outputs
 
 Each map directory under `out/` contains:
@@ -157,7 +181,8 @@ Each map directory under `out/` contains:
 | `edge_periods.tsv` | Per-period edge mass, written where the source carries dates |
 
 Command results sit beside them: `verify_results.tsv`, `anomaly_edges.tsv`,
-`eval_summary.tsv`, `eval_detail.tsv`, `periods.tsv` and `balances.tsv`.
+`eval_summary.tsv`, `eval_detail.tsv`, `periods.tsv`, `balances.tsv`, and the
+benchmark's `type_spectra.tsv`, `benchmark.tsv` and `divergence.tsv`.
 
 ## Tests
 
@@ -165,6 +190,7 @@ Command results sit beside them: `verify_results.tsv`, `anomaly_edges.tsv`,
 python -m unittest discover -s tests -v
 ```
 
-123 tests, covering weight conservation through both rewrites, scoring parity
+153 tests, covering weight conservation through both rewrites, scoring parity
 against the reference entity, the three use-case paths, period windowing and seasonal
-conditioning, natural-balance inference, and map-directory round-trip fidelity.
+conditioning, natural-balance inference, cross-entity comparison, and map-directory
+round-trip fidelity.

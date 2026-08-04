@@ -1,0 +1,159 @@
+txn_id	date	account_id	side	amount	memo
+GAMMA-001	2025-01-02	101 Checking	debit	24000.00	
+GAMMA-001	2025-01-02	300 Retained Capital	credit	24000.00	
+GAMMA-002	2025-01-04	120 Receivables	debit	4229.69	
+GAMMA-002	2025-01-04	400 Service Income	credit	4229.69	
+GAMMA-003	2025-01-18	101 Checking	debit	4229.69	
+GAMMA-003	2025-01-18	120 Receivables	credit	4229.69	
+GAMMA-004	2025-01-07	120 Receivables	debit	3131.25	
+GAMMA-004	2025-01-07	400 Service Income	credit	3131.25	
+GAMMA-005	2025-01-20	101 Checking	debit	3131.25	
+GAMMA-005	2025-01-20	120 Receivables	credit	3131.25	
+GAMMA-006	2025-01-10	120 Receivables	debit	2549.24	
+GAMMA-006	2025-01-10	400 Service Income	credit	2549.24	
+GAMMA-007	2025-01-22	101 Checking	debit	2549.24	
+GAMMA-007	2025-01-22	120 Receivables	credit	2549.24	
+GAMMA-008	2025-01-06	500 Delivery Costs	debit	1141.02	
+GAMMA-008	2025-01-06	200 Vendors	credit	1141.02	
+GAMMA-009	2025-01-24	200 Vendors	debit	1141.02	
+GAMMA-009	2025-01-24	101 Checking	credit	1141.02	
+GAMMA-010	2025-01-08	610 Facilities	debit	630.41	
+GAMMA-010	2025-01-08	210 Business Card	credit	630.41	
+GAMMA-011	2025-01-09	620 Systems	debit	760.71	
+GAMMA-011	2025-01-09	210 Business Card	credit	760.71	
+GAMMA-012	2025-01-10	630 Fuel and Travel	debit	607.70	
+GAMMA-012	2025-01-10	210 Business Card	credit	607.70	
+GAMMA-013	2025-01-26	210 Business Card	debit	1917.76	
+GAMMA-013	2025-01-26	101 Checking	credit	1917.76	
+GAMMA-014	2025-01-27	260 Equipment Loan	debit	540.00	
+GAMMA-014	2025-01-27	101 Checking	credit	540.00	
+GAMMA-015	2025-02-04	120 Receivables	debit	4040.37	
+GAMMA-015	2025-02-04	400 Service Income	credit	4040.37	
+GAMMA-016	2025-02-18	101 Checking	debit	4040.37	
+GAMMA-016	2025-02-18	120 Receivables	credit	4040.37	
+GAMMA-017	2025-02-07	120 Receivables	debit	2731.50	
+GAMMA-017	2025-02-07	400 Service Income	credit	2731.50	
+GAMMA-018	2025-02-20	101 Checking	debit	2731.50	
+GAMMA-018	2025-02-20	120 Receivables	credit	2731.50	
+GAMMA-019	2025-02-10	120 Receivables	debit	2291.55	
+GAMMA-019	2025-02-10	400 Service Income	credit	2291.55	
+GAMMA-020	2025-02-22	101 Checking	debit	2291.55	
+GAMMA-020	2025-02-22	120 Receivables	credit	2291.55	
+GAMMA-021	2025-02-06	500 Delivery Costs	debit	1282.15	
+GAMMA-021	2025-02-06	200 Vendors	credit	1282.15	
+GAMMA-022	2025-02-24	200 Vendors	debit	1282.15	
+GAMMA-022	2025-02-24	101 Checking	credit	1282.15	
+GAMMA-023	2025-02-08	610 Facilities	debit	715.22	
+GAMMA-023	2025-02-08	210 Business Card	credit	715.22	
+GAMMA-024	2025-02-09	620 Systems	debit	762.49	
+GAMMA-024	2025-02-09	210 Business Card	credit	762.49	
+GAMMA-025	2025-02-10	630 Fuel and Travel	debit	383.93	
+GAMMA-025	2025-02-10	210 Business Card	credit	383.93	
+GAMMA-026	2025-02-26	210 Business Card	debit	1189.40	
+GAMMA-026	2025-02-26	101 Checking	credit	1189.40	
+GAMMA-027	2025-02-27	260 Equipment Loan	debit	540.00	
+GAMMA-027	2025-02-27	101 Checking	credit	540.00	
+GAMMA-028	2025-03-04	120 Receivables	debit	3213.77	
+GAMMA-028	2025-03-04	400 Service Income	credit	3213.77	
+GAMMA-029	2025-03-18	101 Checking	debit	3213.77	
+GAMMA-029	2025-03-18	120 Receivables	credit	3213.77	
+GAMMA-030	2025-03-07	120 Receivables	debit	2783.33	
+GAMMA-030	2025-03-07	400 Service Income	credit	2783.33	
+GAMMA-031	2025-03-20	101 Checking	debit	2783.33	
+GAMMA-031	2025-03-20	120 Receivables	credit	2783.33	
+GAMMA-032	2025-03-10	120 Receivables	debit	3643.99	
+GAMMA-032	2025-03-10	400 Service Income	credit	3643.99	
+GAMMA-033	2025-03-22	101 Checking	debit	3643.99	
+GAMMA-033	2025-03-22	120 Receivables	credit	3643.99	
+GAMMA-034	2025-03-06	500 Delivery Costs	debit	980.84	
+GAMMA-034	2025-03-06	200 Vendors	credit	980.84	
+GAMMA-035	2025-03-24	200 Vendors	debit	980.84	
+GAMMA-035	2025-03-24	101 Checking	credit	980.84	
+GAMMA-036	2025-03-08	610 Facilities	debit	901.63	
+GAMMA-036	2025-03-08	210 Business Card	credit	901.63	
+GAMMA-037	2025-03-09	620 Systems	debit	240.19	
+GAMMA-037	2025-03-09	210 Business Card	credit	240.19	
+GAMMA-038	2025-03-10	630 Fuel and Travel	debit	544.48	
+GAMMA-038	2025-03-10	210 Business Card	credit	544.48	
+GAMMA-039	2025-03-26	210 Business Card	debit	2093.39	
+GAMMA-039	2025-03-26	101 Checking	credit	2093.39	
+GAMMA-040	2025-03-27	260 Equipment Loan	debit	540.00	
+GAMMA-040	2025-03-27	101 Checking	credit	540.00	
+GAMMA-041	2025-04-04	120 Receivables	debit	4279.72	
+GAMMA-041	2025-04-04	400 Service Income	credit	4279.72	
+GAMMA-042	2025-04-18	101 Checking	debit	4279.72	
+GAMMA-042	2025-04-18	120 Receivables	credit	4279.72	
+GAMMA-043	2025-04-07	120 Receivables	debit	3312.74	
+GAMMA-043	2025-04-07	400 Service Income	credit	3312.74	
+GAMMA-044	2025-04-20	101 Checking	debit	3312.74	
+GAMMA-044	2025-04-20	120 Receivables	credit	3312.74	
+GAMMA-045	2025-04-10	120 Receivables	debit	4198.72	
+GAMMA-045	2025-04-10	400 Service Income	credit	4198.72	
+GAMMA-046	2025-04-22	101 Checking	debit	4198.72	
+GAMMA-046	2025-04-22	120 Receivables	credit	4198.72	
+GAMMA-047	2025-04-06	500 Delivery Costs	debit	1747.15	
+GAMMA-047	2025-04-06	200 Vendors	credit	1747.15	
+GAMMA-048	2025-04-24	200 Vendors	debit	1747.15	
+GAMMA-048	2025-04-24	101 Checking	credit	1747.15	
+GAMMA-049	2025-04-08	610 Facilities	debit	860.13	
+GAMMA-049	2025-04-08	210 Business Card	credit	860.13	
+GAMMA-050	2025-04-09	620 Systems	debit	602.59	
+GAMMA-050	2025-04-09	210 Business Card	credit	602.59	
+GAMMA-051	2025-04-10	630 Fuel and Travel	debit	280.39	
+GAMMA-051	2025-04-10	210 Business Card	credit	280.39	
+GAMMA-052	2025-04-26	210 Business Card	debit	1385.93	
+GAMMA-052	2025-04-26	101 Checking	credit	1385.93	
+GAMMA-053	2025-04-27	260 Equipment Loan	debit	540.00	
+GAMMA-053	2025-04-27	101 Checking	credit	540.00	
+GAMMA-054	2025-05-04	120 Receivables	debit	3980.36	
+GAMMA-054	2025-05-04	400 Service Income	credit	3980.36	
+GAMMA-055	2025-05-18	101 Checking	debit	3980.36	
+GAMMA-055	2025-05-18	120 Receivables	credit	3980.36	
+GAMMA-056	2025-05-07	120 Receivables	debit	2719.00	
+GAMMA-056	2025-05-07	400 Service Income	credit	2719.00	
+GAMMA-057	2025-05-20	101 Checking	debit	2719.00	
+GAMMA-057	2025-05-20	120 Receivables	credit	2719.00	
+GAMMA-058	2025-05-10	120 Receivables	debit	2298.89	
+GAMMA-058	2025-05-10	400 Service Income	credit	2298.89	
+GAMMA-059	2025-05-22	101 Checking	debit	2298.89	
+GAMMA-059	2025-05-22	120 Receivables	credit	2298.89	
+GAMMA-060	2025-05-06	500 Delivery Costs	debit	1526.71	
+GAMMA-060	2025-05-06	200 Vendors	credit	1526.71	
+GAMMA-061	2025-05-24	200 Vendors	debit	1526.71	
+GAMMA-061	2025-05-24	101 Checking	credit	1526.71	
+GAMMA-062	2025-05-08	610 Facilities	debit	298.17	
+GAMMA-062	2025-05-08	210 Business Card	credit	298.17	
+GAMMA-063	2025-05-09	620 Systems	debit	451.04	
+GAMMA-063	2025-05-09	210 Business Card	credit	451.04	
+GAMMA-064	2025-05-10	630 Fuel and Travel	debit	910.29	
+GAMMA-064	2025-05-10	210 Business Card	credit	910.29	
+GAMMA-065	2025-05-26	210 Business Card	debit	1452.47	
+GAMMA-065	2025-05-26	101 Checking	credit	1452.47	
+GAMMA-066	2025-05-27	260 Equipment Loan	debit	540.00	
+GAMMA-066	2025-05-27	101 Checking	credit	540.00	
+GAMMA-067	2025-06-04	120 Receivables	debit	3279.42	
+GAMMA-067	2025-06-04	400 Service Income	credit	3279.42	
+GAMMA-068	2025-06-18	101 Checking	debit	3279.42	
+GAMMA-068	2025-06-18	120 Receivables	credit	3279.42	
+GAMMA-069	2025-06-07	120 Receivables	debit	3021.76	
+GAMMA-069	2025-06-07	400 Service Income	credit	3021.76	
+GAMMA-070	2025-06-20	101 Checking	debit	3021.76	
+GAMMA-070	2025-06-20	120 Receivables	credit	3021.76	
+GAMMA-071	2025-06-10	120 Receivables	debit	3460.94	
+GAMMA-071	2025-06-10	400 Service Income	credit	3460.94	
+GAMMA-072	2025-06-22	101 Checking	debit	3460.94	
+GAMMA-072	2025-06-22	120 Receivables	credit	3460.94	
+GAMMA-073	2025-06-06	500 Delivery Costs	debit	1183.63	
+GAMMA-073	2025-06-06	200 Vendors	credit	1183.63	
+GAMMA-074	2025-06-24	200 Vendors	debit	1183.63	
+GAMMA-074	2025-06-24	101 Checking	credit	1183.63	
+GAMMA-075	2025-06-08	610 Facilities	debit	265.23	
+GAMMA-075	2025-06-08	210 Business Card	credit	265.23	
+GAMMA-076	2025-06-09	620 Systems	debit	552.79	
+GAMMA-076	2025-06-09	210 Business Card	credit	552.79	
+GAMMA-077	2025-06-10	630 Fuel and Travel	debit	618.97	
+GAMMA-077	2025-06-10	210 Business Card	credit	618.97	
+GAMMA-078	2025-06-26	210 Business Card	debit	1998.47	
+GAMMA-078	2025-06-26	101 Checking	credit	1998.47	
+GAMMA-079	2025-06-27	260 Equipment Loan	debit	540.00	
+GAMMA-079	2025-06-27	101 Checking	credit	540.00	
